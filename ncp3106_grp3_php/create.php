@@ -164,20 +164,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Create Record</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        .wrapper {
-            width: 600px;
-            margin: 0 auto;
-        }
-    </style>
-</head>
-
-<!DOCTYPE html>
-<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -187,8 +173,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .wrapper {
             width: 600px;
             margin: 0 auto;
-        }
+        }     
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        display: none;
+      }
     </style>
+
 </head>
 
 <body>
@@ -226,8 +217,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </div>
                         <div class="from-group">
                             <label for = "">Current Year</label>
-                            <input type="text" name="current_year" class="form-control <?php echo (!empty($current_year_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $current_year; ?>">
-                            <select name="" class="form-control">
+                            <select name=" " class="form-control <?php echo (!empty($current_year_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $current_year; ?>">
                                 <option value=""> Select Year </option>
                                 <option value=""> 1st </option>
                                 <option value=""> 2nd </option>
@@ -235,8 +225,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <option value=""> 4th </option>
                                 </select>
                             <span class="invalid-feedback"><?php echo $current_year_err; ?></span>
-                            <div class="form-group">
-                                <button type = "submit" name = "save_select" class="btn btn primary">Save Selectbox</button>
+
                         </div>
                         <div class="form-group">
                             <label>Email</label>
