@@ -61,6 +61,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     //Validate program
+    $input_program = trim($_POST["program"]);
+    if (empty($input_program)) {
+        $program_err = "Please enter an program.";
+    } else {
+        $program = $input_program;
+    }
 
     // Validate address
     $input_address = trim($_POST["address"]);
@@ -70,48 +76,73 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $address = $input_address;
     }
 
-    // Validate salary
-    $input_salary = trim($_POST["salary"]);
-    if (empty($input_salary)) {
-        $salary_err = "Please enter the salary amount.";
-    } elseif (!ctype_digit($input_salary)) {
-        $salary_err = "Please enter a positive integer value.";
+    // Validate current year
+    $input_current_year = trim($_POST["current_year"]);
+    if (empty($input_current_year)) {
+        $current_year_err = "Please enter the current_year amount.";
+    } elseif (!ctype_digit($input_current_year)) {
+        $current_year_err = "Please enter a positive integer value.";
     } else {
-        $salary = $input_salary;
+        $current_year = $input_current_year;
     }
 
-    $input_datehired = trim($_POST["datehired"]);
-    if (empty($input_datehired)) {
-        $datehired_err = "Please enter an datehired.";
+    // Validate ue email
+    $input_ue_email = trim($_POST["ue_email"]);
+    if (empty($input_ue_email)) {
+        $ue_email_err = "Please enter an ue_email.";
     } else {
-        $datehired = $input_datehired;
+        $ue_email = $input_ue_email;
     }
 
-    // Validate job role
-    $input_jobrole = trim($_POST["jobrole"]);
-    if (empty($input_jobrole)) {
-        $jobrole_err = "Please enter a jobrole.";
-    } elseif (!filter_var($input_jobrole, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => "/^[a-zA-Z\s]+$/")))) {
-        $jobrole_err = "Please enter a valid jobrole.";
+    // Validate contact number
+    $input_contact_number = trim($_POST["contact_number"]);
+    if (empty($input_contact_number)) {
+        $contact_number_err = "Please enter the contact_number amount.";
+    } elseif (!ctype_digit($input_contact_number)) {
+        $contact_number_err = "Please enter a positive integer value.";
     } else {
-        $jobrole = $input_jobrole;
+        $contact_number = $input_contact_number;
     }
 
     // Check input errors before inserting in database
-    if (empty($name_err) && empty($address_err) && empty($salary_err) && empty($datehired_err) && empty($jobrole_err)) {
+    if (empty($first_name_err) && 
+        empty($last_name_err) && 
+        empty($middle_initial_err) && 
+        empty($student_number_err) && 
+        empty($program_err) &&
+        empty($current_year_err) &&
+        empty($ue_email_err) &&
+        empty($contact_number_err)) {
         // Prepare an insert statement
-        $sql = "INSERT INTO employees (name, address, salary, datehired, jobrole) VALUES (?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO student_info (first_name, 
+                                          last_name, 
+                                          middle_initial, 
+                                          student_number, 
+                                          program, 
+                                          current_year, 
+                                          ue_email, 
+                                          contact_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         if ($stmt = $mysqli->prepare($sql)) {
             // Bind variables to the prepared statement as parameters
-            $stmt->bind_param("sssss", $param_name, $param_address, $param_salary, $param_datehired, $param_jobrole);
+            $stmt->bind_param("ssssssss", $param_first_name, 
+                                          $param_last_name, 
+                                          $param_middle_initial, 
+                                          $param_student_number, 
+                                          $param_program,
+                                          $param_current_year, 
+                                          $param_ue_email, 
+                                          $param_contact_number);
 
             // Set parameters
-            $param_name = $name;
-            $param_address = $address;
-            $param_salary = $salary;
-            $param_datehired = $datehired;
-            $param_jobrole = $jobrole;
+            $param_first_name = $first_name;
+            $param_last_name = $last_name;
+            $param_middle_initial = $middle_initial;
+            $param_student_number = $student_number;
+            $param_program = $program;
+            $param_current_year = $current_year;
+            $param_ue_email = $ue_email;
+            $param_contact_number = $contact_number;
 
             // Attempt to execute the prepared statement
             if ($stmt->execute()) {
