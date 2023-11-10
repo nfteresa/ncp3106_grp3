@@ -80,8 +80,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $input_current_year = trim($_POST["current_year"]);
     if (empty($input_current_year)) {
         $current_year_err = "Please enter the current_year amount.";
-    } elseif (!ctype_digit($input_current_year)) {
-        $current_year_err = "Please enter a positive integer value.";
     } else {
         $current_year = $input_current_year;
     }
