@@ -22,7 +22,7 @@ $contact_number_err = "";
 
 // Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Validate name
+    //Validate name
     $input_first_name = trim($_POST["first_name"]);
     if (empty($input_first_name)) {
         $first_name_err = "Please enter a name.";
@@ -68,14 +68,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $program = $input_program;
     }
 
-    // Validate address
-    $input_address = trim($_POST["address"]);
-    if (empty($input_address)) {
-        $address_err = "Please enter an address.";
-    } else {
-        $address = $input_address;
-    }
-
     // Validate current year
     $input_current_year = trim($_POST["current_year"]);
     if (empty($input_current_year)) {
@@ -103,34 +95,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Check input errors before inserting in database
-    if (empty($first_name_err) && 
-        empty($last_name_err) && 
-        empty($middle_initial_err) && 
-        empty($student_number_err) && 
-        empty($program_err) &&
-        empty($current_year_err) &&
-        empty($ue_email_err) &&
-        empty($contact_number_err)) {
+    if (empty($first_name_err) && empty($last_name_err) && empty($middle_initial_err) && empty($student_number_err) && empty($program_err) && empty($current_year_err) && empty($ue_email_err) && empty($contact_number_err)) {
         // Prepare an insert statement
-        $sql = "INSERT INTO student_info (first_name, 
-                                          last_name, 
-                                          middle_initial, 
-                                          student_number, 
-                                          program, 
-                                          current_year, 
-                                          ue_email, 
-                                          contact_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO student_info (first_name, last_name, middle_initial, student_number, program, current_year, ue_email, contact_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         if ($stmt = $mysqli->prepare($sql)) {
             // Bind variables to the prepared statement as parameters
-            $stmt->bind_param("ssssssss", $param_first_name, 
-                                          $param_last_name, 
-                                          $param_middle_initial, 
-                                          $param_student_number, 
-                                          $param_program,
-                                          $param_current_year, 
-                                          $param_ue_email, 
-                                          $param_contact_number);
+            $stmt->bind_param("ssssssss", $param_first_name, $param_last_name, $param_middle_initial, $param_student_number, $param_program, $param_current_year, $param_ue_email, $param_contact_number);
 
             // Set parameters
             $param_first_name = $first_name;
@@ -160,6 +131,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $mysqli->close();
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
