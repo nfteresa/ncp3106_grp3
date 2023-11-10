@@ -192,18 +192,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                         <div class="form-group">
                             <label>First Name</label>
-                            <input type="text" name="First name" class="form-control <?php echo (!empty($first_name_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $first_name; ?>">
+                            <input type="text" name="first_name" class="form-control <?php echo (!empty($first_name_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $first_name; ?>">
                             <span class="invalid-feedback"><?php echo $first_name_err; ?></span>
-                        </div>
-                        <div class="form-group">
-                            <label> Middle Initial </label>
-                            <input name="middle_initial" class="form-control <?php echo (!empty($middle_initial_err)) ? 'is-invalid' : ''; ?>"><?php echo $middle_initial; ?>
-                            <span class="invalid-feedback"><?php echo $middle_initial_err; ?></span>
                         </div>
                         <div class="form-group">
                             <label>Last Name</label>
                             <input type="text" name="last_name" class="form-control <?php echo (!empty($last_name_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $last_name; ?>">
                             <span class="invalid-feedback"><?php echo $last_name_err; ?></span>
+                        </div>
+                        <div class="form-group">
+                            <label>Middle Initial</label>
+                            <input type="text" name="middle_initial" class="form-control <?php echo (!empty($middle_initial_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $middle_initial; ?>">
+                            <span class="invalid-feedback"><?php echo $middle_initial_err; ?></span>
                         </div>
                         <div class="form-group">
                             <label>Student Number</label>
