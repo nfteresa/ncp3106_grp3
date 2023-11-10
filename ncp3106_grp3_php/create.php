@@ -178,38 +178,77 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </style>
 </head>
 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Create Record</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .wrapper {
+            width: 600px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
 <body>
     <div class="wrapper">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <h2 class="mt-5">Create Record</h2>
-                    <p>Please fill this form and submit to add employee record to the database.</p>
+                    <h2 class="mt-5">Registration </h2>
+                    <p>Fill the form</p>
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                         <div class="form-group">
-                            <label>Name</label>
-                            <input type="text" name="name" class="form-control <?php echo (!empty($name_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $name; ?>">
-                            <span class="invalid-feedback"><?php echo $name_err; ?></span>
+                            <label>First Name</label>
+                            <input type="text" name="First name" class="form-control <?php echo (!empty($first_name_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $first_name; ?>">
+                            <span class="invalid-feedback"><?php echo $first_name_err; ?></span>
                         </div>
                         <div class="form-group">
-                            <label>Address</label>
-                            <textarea name="address" class="form-control <?php echo (!empty($address_err)) ? 'is-invalid' : ''; ?>"><?php echo $address; ?></textarea>
-                            <span class="invalid-feedback"><?php echo $address_err; ?></span>
+                            <label> Middle Initial </label>
+                            <input name="middle_initial" class="form-control <?php echo (!empty($middle_initial_err)) ? 'is-invalid' : ''; ?>"><?php echo $middle_initial; ?>
+                            <span class="invalid-feedback"><?php echo $middle_initial_err; ?></span>
                         </div>
                         <div class="form-group">
-                            <label>Salary</label>
-                            <input type="text" name="salary" class="form-control <?php echo (!empty($salary_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $salary; ?>">
-                            <span class="invalid-feedback"><?php echo $salary_err; ?></span>
+                            <label>Last Name</label>
+                            <input type="text" name="last_name" class="form-control <?php echo (!empty($last_name_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $last_name; ?>">
+                            <span class="invalid-feedback"><?php echo $last_name_err; ?></span>
                         </div>
                         <div class="form-group">
-                            <label>Job Role</label>
-                            <input type="text" name="jobrole" class="form-control <?php echo (!empty($jobrole_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $jobrole; ?>">
-                            <span class="invalid-feedback"><?php echo $jobrole_err; ?></span>
+                            <label>Student Number</label>
+                            <input type="number" name="student_number" class="form-control <?php echo (!empty($student_number_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $student_number; ?>">
+                            <span class="invalid-feedback"><?php echo $student_number_err; ?></span>
                         </div>
                         <div class="form-group">
-                            <label>Date Hired</label>
-                            <input type="date" name="datehired" class="form-control <?php echo (!empty($datehired_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $datehired; ?>">
-                            <span class="invalid-feedback"><?php echo $datehired_err; ?></span>
+                            <label>Program</label>
+                            <input type="text" name="program" class="form-control <?php echo (!empty($program_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $program; ?>">
+                            <span class="invalid-feedback"><?php echo $program_err; ?></span>
+                            </div>
+                        <div class="from-group">
+                            <label for = "">Current Year</label>
+                            <input type="text" name="current_year" class="form-control <?php echo (!empty($current_year_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $current_year; ?>">
+                            <select name="" class="form-control">
+                                <option value=""> Select Year </option>
+                                <option value=""> 1st </option>
+                                <option value=""> 2nd </option>
+                                <option value=""> 3rd </option>
+                                <option value=""> 4th </option>
+                                </select>
+                            <span class="invalid-feedback"><?php echo $current_year_err; ?></span>
+                            <div class="form-group">
+                                <button type = "submit" name = "save_select" class="btn btn primary">Save Selectbox</button>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" name="ue_email" class="form-control <?php echo (!empty($ue_email_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $ue_email; ?>">
+                            <span class="invalid-feedback"><?php echo $ue_email_err; ?></span>
+                        </div>
+                        <div class="form-group">
+                            <label>Contact Number</label>
+                            <input type="number" name="contact_number" class="form-control <?php echo (!empty($contact_number_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $contact_number; ?>">
+                            <span class="invalid-feedback"><?php echo $contact_number_err; ?></span>
                         </div>
                         <input type="submit" class="btn btn-primary" value="Submit">
                         <a href="index.php" class="btn btn-secondary ml-2">Cancel</a>
