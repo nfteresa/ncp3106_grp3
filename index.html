@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<h2>Login Form</h2>
+
+<form>
+  <center><h2>University of the East - Manila</h2></center>
+
+  <div class="container">
+    <label for="uname"><b>Username</b></label>
+    <input type="text" placeholder="Enter Username" name="uname" required>
+
+    <label for="psw"><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" name="psw" required>
+        
+    <button type="submit">Login</button>
+  </div>
+
+  <div class="container" style="background-color:#f1f1f1">
+    <button type="submit" onclick="myloginjabol()" class="cancelbtn">Cancel</button>
+    <span class="psw">Forgot <a href="#">password?</a></span>
+  </div>
+  <script>
+    function myloginjabol(){
+      alert('goods');
+      var uname = document.getElementById('uname').value;
+      var pass = document.getElementById('pass').value;
+
+      if((uname == "admin") && (psw == "admin")){
+        window.location.href = "ian.html"
+        alert('goods');
+      }
+      else{
+        alert("wrong username or password!");
+      }
+    }
+  </script>
+</form>
+</body>
+</html>
