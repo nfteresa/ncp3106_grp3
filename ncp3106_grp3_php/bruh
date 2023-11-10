@@ -1,0 +1,8 @@
+$input_student_number = trim($_POST["student_number"]);
+    if (empty($input_student_number)) {
+        $student_number_err = "Please enter the student_number amount.";
+    } elseif (!ctype_digit($input_student_number)) {
+        $student_number_err = "Please enter a positive integer value.";
+    } else {
+        $student_number = $input_student_number;
+    }
