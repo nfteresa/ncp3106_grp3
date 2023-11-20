@@ -63,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //Validate program
     $input_program = trim($_POST["program"]);
     if (empty($input_program)) {
-        $program_err = "Please enter an program.";
+        $program_err = "Please enter a program.";
     } else {
         $program = $input_program;
     }
@@ -116,7 +116,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Attempt to execute the prepared statement
             if ($stmt->execute()) {
                 // Records created successfully. Redirect to landing page
-                header("location: index.php");
+                header("location: create.php");
                 exit();
             } else {
                 echo "Oops! Something went wrong. Please try again later.";
@@ -130,12 +130,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Close connection
     $mysqli->close();
 }
+// END OF PHP PART
+// START OF HTML PART
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
-
 
 <head>
     <meta charset="UTF-8">
@@ -174,7 +174,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                         <div class="form-group">
                             <label>Middle Initial</label>
-                            <input type="text" name="middle_initial" class="form-control <?php echo (!empty($middle_initial_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $middle_initial; ?>">
+                            <input type="text"   class="form-control <?php echo (!empty($middle_initial_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $middle_initial; ?>">
                             <span class="invalid-feedback"><?php echo $middle_initial_err; ?></span>
                         </div>
                         <div class="form-group">
@@ -189,12 +189,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </div>
                         <div class="from-group">
                             <label for = "">Current Year</label>
-                            <select name=" " class="form-control <?php echo (!empty($current_year_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $current_year; ?>">
+                            <select name="current_year" class="form-control <?php echo (!empty($current_year_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $current_year; ?>">
                                 <option value=""> Select Year </option>
-                                <option value=""> 1st </option>
-                                <option value=""> 2nd </option>
-                                <option value=""> 3rd </option>
-                                <option value=""> 4th </option>
+                                <option value="1st"> 1st </option>
+                                <option value="2nd"> 2nd </option>
+                                <option value="3rd"> 3rd </option>
+                                <option value="4th"> 4th </option>
                                 </select>
 
 
@@ -213,7 +213,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <span class="invalid-feedback"><?php echo $contact_number_err; ?></span>
                         </div>
                         <input type="submit" class="btn btn-primary" value="Submit">
-                        <a href="index.php" class="btn btn-secondary ml-2">Cancel</a>
+                        <a href="create.php" class="btn btn-secondary ml-2">Cancel</a>
                     </form>
                 </div>
             </div>
