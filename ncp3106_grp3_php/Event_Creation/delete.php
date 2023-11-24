@@ -12,6 +12,7 @@
         header("location: delete_confirmation.php?ids=".urlencode($url_ids));
     } else {
         // error message here
+        echo "Something went wrong. Please try again later.";
     }
 ?>
 
@@ -60,6 +61,7 @@
     <div class="wrapper">
         <div class="container-fluid">
             <!-- the whole table as well as the button at the bottom is a form -->
+            <a href="index.php"><button class="btn btn-danger">Back</button></a>
             <form method = "post">
                 <?php
                 require_once '../config.php';
@@ -114,3 +116,4 @@
         </div>
     </div>
 </body>
+
