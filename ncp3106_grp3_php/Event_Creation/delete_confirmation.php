@@ -55,8 +55,9 @@
             ARE YOU SURE YOU WANT TO DELETE THESE?
             <form method="post">
                 <input type = "hidden" name = "ids" value = '<?php echo trim($_GET["ids"]); ?>'/>
-                <input type = "submit" class = "btn btn_danger" value = "Submit"/>
+                <input type = "submit" class = "btn btn_danger" value = "Yes"/>  
             </form>
+                <a href="delete.php"><button class = "btn btn_danger" >No</button></a>
             <?php
                 require_once "../config.php";
                 $ids = explode(",", urldecode($_GET["ids"]));
