@@ -160,6 +160,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
+                    <a href="index.php"><button class="btn btn-danger">Back</button></a>
                     <h2 class="mt-5">Registration </h2>
                     <p>Fill the form</p>
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
