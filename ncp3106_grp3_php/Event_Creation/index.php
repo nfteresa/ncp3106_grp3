@@ -11,7 +11,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
         .wrapper {
-            width: 600px;
+            width: 900px;
             margin: 0 auto;
         }
 
@@ -39,24 +39,28 @@
                     echo "<thead>";
                     echo "<tr>";
                     echo "<th>#</th>";
-                    echo "<th>Name</th>";
-                    echo "<th>Address</th>";
-                    echo "<th>Salary</th>";
-                    echo "<th>Action</th>";
+                    echo "<th>event_name</th>";
+                    echo "<th>event_description</th>";
+                    echo "<th>date</th>";
+                    echo "<th>start_time</th>";
+                    echo "<th>end_time</th>";
+                    echo "<th>registration_fee</th>";
+                    echo "<th>venue</th>";
+                    echo "<th>oic</th>";
                     echo "</tr>";
                     echo "</thead>";
                     echo "<tbody>";
                     while ($rows = $result->fetch_array()) {
                         echo "<tr>";
-                        echo "<td>" . $row['event_id'] . "</td>";
-                        echo "<td>" . $row['event_name'] . "</td>";
-                        echo "<td>" . $row['event_description'] . "</td>";
-                        echo "<td>" . $row['date'] . "</td>";
-                        echo "<td>" . $row['start_time'] . "</td>";
-                        echo "<td>" . $row['end_time'] . "</td>";
-                        echo "<td>" . $row['registration_fee'] . "</td>";
-                        echo "<td>" . $row['venue'] . "</td>";
-                        echo "<td>" . $row['oic'] . "</td>";
+                        echo "<td>" . $rows['event_id'] . "</td>";
+                        echo "<td>" . $rows['event_name'] . "</td>";
+                        echo "<td>" . $rows['event_description'] . "</td>";
+                        echo "<td>" . $rows['date'] . "</td>";
+                        echo "<td>" . $rows['start_time'] . "</td>";
+                        echo "<td>" . $rows['end_time'] . "</td>";
+                        echo "<td>" . $rows['registration_fee'] . "</td>";
+                        echo "<td>" . $rows['venue'] . "</td>";
+                        echo "<td>" . $rows['oic'] . "</td>";
                         echo "</tr>";
                     }
                     echo "</tbody>";
@@ -65,10 +69,12 @@
                     $result->free();
 
                 } else {
-
+                    //error message here if $result doesnt have rows
+                    echo "no rows found";
                 }
             } else {
-
+                // error message here if we didnt get a $result
+                echo "no results found";
             }
             ?>
         </div>
