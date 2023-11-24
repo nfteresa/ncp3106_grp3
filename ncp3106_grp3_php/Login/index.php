@@ -105,7 +105,7 @@
             <div class="right d-flex justify-content-center align-items-center">
                 <div style="margin-left: 40px;">
                     <div class="center">
-                        <img src="logo.png" style="height:50px; width:50px; position: absolute; top: 5px; center: 5px; text-align: center; margin-left:100px; margin-top:30px;">
+                        <img src="logo.png" style="border-radius:50px;height:50px; width:50px; position: absolute; top: 5px; center: 5px; text-align: center; margin-left:100px; margin-top:30px;">
                     </div>
                     <form action = "<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" style="line-height: 25px;">
                         <section>
