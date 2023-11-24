@@ -166,12 +166,20 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
+                <button class = "btn btn_danger" href="index.php">No</button>
                     <h2 class="mt-5">Registration </h2>
                     <p>Fill the form</p>
+                    <?php
+                    //throw user to error page if id isnt in url
+                        empty($_GET["id"]) ? header("location: error.php") : "";
+                    ?>
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                         <div class="form-group">
                             <label>Event_Name</label>
                             <?php
+                            // i put this in every text field
+                            // it gets the value of the element to edit
+                            // every text field makes a database query
                                 $id = $_GET['id'];
                                 $sql = "SELECT * FROM event_info WHERE event_id = $id";
                                 $result = $mysqli->query($sql);
