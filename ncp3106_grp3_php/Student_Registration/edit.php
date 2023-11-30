@@ -217,28 +217,6 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
             </div>
         </div>
     </div>
-</body>
-
-</html>
-                        </div>
-                        <div class="form-group">
-                            <label>Oic</label>
-                            <?php
-                                $id = $_GET['id'];
-                                $sql = "SELECT * FROM stud_info WHERE stud_id = $id";
-                                $result = $mysqli->query($sql);
-                                $result = $result->fetch_array();                                               
-                            ?>
-                            <span class="invalid-feedback"><?php echo $oic_err; ?></span>
-                        </div>
-                        <input type="hidden" name="id" value="<?php echo trim($_GET["id"])?>">
-                        <input type="submit" class="btn btn-primary" value="Submit">
-                        <a href="create.php" class="btn btn-secondary ml-2">Cancel</a>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</body>
+</body>                      
 
 </html>
