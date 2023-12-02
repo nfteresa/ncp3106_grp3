@@ -81,7 +81,7 @@
 
             if (!empty($result)) {
                 if($result->num_rows > 0) {
-                    echo '<table class="table table-bordered table-striped">';
+                    echo '<table class="table table-bordered table-striped table-hover">';
                     echo "<thead>";
                     echo "<tr>";
                     echo "<th>#</th>";
