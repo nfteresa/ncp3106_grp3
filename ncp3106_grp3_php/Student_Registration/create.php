@@ -59,17 +59,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     //Validate program
-    $input_program = trim($_POST["program"]);
-    if (empty($input_program)) {
-        $program_err = "Please enter an program.";
+    $program = $_POST["program"];
+    if (empty($program)) {
+        $program_err = "Please enter your program.";
     } else {
-        $program = $input_program;
+        $program = $program;
     }
 
     // Validate current year
-    $current_year = $_POST['current_year'];
-    if ($current_year == "1"){
-        $current_year_err = "please enter your current year";
+    $current_year = $_POST["current_year"];
+    if (empty($current_year)){
+        $current_year_err = "Please enter your current year.";
     } else {
         $current_year = $current_year;
     }
@@ -78,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Validate ue email
     $input_ue_email = trim($_POST["ue_email"]);
     if (empty($input_ue_email)) {
-        $ue_email_err = "Please enter an ue_email.";
+        $ue_email_err = "Please enter an UE email.";
     } else {
         $ue_email = $input_ue_email;
     }
@@ -86,7 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Validate contact number
     $input_contact_number = trim($_POST["contact_number"]);
     if (empty($input_contact_number)) {
-        $contact_number_err = "Please enter the contact_number amount.";
+        $contact_number_err = "Please enter your contact number. ";
     } elseif (!ctype_digit($input_contact_number)) {
         $contact_number_err = "Please enter a positive integer value.";
     } else {
@@ -172,7 +172,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <span class="invalid-feedback"><?php echo $last_name_err; ?></span>
                         </div>
                         <div class="form-group">
-                            <label>Middle Initial</label>
+                            <label>Middle Initial (Optional)</label>
                             <input type="text" name="middle_initial" class="form-control <?php echo (!empty($middle_initial_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $middle_initial; ?>">
                             <span class="invalid-feedback"><?php echo $middle_initial_err; ?></span>
                         </div>
@@ -183,26 +183,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                         <div class="form-group">
                             <label>Program</label>
-                            <input type="text" name="program" class="form-control <?php echo (!empty($program_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $program; ?>">
+                            <select name="program" class="form-control <?php echo (!empty($program_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $program; ?>">
                             <span class="invalid-feedback"><?php echo $program_err; ?></span>
+                                <option value="">Select program</option>
+                                <option value="CpE">Computer Engineering</option>
+                                <option value="ECE">Electrical Engineering</option>
+                                <option value="CE">Civil Engineering</option>
+                                <option value="ME">Mechanical Engineering</option>
+                                <option value="EE">Electronic Engineering</option>
+                                    </select>
+
+                                    
+
                             </div>
-                        <div class="from-group">
-                            <label >Current Year</label > 
-                            <select name="current_year" class="form-control" <?php echo ($current_year_err) ? 'is-invalid' : ''; ?> value="<?php echo $current_year; ?>">
-                            <span class="invalid-feedback"><?php echo $current_year_err; ?></span>> 
-                                <option value="1"> Select Year </option>
-                                <option value="1st"> 1st </option>
-                                <option value="2nd"> 2nd </option>
-                                <option value="3rd"> 3rd </option>
-                                <option value="4th"> 4th </option>
+                            <div class="form-group">
+                            <label>Current Year</label>
+                            <select name="current_year" class="form-control <?php echo (!empty($current_year_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $current_year; ?>">
+                            <span class="invalid-feedback"><?php echo $current_year_err; ?></span>
+                                <option value="">Current Year</option>
+                                <option value="1st">1st</option>
+                                <option value="2nd">2nd</option>
+                                <option value="3rd">3rd</option>
+                                <option value="4th">4th</option>
+                                
+                                    </select>
 
-                                </select>
+                                    
 
-
-
-
-
-                        </div>
+                            </div>
+                        
                         <div class="form-group">
                             <label>Email</label>
                             <input type="email" name="ue_email" class="form-control <?php echo (!empty($ue_email_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $ue_email; ?>">
@@ -210,8 +219,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                         <div class="form-group">
                             <label>Contact Number</label>
-                            <input type="number" name="contact_number" class="form-control <?php echo (!empty($contact_number_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $contact_number; ?>">
+                            <input type="number" name="contact_number" class="form-control"  <?php echo (!empty($contact_number_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $contact_number; ?>">
                             <span class="invalid-feedback"><?php echo $contact_number_err; ?></span>
+                            
+                            
                         </div>
                         <input type="submit" class="btn btn-primary" value="Submit">
                         <a href="index.php" class="btn btn-secondary ml-2">Cancel</a>
@@ -220,6 +231,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
     </div>
+    
 </body>
 
 </html>
