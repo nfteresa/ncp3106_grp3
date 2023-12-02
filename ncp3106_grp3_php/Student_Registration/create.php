@@ -68,6 +68,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Validate current year
     $current_year = $_POST['current_year'];
+    if ($current_year == "1"){
+        $current_year_err = "please enter your current year";
+    } else {
+        $current_year = $current_year;
+    }
 
 
     // Validate ue email
@@ -182,19 +187,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <span class="invalid-feedback"><?php echo $program_err; ?></span>
                             </div>
                         <div class="from-group">
-                            <label >Current Year</label>
-                            <select name="current_year" class="form-control">
-
-                                <option value=""> Select Year </option>
+                            <label >Current Year</label > 
+                            <select name="current_year" class="form-control" <?php echo ($current_year_err) ? 'is-invalid' : ''; ?> value="<?php echo $current_year; ?>">
+                            <span class="invalid-feedback"><?php echo $current_year_err; ?></span>> 
+                                <option value="1"> Select Year </option>
                                 <option value="1st"> 1st </option>
                                 <option value="2nd"> 2nd </option>
                                 <option value="3rd"> 3rd </option>
                                 <option value="4th"> 4th </option>
+
                                 </select>
 
 
 
-                            
+
 
                         </div>
                         <div class="form-group">
