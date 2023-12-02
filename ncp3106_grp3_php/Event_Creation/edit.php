@@ -160,22 +160,132 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
     </style>
 
 </head>
-
+<style>
+    @font-face {
+        font-family: myFirstFont;
+        src: url(Montserrat-VariableFont_wght.ttf);
+    }
+  body {
+    opacity: 1;
+    background-color: #013365;
+    background-image: url(bg1.png);
+    background-size: cover;
+  }
+  .signup-form::-webkit-scrollbar{
+    display: none;
+  }
+  .form-control {
+    height: 40px;
+    box-shadow: none;
+    color: #969fa4;
+  }
+  .form-control:focus {
+    border-color: #013365;
+  }
+  .form-control, .btn {        
+    border-radius: 3px;
+  }
+  .signup-form {
+    width: 450px;
+    margin: 0 auto;
+    font-size: 15px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .signup-form h2 {
+    color: #013365;
+    font-weight: bold;
+    margin: 0 0 15px;
+    position: relative;
+    text-align: center;
+  }
+  .signup-form h2:before {
+    left: 0;
+  }
+  .signup-form h2:after {
+    right: 0;
+  }
+  .signup-form .hint-text {
+    color: #999;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  .signup-form form {
+    margin-top: 30px;
+    color: black;
+    border-radius: 3px;
+    margin-bottom: 15px;
+    background: rgba(246, 246, 242, 1);
+    padding: 30px;
+    width: 100%; 
+    height: 100%;
+    line-height: 1.8; 
+    display: block;
+    
+  }
+  .signup-form .form-group {
+    margin-bottom: 20px;
+  }
+  .signup-form input [type="checkbox"] {
+    margin-top: 3px;
+  }
+  .signup-form .btn {        
+    font-size: 16px;
+    font-weight: bold;		
+    min-width: 140px;
+    outline: none !important;
+  }
+  .signup-form .row div:first-child {
+    padding-right: 10px;
+  }
+  .signup-form .row div:last-child {
+    padding-left: 10px;
+  }    	
+  .signup-form a {
+    color: #fff;
+    text-decoration: underline;
+  }
+  .signup-form a:hover {
+    text-decoration: none;
+  }
+  .signup-form form a {
+    color: #013365;
+    text-decoration: none;
+  }	
+  .signup-form form a:hover {
+    text-decoration: underline;
+  }  
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    text-align: center;
+  }
+  ::-webkit-scrollbar{
+    display: none;
+  }
+  
+</style>
 <body>
-    <div class="wrapper">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                <button class = "btn btn_danger" href="index.php">No</button>
-                    <h2 class="mt-5">Registration </h2>
-                    <p>Fill the form</p>
-                    <?php
+<div class="container">
+        <?php
                     //throw user to error page if id isnt in url
-                        empty($_GET["id"]) ? header("location: error.php") : "";
-                    ?>
-                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                        <div class="form-group">
-                            <label>Event_Name</label>
+            empty($_GET["id"]) ? header("location: error.php") : "";
+        ?>
+        <div class="col-md-6 no-gutters" style="width:100%; box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3); border-radius: 10px 0px 0px 10px; background: rgba(246, 246, 242, 1); height:500px; margin-top: 30px; background-image: url(bg2.png); background-size:cover;">
+        <a href="index.php"><img src="back2.png" style="position: absolute; top: 8px; left: 16px; width:50px; height: 50px;"></a>
+        <div class="signup-form" style="float: left; background-size: cover; margin: auto; text-align: center; margin-top: 200px;">
+            <h2 style="margin-left: 50px;">Register Event</h2>
+            <p class="hint-text" style="margin-left: 50px; color: #013365;">Plan, Create, Celebrate: Events Made Easy.</p>
+        </div>
+        </div>
+        <div class="col-md-6 no-gutters" style="width:100%;overflow: scroll; height:500px; margin-top: 30px; border-radius: 0px 10px 10px 0px; background: rgba(246, 246, 242, 1);">
+            <div class="signup-form" style="float: left; justify-content: center; align-items: center; margin: auto; ">
+                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                <div class="form-group" style="margin-left: 60px;">
+                <div class="form-group">
+                            <label style="font-weight:bold;">Event Name</label>
                             <?php
                             // i put this in every text field
                             // it gets the value of the element to edit
@@ -191,7 +301,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                             <span class="invalid-feedback"><?php echo $event_name_err; ?></span>
                         </div>
                         <div class="form-group">
-                            <label>Event Description</label>
+                            <label style="font-weight:bold;">Event Description</label>
                             <?php
                                 $id = $_GET['id'];
                                 $sql = "SELECT * FROM event_info WHERE event_id = $id";
@@ -204,7 +314,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                             <span class="invalid-feedback"><?php echo $event_description_err; ?></span>
                         </div>
                         <div class="form-group">
-                            <label>Event Type</label>
+                            <label style="font-weight:bold;">Event Type</label>
                             <?php
                                 $id = $_GET['id'];
                                 $sql = "SELECT * FROM event_info WHERE event_id = $id";
@@ -216,8 +326,8 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                             ?>
                             <span class="invalid-feedback"><?php echo $event_type_err; ?></span>
                         </div>
-                        <div class="form-group">
-                            <label>Event Date</label>
+                    <div class="form-group">
+                            <label style="font-weight:bold;">Event Date</label>
                             <?php
                                 $id = $_GET['id'];
                                 $sql = "SELECT * FROM event_info WHERE event_id = $id";
@@ -229,8 +339,10 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                             ?>
                             <span class="invalid-feedback"><?php echo $date_err; ?> </span>
                         </div>
-                        <div class="form-group">
-                            <label>Start Time</label>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col">
+                            <label style="font-weight:bold;">Start Time</label>
                             <?php
                                 $id = $_GET['id'];
                                 $sql = "SELECT * FROM event_info WHERE event_id = $id";
@@ -242,8 +354,8 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                             ?>
                             <span class="invalid-feedback"><?php echo $start_time_err; ?></span>
                             </div>
-                        <div class="from-group">
-                            <label>End Time</label>
+                            <div class="col">
+                            <label style="font-weight:bold;">End Time</label>
                             <?php
                                 $id = $_GET['id'];
                                 $sql = "SELECT * FROM event_info WHERE event_id = $id";
@@ -254,10 +366,12 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                                 echo '<input type="time" name="end_time" class="form-control'.$is_invalid.'" value="'.$placeholder.'">';
                             ?>
                             <span class="invalid-feedback"><?php echo $end_time_err; ?></span>
-
-                        </div>
-                        <div class="form-group">
-                            <label>Registration Fee</label>
+                            </div>
+                        </div>        	
+                    </div>  
+                    </div>
+                    <div class="form-group" style="margin-left: 60px;">
+                            <label style="font-weight:bold;">Registration Fee</label>
                             <?php
                                 $id = $_GET['id'];
                                 $sql = "SELECT * FROM event_info WHERE event_id = $id";
@@ -269,8 +383,8 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                             ?>
                             <span class="invalid-feedback"><?php echo $registration_fee_err; ?></span>
                         </div>
-                        <div class="form-group">
-                            <label>Venue</label>
+                        <div class="form-group" style="margin-left: 60px;">
+                            <label style="font-weight:bold;">Venue</label>
                             <?php
                                 $id = $_GET['id'];
                                 $sql = "SELECT * FROM event_info WHERE event_id = $id";
@@ -282,8 +396,8 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                             ?>
                             <span class="invalid-feedback"><?php echo $venue_err; ?></span>
                         </div>
-                        <div class="form-group">
-                            <label>Oic</label>
+                        <div class="form-group" style="margin-left: 60px;">
+                            <label style="font-weight:bold;">Officer in Charge</label>
                             <?php
                                 $id = $_GET['id'];
                                 $sql = "SELECT * FROM event_info WHERE event_id = $id";
@@ -296,13 +410,12 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                             <span class="invalid-feedback"><?php echo $oic_err; ?></span>
                         </div>
                         <input type="hidden" name="id" value="<?php echo trim($_GET["id"])?>">
-                        <input type="submit" class="btn btn-primary" value="Submit">
-                        <a href="create.php" class="btn btn-secondary ml-2">Cancel</a>
-                    </form>
-                </div>
+                    <div class="form-group" style="margin-left: 60px;">
+                            <button type="submit" style="background-color: #60EE5E; border: #60EE5E solid;" class="btn btn-success btn-lg btn-block">Submit</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </body>
-
 </html>
