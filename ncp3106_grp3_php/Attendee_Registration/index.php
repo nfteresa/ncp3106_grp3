@@ -9,19 +9,15 @@
     $payment_err = "";
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $input_event_id = trim($_POST["event_id"]);
-        if (empty($input_event_id)) {
-            $event_id_err = "Please put in a valid event name";
-        } else {
-            $event_id = $input_event_id;
-        }
 
-        $input_payment = trim($_POST["payment"]);
-        if (empty($input_payment)) {
-            $payment_err = "Please put in a valid price";
-        } else {
-            $payment = $input_payment;
-        }
+        $input_event_id = trim($_POST["event_id"]);
+        $event_id = $input_event_id;
+
+        $sql = "SELECT registration_fee FROM event_info WHERE event_id=".$event_id;
+        $payment = $mysqli->query($sql);
+        $payment = $payment->fetch_array();
+        $payment = $payment["registration_fee"];
+        $mysqli->close();
 
         if (empty($event_id_err) && empty($payment_err)) {
             $payment_url = urlencode($payment);
@@ -105,10 +101,6 @@
 
                 }
                 ?>
-            <div class="form-group">
-                <label>Price</label>
-                <input type="text" name="payment" class="form-control <?php echo (!empty($payment_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $payment?>"/>
-            </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form> 
     </div>
