@@ -48,12 +48,12 @@
                 <div class="form-group">
                     <label>Search</label>
                     <input type="text" name="search" class="form-control <?php echo (!empty($search_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $search?>"/>
-                    <button type="submit" class="btn btn-primary">Search</button>
                 </div>
+                <button type="submit" class="btn btn-primary">Search</button>
             </form>
-
+            <a href="create.php"><button class="btn btn-primary">Create</button></a>
+            <a href="delete.php"><button class="btn btn-danger">Delete</button></a>
             <?php
-
             if (!empty($search)) {
                 $sql = "SELECT * FROM event_info WHERE event_name LIKE ?";
 
@@ -97,8 +97,8 @@
                     echo "</thead>";
                     echo "<tbody>";
                     while ($rows = $result->fetch_array()) {
-                        echo "<tr>";
-                        echo "<td>" . $rows['event_id'] . "</td>";
+                        echo "<tr class='position-relative'>";
+                        echo "<td><a class='stretched-link' href='edit.php?id=".$rows['event_id']."'>" . $rows['event_id'] . "</a></td>";
                         echo "<td>" . $rows['event_name'] . "</td>";
                         echo "<td>" . $rows['event_description'] . "</td>";
                         echo "<td>" . $rows['date'] . "</td>";
