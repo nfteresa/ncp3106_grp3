@@ -1,9 +1,24 @@
+<?php
+    require_once "../config.php";
+
+    $search = "";
+    $input_search = "";
+    $search_err = "";
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        require_once '../config.php';
+
+        $input_search = trim($_POST["search"]);
+        $search = $input_search;
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard</title>
+    <title>Event list</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -29,11 +44,42 @@
 <body>
     <div class="wrapper">
         <div class="container-fluid">
-            <?php
-            require_once '../config.php';
+            <form method="post">
+                <div class="form-group">
+                    <label>Search</label>
+                    <input type="text" name="search" class="form-control <?php echo (!empty($search_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $search?>"/>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </form>
 
-            $sql = "SELECT * FROM event_info";
-            if ($result = $mysqli->query($sql)) {
+            <?php
+
+            if (!empty($search)) {
+                $sql = "SELECT * FROM event_info WHERE event_name LIKE ?";
+
+                if ($stmt = $mysqli->prepare($sql)) {
+                    $stmt->bind_param("s", $param_search);
+                    $param_search = "%" . $search  . "%";
+                    if ($stmt->execute()) {
+                        $result = $stmt->get_result();
+                    } else {
+                        echo "search failed";
+                    }
+                }
+                $stmt->close();
+            } else {
+                $sql = "SELECT * FROM event_info";
+                if ($stmt = $mysqli->prepare($sql)) {
+                    if ($stmt->execute()) {
+                        $result = $stmt->get_result();
+                    } else {
+                        echo "search failed";
+                    }
+                }
+                $stmt->close();
+            }
+
+            if (!empty($result)) {
                 if($result->num_rows > 0) {
                     echo '<table class="table table-bordered table-striped">';
                     echo "<thead>";
