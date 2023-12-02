@@ -1,18 +1,20 @@
 <?php
-    if(isset($_POST['ids']) && !empty($_POST['ids'])){
-        //this contains all the values of the checkboxes that were ticked at form submission.
-        $ids = $_POST["ids"];
-        $url_ids = "";
-        //package array into string
-        while (count($ids)) {
-            $temp = array_pop($ids);
-            $url_ids = $url_ids . $temp . ",";
+    if($_SERVER["REQUEST_METHOD"] == "POST") {
+        if(isset($_POST['ids']) && !empty($_POST['ids'])){
+            //this contains all the values of the checkboxes that were ticked at form submission.
+            $ids = $_POST["ids"];
+            $url_ids = "";
+            //package array into string
+            while (count($ids)) {
+                $temp = array_pop($ids);
+                $url_ids = $url_ids . $temp . ",";
+            }
+            // send user to delete_confirmation.php with the ids url-encoded.
+            header("location: delete_confirmation.php?ids=".urlencode($url_ids));
+        } else {
+            // error message here
+            echo "Something went wrong. Please try again later.";
         }
-        // send user to delete_confirmation.php with the ids url-encoded.
-        header("location: delete_confirmation.php?ids=".urlencode($url_ids));
-    } else {
-        // error message here
-        echo "Something went wrong. Please try again later.";
     }
 ?>
 
