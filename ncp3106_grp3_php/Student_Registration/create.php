@@ -42,13 +42,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $input_middle_initial = trim($_POST["middle_initial"]);
-    if (empty($input_middle_initial)) {
-        $middle_initial_err = "Please enter a middle_initial.";
-    } elseif (!filter_var($input_middle_initial, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => "/^[a-zA-Z\s]+$/")))) {
+    if (!filter_var($input_middle_initial, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => "/^[a-zA-Z\s]+$/")))){
         $middle_initial_err = "Please enter a valid middle_initial.";
     } else {
         $middle_initial = $input_middle_initial;
-    }
+    }   
 
     //Validate student number
     $input_student_number = trim($_POST["student_number"]);
@@ -63,18 +61,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //Validate program
     $input_program = trim($_POST["program"]);
     if (empty($input_program)) {
-        $program_err = "Please enter a program.";
+        $program_err = "Please enter an program.";
     } else {
         $program = $input_program;
     }
 
     // Validate current year
-    $input_current_year = trim($_POST["current_year"]);
-    if (empty($input_current_year)) {
-        $current_year_err = "Please enter the current_year amount.";
-    } else {
-        $current_year = $input_current_year;
-    }
+    $current_year = $_POST['current_year'];
+
 
     // Validate ue email
     $input_ue_email = trim($_POST["ue_email"]);
@@ -97,7 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check input errors before inserting in database
     if (empty($first_name_err) && empty($last_name_err) && empty($middle_initial_err) && empty($student_number_err) && empty($program_err) && empty($current_year_err) && empty($ue_email_err) && empty($contact_number_err)) {
         // Prepare an insert statement
-        $sql = "INSERT INTO student_info (first_name, last_name, middle_initial, student_number, program, current_year, ue_email, contact_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO stud_info (first_name, last_name, middle_initial, student_number, program, current_year, ue_email, contact_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         if ($stmt = $mysqli->prepare($sql)) {
             // Bind variables to the prepared statement as parameters
@@ -116,7 +110,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Attempt to execute the prepared statement
             if ($stmt->execute()) {
                 // Records created successfully. Redirect to landing page
-                header("location: create.php");
+                header("location: index.php");
                 exit();
             } else {
                 echo "Oops! Something went wrong. Please try again later.";
@@ -124,18 +118,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // Close statement
-        $stmt->close();
+       // $stmt->close();
     }
 
     // Close connection
     $mysqli->close();
 }
-// END OF PHP PART
-// START OF HTML PART
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
+
 
 <head>
     <meta charset="UTF-8">
@@ -174,7 +168,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                         <div class="form-group">
                             <label>Middle Initial</label>
-                            <input type="text"   class="form-control <?php echo (!empty($middle_initial_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $middle_initial; ?>">
+                            <input type="text" name="middle_initial" class="form-control <?php echo (!empty($middle_initial_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $middle_initial; ?>">
                             <span class="invalid-feedback"><?php echo $middle_initial_err; ?></span>
                         </div>
                         <div class="form-group">
@@ -188,8 +182,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <span class="invalid-feedback"><?php echo $program_err; ?></span>
                             </div>
                         <div class="from-group">
-                            <label for = "">Current Year</label>
-                            <select name="current_year" class="form-control <?php echo (!empty($current_year_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $current_year; ?>">
+                            <label >Current Year</label>
+                            <select name="current_year" class="form-control">
+
                                 <option value=""> Select Year </option>
                                 <option value="1st"> 1st </option>
                                 <option value="2nd"> 2nd </option>
@@ -199,7 +194,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 
-                            <span class="invalid-feedback"><?php echo $current_year_err; ?></span>
+                            
 
                         </div>
                         <div class="form-group">
@@ -213,7 +208,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <span class="invalid-feedback"><?php echo $contact_number_err; ?></span>
                         </div>
                         <input type="submit" class="btn btn-primary" value="Submit">
-                        <a href="create.php" class="btn btn-secondary ml-2">Cancel</a>
+                        <a href="index.php" class="btn btn-secondary ml-2">Cancel</a>
                     </form>
                 </div>
             </div>
