@@ -59,7 +59,7 @@
                 $sql = "SELECT * FROM event_info";
                 if ($result = $mysqli->query($sql)) {
                     if($result->num_rows > 0) {
-                        echo '<table class="table table-bordered table-striped">';
+                        echo '<table class="table table-bordered table-striped table-hover">';
                         echo "<thead>";
                         echo "<tr>";
                         echo "<th>amongus</th>";
@@ -76,8 +76,8 @@
                         echo "</thead>";
                         echo "<tbody>";
                         while ($rows = $result->fetch_array()) {
-                            echo "<tr>";
-                            echo '<td><input type ="radio" name = "event_id" id = "'. $rows["event_id"].' "value = "'. $rows["event_id"].'"></input></td>';
+                            echo "<tr class='position-relative'>";
+                            echo '<td><input class="stretched-link" type ="radio" name = "event_id" id = "'. $rows["event_id"].' "value = "'. $rows["event_id"].'"></input></td>';
                             echo "<td>" . $rows['event_id'] . "</td>";
                             echo "<td>" . $rows['event_name'] . "</td>";
                             echo "<td>" . $rows['event_description'] . "</td>";
