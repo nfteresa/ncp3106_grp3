@@ -86,7 +86,7 @@
                         echo "<div class='col mt-3'>";
                         echo "<div class='card h-100'>";
                         echo "<div class='card-body position-relative'>";         
-                        echo "<a class='stretched-link' href='view.php?id=".$rows['event_id']."'></a>";
+                        echo "<a class='stretched-link' href='view.php?event_id=".urlencode($rows['event_id'])."&flag=view'></a>";
                         echo "<h5 class='card-title'>".$rows['event_name']."</h5>";
                         echo "<p class='card-text'>".$rows['event_description']."</p>";
                         echo "</div>";
