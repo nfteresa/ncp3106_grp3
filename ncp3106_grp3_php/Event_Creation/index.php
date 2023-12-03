@@ -80,40 +80,19 @@
             }
 
             if (!empty($result)) {
-                if($result->num_rows > 0) {
-                    echo '<table class="table table-bordered table-striped table-hover">';
-                    echo "<thead>";
-                    echo "<tr>";
-                    echo "<th>#</th>";
-                    echo "<th>event_name</th>";
-                    echo "<th>event_description</th>";
-                    echo "<th>date</th>";
-                    echo "<th>start_time</th>";
-                    echo "<th>end_time</th>";
-                    echo "<th>registration_fee</th>";
-                    echo "<th>venue</th>";
-                    echo "<th>oic</th>";
-                    echo "</tr>";
-                    echo "</thead>";
-                    echo "<tbody>";
+                if ($result->num_rows > 0) {
+                    echo "<div class='row row-cols-1 row-cols-md-3 g-4'>";
                     while ($rows = $result->fetch_array()) {
-                        echo "<tr class='position-relative'>";
-                        echo "<td><a class='stretched-link' href='edit.php?id=".$rows['event_id']."'>" . $rows['event_id'] . "</a></td>";
-                        echo "<td>" . $rows['event_name'] . "</td>";
-                        echo "<td>" . $rows['event_description'] . "</td>";
-                        echo "<td>" . $rows['date'] . "</td>";
-                        echo "<td>" . $rows['start_time'] . "</td>";
-                        echo "<td>" . $rows['end_time'] . "</td>";
-                        echo "<td>" . $rows['registration_fee'] . "</td>";
-                        echo "<td>" . $rows['venue'] . "</td>";
-                        echo "<td>" . $rows['oic'] . "</td>";
-                        echo "</tr>";
+                        echo "<div class='col mt-3'>";
+                        echo "<div class='card h-100'>";
+                        echo "<div class='card-body position-relative'>";         
+                        echo "<a class='stretched-link' href='view.php?id=".$rows['event_id']."'></a>";
+                        echo "<h5 class='card-title'>".$rows['event_name']."</h5>";
+                        echo "<p class='card-text'>".$rows['event_description']."</p>";
+                        echo "</div>";
+                        echo "</div>";
+                        echo "</div>";
                     }
-                    echo "</tbody>";
-                    echo "</table>";
-                    // Free result set
-                    $result->free();
-
                 } else {
                     //error message here if $result doesnt have rows
                     echo "no rows found";
@@ -126,4 +105,3 @@
         </div>
     </div>
 </body>
-                
