@@ -276,7 +276,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
         <div class="col-md-6 no-gutters" style="width:100%; box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3); border-radius: 10px 0px 0px 10px; background: rgba(246, 246, 242, 1); height:500px; margin-top: 30px; background-image: url(bg2.png); background-size:cover;">
         <a href="index.php"><img src="back2.png" style="position: absolute; top: 8px; left: 16px; width:50px; height: 50px;"></a>
         <div class="signup-form" style="float: left; background-size: cover; margin: auto; text-align: center; margin-top: 200px;">
-            <h2 style="margin-left: 50px;">Register Event</h2>
+            <h2 style="margin-left: 50px;">Edit Event</h2>
             <p class="hint-text" style="margin-left: 50px; color: #013365;">Plan, Create, Celebrate: Events Made Easy.</p>
         </div>
         </div>
