@@ -30,7 +30,7 @@
     <div class="wrapper">
         <div class="container-fluid">
             <?php
-            require_once '../config.php';
+            require_once 'C:\Users\Neilf\Downloads\xaamp\phpMyAdmin\htmlforms\crud\config.php';
 
             $sql = "SELECT * FROM stud_info";
             if ($result = $mysqli->query($sql)) {
@@ -39,15 +39,15 @@
                     echo "<thead>";
                     echo "<tr>";
                     echo "<th>#</th>";
-                    echo "<th>#</th>";
-                        echo "<th>first_name</th>";
-                        echo "<th>last_name</th>";
-                        echo "<th>middle_initial</th>";
-                        echo "<th>student_number</th>";
-                        echo "<th>program</th>";
-                        echo "<th>current_year</th>";
-                        echo "<th>ue_email</th>";
-                        echo "<th>contact_number</th>";
+                        echo "<th>First Name</th>";
+                        echo "<th>Last Name</th>";
+                        echo "<th>Middle Initial</th>";
+                        echo "<th>Student Number</th>";
+                        echo "<th>Program</th>";
+                        echo "<th>Current</th>";
+                        echo "<th>Email</th>";
+                        echo "<th>Contact Number</th>";
+                        echo "<th>Actions </th>";
                         echo "</tr>";
                         echo "</thead>";
                         echo "<tbody>";
@@ -62,6 +62,12 @@
                             echo "<td>" . $rows['current_year'] . "</td>";
                             echo "<td>" . $rows['ue_email'] . "</td>";
                             echo "<td>" . $rows['contact_number'] . "</td>";
+                            echo "<td>
+                            <div class='btn-group'>
+                                <input type='button' class='btn btn-secondary' href='C:\Users\Neilf\Downloads\xaamp\phpMyAdmin\htmlforms\crud\edit.php?id=" .$rows['stud_id']."' value='EDIT'>
+                                <input type='button' class='btn btn-danger' href='C:\Users\Neilf\Downloads\xaamp\phpMyAdmin\htmlforms\crud\delete.php??id=" .$rows['stud_id']."' value='DELETE'>
+                                </div>
+                            </td>";    
                             echo "</tr>";
                        
                     }
