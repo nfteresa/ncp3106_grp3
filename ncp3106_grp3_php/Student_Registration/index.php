@@ -64,8 +64,8 @@
                             echo "<td>" . $rows['contact_number'] . "</td>";
                             echo "<td>
                             <div class='btn-group'>
-                                <input type='button' class='btn btn-secondary' href='C:\Users\Neilf\Downloads\xaamp\phpMyAdmin\htmlforms\crud\edit.php?id=" .$rows['stud_id']."' value='EDIT'>
-                                <input type='button' class='btn btn-danger' href='C:\Users\Neilf\Downloads\xaamp\phpMyAdmin\htmlforms\crud\delete.php??id=" .$rows['stud_id']."' value='DELETE'>
+                                <a class='btn btn-secondary' href='/edit.php?id=" .$rows['stud_id']."' > EDIT <a>
+                                <a class='btn btn-danger' href='/delete.php??id=" .$rows['stud_id']."'> DELETE <a>
                                 </div>
                             </td>";    
                             echo "</tr>";
