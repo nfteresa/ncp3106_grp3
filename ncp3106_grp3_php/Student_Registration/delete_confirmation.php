@@ -1,7 +1,7 @@
 <?php
     if (isset($_POST["ids"]) && !empty($_POST["ids"])) {
         // ask for access to the server
-        require_once "../config.php";
+        require_once 'config.php';
 
         //sql statement
         $sql = "DELETE FROM stud_info WHERE stud_id = ?";
@@ -59,7 +59,7 @@
             </form>
                 <a href="delete.php"><button class = "btn btn_danger" >No</button></a>
             <?php
-                require_once "../config.php";
+                require_once 'C:\Users\Neilf\Downloads\xaamp\phpMyAdmin\htmlforms\crud\config.php';
                 $ids = explode(",", urldecode($_GET["ids"]));
                 $ids = implode("', '",$ids);
                 $sql = "SELECT * FROM stud_info WHERE stud_id IN ('$ids')";
@@ -69,14 +69,15 @@
                         echo "<thead>";
                         echo "<tr>";
                         echo "<th>#</th>";
-                        echo "<th>first_name</th>";
-                        echo "<th>last_name</th>";
-                        echo "<th>middle_initial</th>";
-                        echo "<th>student_number</th>";
-                        echo "<th>program</th>";
-                        echo "<th>current_year</th>";
-                        echo "<th>ue_email</th>";
-                        echo "<th>contact_number</th>";
+                        echo "<th>First Name</th>";
+                        echo "<th>Last Name</th>";
+                        echo "<th>Middle Initial</th>";
+                        echo "<th>Student Number</th>";
+                        echo "<th>Program</th>";
+                        echo "<th>Current</th>";
+                        echo "<th>Email</th>";
+                        echo "<th>Contact Number</th>";
+                        echo "<th>Actions </th>";
                         echo "</tr>";
                         echo "</thead>";
                         echo "<tbody>";
@@ -91,10 +92,12 @@
                             echo "<td>" . $rows['current_year'] . "</td>";
                             echo "<td>" . $rows['ue_email'] . "</td>";
                             echo "<td>" . $rows['contact_number'] . "</td>";
-                            echo "</tr>";
+                            echo "<td>"
+            ;
                         }
                         echo "</tbody>";
                         echo "</table>";
+                        // Free result set
                         $result->free();
                     }
                 }
