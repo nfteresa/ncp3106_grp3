@@ -1,6 +1,6 @@
 <?php
 // Include config file
-require_once "../config.php";
+require_once "config.php";
 
 // Define variables and initialize with empty values
 $first_name = "";
@@ -21,9 +21,9 @@ $ue_email_err = "";
 $contact_number_err = "";
 
 // Processing form data when form is submitted
-if (isset($_POST['id']) && !empty($_POST['id'])) {
+if (isset($_POST['stud_id']) && !empty($_POST['stud_id'])) {
     //Get ID from URL
-    $event_id = trim($_POST["id"]);
+    $stud_id = trim($_POST["stud_id"]);
 
     //Validate first name
     $input_first_name = trim($_POST["first_name"]);
@@ -55,21 +55,22 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
         $student_number= $input_student_number;
     }
 
-    //Validate program    $input_program = trim($_POST["program"]);
-    if (empty($input_program)) {
-        $program_err = "Please enter a program.";
-    } else {
-        $program = $input_program;
-    }
-
-    // Validate year
-    $input_current_year = trim($_POST["current_year"]);
-    if (empty($input_current_year)) {
-        $current_year_err = "Please enter the current year.";
-    } else {
-        $current_year = $input_current_year;
-    }
-
+     //Validate program
+     $program = $_POST["program"];
+     if (empty($program)) {
+         $program_err = "Please enter your program.";
+     } else {
+         $program = $program;
+     }
+ 
+     // Validate current year
+     $current_year = $_POST["current_year"];
+     if (empty($current_year)){
+         $current_year_err = "Please enter your current year.";
+     } else {
+         $current_year = $current_year;
+     }
+ 
     // Validate ue email
     $input_ue_email = trim($_POST["ue_email"]);
     if (empty($input_ue_email)) {
@@ -111,7 +112,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
             // Attempt to execute the prepared statement
             if ($stmt->execute()) {
                 // Records created successfully. Redirect to landing page
-                header("location: index.php");
+                header("location: create.php");
                 exit();
             } else {
                 echo "Oops! Something went wrong. Please try again later.";
@@ -171,7 +172,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                             <span class="invalid-feedback"><?php echo $last_name_err; ?></span>
                         </div>
                         <div class="form-group">
-                            <label>Middle Initial</label>
+                            <label>Middle Initial (Optional)</label>
                             <input type="text" name="middle_initial" class="form-control <?php echo (!empty($middle_initial_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $middle_initial; ?>">
                             <span class="invalid-feedback"><?php echo $middle_initial_err; ?></span>
                         </div>
@@ -182,24 +183,35 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                         </div>
                         <div class="form-group">
                             <label>Program</label>
-                            <input type="text" name="program" class="form-control <?php echo (!empty($program_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $program; ?>">
+                            <select name="program" class="form-control <?php echo (!empty($program_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $program; ?>">
                             <span class="invalid-feedback"><?php echo $program_err; ?></span>
+                                <option value="">Select program</option>
+                                <option value="CpE">Computer Engineering</option>
+                                <option value="ECE">Electrical Engineering</option>
+                                <option value="CE">Civil Engineering</option>
+                                <option value="ME">Mechanical Engineering</option>
+                                <option value="EE">Electronic Engineering</option>
+                                    </select>
+
+                                    
+
                             </div>
-                        <div class="from-group">
-                            <label for = "">Current Year</label>
-                            <select name=" " class="form-control <?php echo (!empty($current_year_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $current_year; ?>">
-                                <option value=""> Select Year </option>
-                                <option value=""> 1st </option>
-                                <option value=""> 2nd </option>
-                                <option value=""> 3rd </option>
-                                <option value=""> 4th </option>
-                                </select>
-
-
-
+                            <div class="form-group">
+                            <label>Current Year</label>
+                            <select name="current_year" class="form-control <?php echo (!empty($current_year_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $current_year; ?>">
                             <span class="invalid-feedback"><?php echo $current_year_err; ?></span>
+                                <option value="">Current Year</option>
+                                <option value="1st">1st</option>
+                                <option value="2nd">2nd</option>
+                                <option value="3rd">3rd</option>
+                                <option value="4th">4th</option>
+                                
+                                    </select>
 
-                        </div>
+                                    
+
+                            </div>
+                        
                         <div class="form-group">
                             <label>Email</label>
                             <input type="email" name="ue_email" class="form-control <?php echo (!empty($ue_email_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $ue_email; ?>">
@@ -207,8 +219,10 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                         </div>
                         <div class="form-group">
                             <label>Contact Number</label>
-                            <input type="number" name="contact_number" class="form-control <?php echo (!empty($contact_number_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $contact_number; ?>">
+                            <input type="number" name="contact_number" class="form-control"  <?php echo (!empty($contact_number_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $contact_number; ?>">
                             <span class="invalid-feedback"><?php echo $contact_number_err; ?></span>
+                            
+                        
                         </div>
                         <input type="submit" class="btn btn-primary" value="Submit">
                         <a href="index.php" class="btn btn-secondary ml-2">Cancel</a>
@@ -217,6 +231,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
             </div>
         </div>
     </div>
-</body>                      
+    
+</body>
 
 </html>
