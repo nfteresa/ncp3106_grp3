@@ -1,18 +1,20 @@
 <?php
-    if(isset($_POST['ids']) && !empty($_POST['ids'])){
-        //this contains all the values of the checkboxes that were ticked at form submission.
-        $ids = $_POST["ids"];
-        $url_ids = "";
-        //package array into string
-        while (count($ids)) {
-            $temp = array_pop($ids);
-            $url_ids = $url_ids . $temp . ",";
+    if($_SERVER["REQUEST_METHOD"] == "POST") {
+        if(isset($_POST['ids']) && !empty($_POST['ids'])){
+            //this contains all the values of the checkboxes that were ticked at form submission.
+            $ids = $_POST["ids"];
+            $url_ids = "";
+            //package array into string
+            while (count($ids)) {
+                $temp = array_pop($ids);
+                $url_ids = $url_ids . $temp . ",";
+            }
+            // send user to delete_confirmation.php with the ids url-encoded.
+            header("location: delete_confirmation.php?ids=".urlencode($url_ids));
+        } else {
+            // error message here
+            echo "Something went wrong. Please try again later.";
         }
-        // send user to delete_confirmation.php with the ids url-encoded.
-        header("location: delete_confirmation.php?ids=".urlencode($url_ids));
-    } else {
-        // error message here
-        echo "Something went wrong. Please try again later.";
     }
 ?>
 
@@ -38,22 +40,7 @@
             width: 120px;
         }
     </style>
-    <script>
-        $(document).ready(function() {
-            $('[data-toggle="tooltip"]').tooltip();
-        });
-
-        function confirm() {
-            var array = [];
-            var checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
-
-            for (var i = 0; i < checkboxes.length; i++) {
-                array.push(checkboxes[i].value);
-            }
-
-            return checkboxes;
-        }
-    </script>
+   
 
 </head>
 
@@ -64,7 +51,7 @@
             <a href="index.php"><button class="btn btn-danger">Back</button></a>
             <form method = "post">
                 <?php
-                require_once '../config.php';
+                require_once 'C:\Users\Neilf\Downloads\xaamp\phpMyAdmin\htmlforms\crud\config.php';
 
                 $sql = "SELECT * FROM stud_info";
                 if ($result = $mysqli->query($sql)) {
@@ -72,31 +59,32 @@
                         echo '<table class="table table-bordered table-striped">';
                         echo "<thead>";
                         echo "<tr>";
-                        echo "<th>amongus</th>";
                         echo "<th>#</th>";
-                        echo "<th>first_name</th>";
-                        echo "<th>last_name</th>";
-                        echo "<th>middle_initial</th>";
-                        echo "<th>student_number</th>";
-                        echo "<th>program</th>";
-                        echo "<th>current_year</th>";
-                        echo "<th>ue_email</th>";
-                        echo "<th>contact_number</th>";
-                        echo "</tr>";
-                        echo "</thead>";
-                        echo "<tbody>";
-                        while ($rows = $result->fetch_array()) {
-                            echo "<tr>";
-                            echo '<td><input type ="checkbox" name = "ids[]" id = "'. $rows["stud_id"].' "value = "'. $rows["stud_id"].'"></input></td>';
-                            echo "<td>" . $rows['stud_id'] . "</td>";
-                            echo "<td>" . $rows['first_name'] . "</td>";
-                            echo "<td>" . $rows['last_name'] . "</td>";
-                            echo "<td>" . $rows['middle_initial'] . "</td>";
-                            echo "<td>" . $rows['student_number'] . "</td>";
-                            echo "<td>" . $rows['program'] . "</td>";
-                            echo "<td>" . $rows['current_year'] . "</td>";
-                            echo "<td>" . $rows['ue_email'] . "</td>";
-                            echo "<td>" . $rows['contact_number'] . "</td>";
+                            echo "<th>First Name</th>";
+                            echo "<th>Last Name</th>";
+                            echo "<th>Middle Initial</th>";
+                            echo "<th>Student Number</th>";
+                            echo "<th>Program</th>";
+                            echo "<th>Current</th>";
+                            echo "<th>Email</th>";
+                            echo "<th>Contact Number</th>";
+                            echo "<th>Actions </th>";
+                            echo "</tr>";
+                            echo "</thead>";
+                            echo "<tbody>";
+                            while ($rows = $result->fetch_array()) {
+                                echo "<tr>";
+                                echo '<td><input type ="checkbox" name = "ids[]" id = "'. $rows["stud_id"].' "value = "'. $rows["stud_id"].'"></input></td>';
+                                echo "<td>" . $rows['stud_id'] . "</td>";
+                                echo "<td>" . $rows['first_name'] . "</td>";
+                                echo "<td>" . $rows['last_name'] . "</td>";
+                                echo "<td>" . $rows['middle_initial'] . "</td>";
+                                echo "<td>" . $rows['student_number'] . "</td>";
+                                echo "<td>" . $rows['program'] . "</td>";
+                                echo "<td>" . $rows['current_year'] . "</td>";
+                                echo "<td>" . $rows['ue_email'] . "</td>";
+                                echo "<td>" . $rows['contact_number'] . "</td>";
+                                echo "<td>";
                             echo "</tr>";
                         }
                         echo "</tbody>";
