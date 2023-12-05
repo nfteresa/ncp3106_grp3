@@ -23,7 +23,7 @@ $contact_number_err = "";
 // Processing form data when form is submitted
 if (isset($_POST['id']) && !empty($_POST['id'])) {
     //Get ID from URL
-    $id = trim($_POST["stud_id"]);
+    $id = trim($_POST['id']);
 
     //Validate first name
     $input_first_name = trim($_POST["first_name"]);
@@ -112,7 +112,9 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
             // Attempt to execute the prepared statement
             if ($stmt->execute()) {
                 // Records created successfully. Redirect to landing page
-                header("location: create.php");
+                echo "bobo ako";
+                header("location: index.php");
+
                 exit();
             } else {
                 echo "Oops! Something went wrong. Please try again later.";
@@ -123,8 +125,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
         $stmt->close();
     }
 
-    // Close connection
-    $mysqli->close();
+    
 } else {
     // put error here
 }
@@ -163,9 +164,9 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <h2 class="mt-5">Registration </h2>
-                    <p>Fill the form</p>
-                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                    <h2 class="mt-5"> Student Registration </h2>
+                    <p> Fill up the form </p>
+                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]).'?id='.$_GET["id"]; ?>" method="post">
                         <div class="form-group">
                         <?php
                             // i put this in every text field
