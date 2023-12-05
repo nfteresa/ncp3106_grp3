@@ -21,9 +21,9 @@ $ue_email_err = "";
 $contact_number_err = "";
 
 // Processing form data when form is submitted
-if (isset($_POST['stud_id']) && !empty($_POST['stud_id'])) {
+if (isset($_POST['id']) && !empty($_POST['id'])) {
     //Get ID from URL
-    $stud_id = trim($_POST["stud_id"]);
+    $id = trim($_POST["stud_id"]);
 
     //Validate first name
     $input_first_name = trim($_POST["first_name"]);
@@ -135,6 +135,11 @@ if (isset($_POST['stud_id']) && !empty($_POST['stud_id'])) {
 <!DOCTYPE html>
 <html lang="en">
 
+<?php
+                    //throw user to error page if id isnt in url
+            empty($_GET["id"]) ? header("location: error.php") : "";
+        ?>
+
 
 <head>
     <meta charset="UTF-8">
@@ -162,67 +167,129 @@ if (isset($_POST['stud_id']) && !empty($_POST['stud_id'])) {
                     <p>Fill the form</p>
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                         <div class="form-group">
-                            <label>First Name</label>
-                            <input type="text" name="first_name" class="form-control <?php echo (!empty($first_name_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $first_name; ?>">
-                            <span class="invalid-feedback"><?php echo $first_name_err; ?></span>
+                        <?php
+                            // i put this in every text field
+                            // it gets the value of the element to edit
+                            // every text field makes a database query
+                                $id = $_GET['id'];
+                                $sql = "SELECT * FROM stud_info WHERE stud_id = $id";
+                                $result = $mysqli->query($sql);
+                                $result = $result->fetch_array();
+                                $placeholder = $result['first_name'];
+                                $is_invalid = (!empty($first_name_err)) ? "is-invalid" : "";
+                                echo '<input type="text" name="first_name" class="form-control'.$is_invalid.'" value="'.$placeholder.'">';
+                            ?>
                         </div>
                         <div class="form-group">
                             <label>Last Name</label>
-                            <input type="text" name="last_name" class="form-control <?php echo (!empty($last_name_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $last_name; ?>">
-                            <span class="invalid-feedback"><?php echo $last_name_err; ?></span>
+                            <?php
+                                $id = $_GET['id'];
+                                $sql = "SELECT * FROM stud_info WHERE stud_id = $id";
+                                $result = $mysqli->query($sql);
+                                $result = $result->fetch_array();
+                                $placeholder = $result['last_name'];
+                                $is_invalid = (!empty($last_name_err)) ? "is-invalid" : "";
+                                echo '<input type="text" name="last_name" class="form-control'.$is_invalid.'" value="'.$placeholder.'">';
+                            ?>
                         </div>
                         <div class="form-group">
                             <label>Middle Initial (Optional)</label>
-                            <input type="text" name="middle_initial" class="form-control <?php echo (!empty($middle_initial_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $middle_initial; ?>">
-                            <span class="invalid-feedback"><?php echo $middle_initial_err; ?></span>
+                            <?php
+                                $id = $_GET['id'];
+                                $sql = "SELECT * FROM stud_info WHERE stud_id = $id";
+                                $result = $mysqli->query($sql);
+                                $result = $result->fetch_array();
+                                $placeholder = $result['middle_initial'];
+                                echo '<input type="text" name="middle_initial" class="form-control" value="'.$placeholder.'">';
+                            ?>
                         </div>
                         <div class="form-group">
                             <label>Student Number</label>
-                            <input type="number" name="student_number" class="form-control <?php echo (!empty($student_number_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $student_number; ?>">
-                            <span class="invalid-feedback"><?php echo $student_number_err; ?></span>
+                            <?php
+                                $id = $_GET['id'];
+                                $sql = "SELECT * FROM stud_info WHERE stud_id = $id";
+                                $result = $mysqli->query($sql);
+                                $result = $result->fetch_array();
+                                $placeholder = $result['student_number'];
+                                $is_invalid = (!empty($student_number_err)) ? "is-invalid" : "";
+                                echo '<input type="number" name="student_number" class="form-control'.$is_invalid.'" value="'.$placeholder.'">';
+                            ?>
+                            <span class="invalid-feedback"><?php echo $student_number_err; ?> </span>
                         </div>
                         <div class="form-group">
                             <label>Program</label>
-                            <select name="program" class="form-control <?php echo (!empty($program_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $program; ?>">
-                            <span class="invalid-feedback"><?php echo $program_err; ?></span>
+                            <?php
+                                $id = $_GET['id'];
+                                $sql = "SELECT * FROM stud_info WHERE stud_id = $id";
+                                $result = $mysqli->query($sql);
+                                $result = $result->fetch_array();
+                                $placeholder = $result['program'];
+                                $is_invalid = (!empty($program_err)) ? "is-invalid" : "";
+                                echo '<select type ="text" name = "program" class="form-control'.$is_invalid.'" value"'.$placeholder.'"
                                 <option value="">Select program</option>
                                 <option value="CpE">Computer Engineering</option>
                                 <option value="ECE">Electrical Engineering</option>
                                 <option value="CE">Civil Engineering</option>
                                 <option value="ME">Mechanical Engineering</option>
                                 <option value="EE">Electronic Engineering</option>
-                                    </select>
+                                    </select>';
+                            ?>
+                            <span class="invalid-feedback"><?php echo $program_err; ?></span>
+                            
 
                                     
 
                             </div>
                             <div class="form-group">
                             <label>Current Year</label>
-                            <select name="current_year" class="form-control <?php echo (!empty($current_year_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $current_year; ?>">
-                            <span class="invalid-feedback"><?php echo $current_year_err; ?></span>
+                            <?php
+                                $id = $_GET['id'];
+                                $sql = "SELECT * FROM stud_info WHERE stud_id = $id";
+                                $result = $mysqli->query($sql);
+                                $result = $result->fetch_array();
+                                $placeholder = $result['current_year'];
+                                $is_invalid = (!empty($current_year_err)) ? "is-invalid" : "";
+                                echo '<select type ="text" name="current_year" class="form-control'.$is_invalid.'" value"'.$placeholder.'"
                                 <option value="">Current Year</option>
                                 <option value="1st">1st</option>
                                 <option value="2nd">2nd</option>
                                 <option value="3rd">3rd</option>
                                 <option value="4th">4th</option>
                                 
-                                    </select>
-
+                                    </select>';
+                            ?>
+                        
                                     
 
                             </div>
                         
                         <div class="form-group">
                             <label>Email</label>
-                            <input type="email" name="ue_email" class="form-control <?php echo (!empty($ue_email_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $ue_email; ?>">
+                            <?php
+                                $id = $_GET['id'];
+                                $sql = "SELECT * FROM stud_info WHERE stud_id = $id";
+                                $result = $mysqli->query($sql);
+                                $result = $result->fetch_array();
+                                $placeholder = $result['ue_email'];
+                                $is_invalid = (!empty($ue_email_err)) ? "is-invalid" : "";
+                                echo '<input type="email" name="ue_email" class="form-control'.$is_invalid.'" value="'.$placeholder.'">';
+                            ?>
                             <span class="invalid-feedback"><?php echo $ue_email_err; ?></span>
                         </div>
                         <div class="form-group">
                             <label>Contact Number</label>
-                            <input type="number" name="contact_number" class="form-control"  <?php echo (!empty($contact_number_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $contact_number; ?>">
+                            <?php
+                                $id = $_GET['id'];
+                                $sql = "SELECT * FROM stud_info WHERE stud_id = $id";
+                                $result = $mysqli->query($sql);
+                                $result = $result->fetch_array();
+                                $placeholder = $result['contact_number'];
+                                $is_invalid = (!empty($contact_number_err)) ? "is-invalid" : "";
+                                echo '<input type="number" name="contact_number" class="form-control'.$is_invalid.'" value="'.$placeholder.'">';
+                            ?>
                             <span class="invalid-feedback"><?php echo $contact_number_err; ?></span>
                             
-                        
+                            <input type="hidden" name="id" value="<?php echo trim($_GET["id"])?>">
                         </div>
                         <input type="submit" class="btn btn-primary" value="Submit">
                         <a href="index.php" class="btn btn-secondary ml-2">Cancel</a>
