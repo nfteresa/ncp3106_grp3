@@ -77,7 +77,7 @@
                         echo "<th>Current</th>";
                         echo "<th>Email</th>";
                         echo "<th>Contact Number</th>";
-                        echo "<th>Actions </th>";
+                        
                         echo "</tr>";
                         echo "</thead>";
                         echo "<tbody>";
