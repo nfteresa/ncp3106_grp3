@@ -51,7 +51,7 @@
 
 <body>
     <div class="wrapper">
-        <form method="post">
+        <a href="../Dashboard/dashboard.html"><button class="btn btn-danger">Back</button></a>
         <form method = "post">
                 <?php
                 require_once '../config.php';
