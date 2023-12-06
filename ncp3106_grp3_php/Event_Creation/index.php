@@ -44,6 +44,7 @@
 <body>
     <div class="wrapper">
         <div class="container-fluid">
+            <a href="../Dashboard/dashboard.html"><button class="btn btn-danger">Back</button></a>
             <form method="post">
                 <div class="form-group">
                     <label>Search</label>
