@@ -163,7 +163,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
 <style>
     @font-face {
         font-family: myFirstFont;
-        src: url(Montserrat-VariableFont_wght.ttf);
+        src: url(font/Montserrat-VariableFont_wght.ttf);
     }
   body {
     opacity: 1;
