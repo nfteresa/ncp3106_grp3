@@ -159,7 +159,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <style>
     @font-face {
         font-family: myFirstFont;
-        src: url(font/Montserrat-VariableFont_wght.ttf);
+        src: url(../font/Montserrat-VariableFont_wght.ttf);
     }
   body {
     opacity: 1;
