@@ -30,9 +30,9 @@
     <div class="wrapper">
         <div class="container-fluid">
             <?php
-            require_once 'C:\Users\Neilf\Downloads\xaamp\phpMyAdmin\htmlforms\crud\config.php';
+            require_once '../config.php';
 
-            $sql = "SELECT * FROM stud_info";
+            $sql = "SELECT * FROM student_info";
             if ($result = $mysqli->query($sql)) {
                 if($result->num_rows > 0) {
                     echo '<table class="table table-bordered table-striped">';
@@ -53,7 +53,7 @@
                         echo "<tbody>";
                         while ($rows = $result->fetch_array()) {
                             echo "<tr>";
-                            echo "<td>" . $rows['stud_id'] . "</td>";
+                            echo "<td>" . $rows['id'] . "</td>";
                             echo "<td>" . $rows['first_name'] . "</td>";
                             echo "<td>" . $rows['last_name'] . "</td>";
                             echo "<td>" . $rows['middle_initial'] . "</td>";
@@ -64,8 +64,8 @@
                             echo "<td>" . $rows['contact_number'] . "</td>";
                             echo "<td>
                             <div class='btn-group'>
-                                <a class='btn btn-secondary' href='/edit.php?id=" .$rows['stud_id']."' > EDIT <a>
-                                <a class='btn btn-danger' href='/delete.php??id=" .$rows['stud_id']."'> DELETE <a>
+                                <a class='btn btn-secondary' href='../Student_Registration/edit.php?id=" .$rows['id']."' > EDIT <a>
+                                <a class='btn btn-danger' href='../Student_Registration/delete.php??id=" .$rows['id']."'> DELETE <a>
                                 </div>
                             </td>";    
                             echo "</tr>";

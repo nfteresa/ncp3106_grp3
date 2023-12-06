@@ -1,6 +1,6 @@
 <?php
 // Include config file
-require_once "config.php";
+require_once "../config.php";
 
 // Define variables and initialize with empty values
 $first_name = "";
@@ -173,7 +173,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                             // it gets the value of the element to edit
                             // every text field makes a database query
                                 $id = $_GET['id'];
-                                $sql = "SELECT * FROM stud_info WHERE stud_id = $id";
+                                $sql = "SELECT * FROM student_info WHERE id = $id";
                                 $result = $mysqli->query($sql);
                                 $result = $result->fetch_array();
                                 $placeholder = $result['first_name'];
@@ -185,7 +185,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                             <label>Last Name</label>
                             <?php
                                 $id = $_GET['id'];
-                                $sql = "SELECT * FROM stud_info WHERE stud_id = $id";
+                                $sql = "SELECT * FROM student_info WHERE id = $id";
                                 $result = $mysqli->query($sql);
                                 $result = $result->fetch_array();
                                 $placeholder = $result['last_name'];
@@ -197,7 +197,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                             <label>Middle Initial (Optional)</label>
                             <?php
                                 $id = $_GET['id'];
-                                $sql = "SELECT * FROM stud_info WHERE stud_id = $id";
+                                $sql = "SELECT * FROM student_info WHERE id = $id";
                                 $result = $mysqli->query($sql);
                                 $result = $result->fetch_array();
                                 $placeholder = $result['middle_initial'];
@@ -208,7 +208,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                             <label>Student Number</label>
                             <?php
                                 $id = $_GET['id'];
-                                $sql = "SELECT * FROM stud_info WHERE stud_id = $id";
+                                $sql = "SELECT * FROM student_info WHERE id = $id";
                                 $result = $mysqli->query($sql);
                                 $result = $result->fetch_array();
                                 $placeholder = $result['student_number'];
@@ -221,7 +221,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                             <label>Program</label>
                             <?php
                                 $id = $_GET['id'];
-                                $sql = "SELECT * FROM stud_info WHERE stud_id = $id";
+                                $sql = "SELECT * FROM student_info WHERE id = $id";
                                 $result = $mysqli->query($sql);
                                 $result = $result->fetch_array();
                                 $placeholder = $result['program'];
@@ -245,7 +245,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                             <label>Current Year</label>
                             <?php
                                 $id = $_GET['id'];
-                                $sql = "SELECT * FROM stud_info WHERE stud_id = $id";
+                                $sql = "SELECT * FROM student_info WHERE id = $id";
                                 $result = $mysqli->query($sql);
                                 $result = $result->fetch_array();
                                 $placeholder = $result['current_year'];
@@ -268,7 +268,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                             <label>Email</label>
                             <?php
                                 $id = $_GET['id'];
-                                $sql = "SELECT * FROM stud_info WHERE stud_id = $id";
+                                $sql = "SELECT * FROM student_info WHERE id = $id";
                                 $result = $mysqli->query($sql);
                                 $result = $result->fetch_array();
                                 $placeholder = $result['ue_email'];
@@ -281,7 +281,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                             <label>Contact Number</label>
                             <?php
                                 $id = $_GET['id'];
-                                $sql = "SELECT * FROM stud_info WHERE stud_id = $id";
+                                $sql = "SELECT * FROM student_info WHERE id = $id";
                                 $result = $mysqli->query($sql);
                                 $result = $result->fetch_array();
                                 $placeholder = $result['contact_number'];
