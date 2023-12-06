@@ -29,8 +29,8 @@
         $event_id = urldecode($_GET["event_id"]);
     }
 
-    if ($flag == "edit") {
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if ($flag == "edit") {
             if (isset($_POST['id']) && !empty($_POST['id'])) {
                 //Get ID from URL
                 $event_id = trim($_POST["id"]);
@@ -129,7 +129,7 @@
                         // Attempt to execute the prepared statement
                         if ($stmt->execute()) {
                             // Records created successfully. Redirect to landing page
-                            header("location: view.php?event_id=".$event_id."&flag=view");
+                            header("location: view.php?event_id=".$event_id."&flag=view&nigga");
                             exit();
                         } else {
                             echo "Oops! Something went wrong. Please try again later.";
@@ -137,15 +137,20 @@
                         }
                     }
                     // Close statement
+                    echo "nigga";
                     $stmt->close();
                 }
                 // Close connection
+                echo "bruh";
                 $mysqli->close();
             } else {
-                // put server request error here
+                
+                echo "id";
+                // put error here
             }
         }
     }
+
 ?>
 
 <!DOCTYPE html>
@@ -191,11 +196,10 @@
                         if ($result->num_rows > 0) {
                             $rows = $result->fetch_array();
                             if ($flag == "edit") {
-                                echo '<form action="'.htmlspecialchars($_SERVER["PHP_SELF"]).'?event_id='.$event_id.'&flag=edit" method="post">';
-                                
                                 echo '<a href="view.php?event_id='.$event_id.'&flag=view" class="btn btn-secondary ml-2">Cancel</a>';
+                                echo '<form action="'.htmlspecialchars($_SERVER["PHP_SELF"]).'?event_id='.$event_id.'&flag=edit" method="post">';
                                 echo '<input type="submit" class="btn btn-primary" value="Submit">';
-                                
+
                                 echo '<div class="form-group">';
                                 echo "<label>Event Name</label>";
                                 $placeholder = $rows['event_name'];
@@ -214,7 +218,43 @@
                                 echo "<label>Event Type</label>";
                                 $placeholder = $rows['event_type'];
                                 $is_invalid = (!empty($event_type_err)) ? "is-invalid" : "";
-                                echo '<input type="text" name="event_type" class="form-control'.$is_invalid.'" value="'.$placeholder.'">';
+                                echo '<select name="event_type" class="form-control '.$is_invalid.'" value='.$event_type.'required="required">';
+                                $option1 = '<option value="Other">Other</option>';
+                                $option2 = '<option value="Meetup">Meetup</option>';
+                                $option3 = '<option value="Seminar">Seminar</option>';
+                                $option4 = '<option value="Sports">Sports</option>';
+                                $option5 = '<option value="Convention">Convention</option>';
+                                $option_list = array($option1, $option2, $option3, $option4, $option5);
+
+                                switch ($placeholder) {
+                                    case "Other":
+                                        $i = 0;
+                                        break;
+                                    case "Meetup":
+                                        $i = 1;
+                                        break;
+                                    case "Seminar":
+                                        $i = 2;
+                                        break;
+                                    case "Sports":
+                                        $i = 3;
+                                        break;
+                                    case "Convention":
+                                        $i = 4;
+                                        break;
+                                }
+
+                                $j = count($option_list);
+                                while($j > 0) {
+                                    echo $option_list[$i];
+                                    if ($i == 4) {
+                                        $i = 0;
+                                    } else {
+                                        $i += 1;
+                                    }
+                                    $j -=1;
+                                }
+                                echo '</select>';
                                 echo '</div>';
 
                                 echo '<div class="form-group">';
