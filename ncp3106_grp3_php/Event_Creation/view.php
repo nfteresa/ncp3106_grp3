@@ -30,118 +30,120 @@
     }
 
     if ($flag == "edit") {
-        if (isset($_POST['id']) && !empty($_POST['id'])) {
-            //Get ID from URL
-            $event_id = trim($_POST["id"]);
-        
-            //Validate event name
-            $input_event_name = trim($_POST["event_name"]);
-            if (empty($input_event_name)) {
-                $event_name_err = "Please enter a name.";
-            } else {
-                $event_name = $input_event_name;
-            }
-            //Validate event description
-            $input_event_description = trim($_POST["event_description"]);
-            if (empty($input_event_description)) {
-                $event_description_err = "Please enter a event_description.";
-            } else {
-                $event_description = $input_event_description;
-            }
-            //Validate event type
-            $input_event_type = trim($_POST["event_type"]);
-            if (empty($input_event_type)) {
-                $event_type_err = "Please enter a event_type.";
-            } else {
-                $event_type = $input_event_type;
-            }
-        
-            //Validate event date
-            $input_date = trim($_POST["date"]);
-            if (empty($input_date)) {
-                $date_err = "Please enter a valid event date";
-            } else {
-                $date = $input_date;
-            }
-        
-            //Validate start_time.
-            $input_start_time = trim($_POST["start_time"]);
-            if (empty($input_start_time)) {
-                $start_time_err = "Please enter a start_time.";
-            } else {
-                $start_time = $input_start_time;
-            }
-        
-            // Validate end time.
-            $input_end_time = trim($_POST["end_time"]);
-            if (empty($input_end_time)) {
-                $end_time_err = "Please enter the end_time amount.";
-            } else {
-                $end_time = $input_end_time;
-            }
-        
-            // Validate registration fee.
-            $input_registration_fee = trim($_POST["registration_fee"]);
-            if (empty($input_registration_fee)) {
-                $registration_fee_err = "Please enter an registration_fee.";
-            } else {
-                $registration_fee = $input_registration_fee;
-            }
-        
-            // Validate venue.
-            $input_venue = trim($_POST["venue"]);
-            if (empty($input_venue)) {
-                $venue_err = "Please enter the venue amount.";
-            } else {
-                $venue = $input_venue;
-            }
-        
-            // Validate oic.
-            $input_oic = trim($_POST["oic"]);
-            if (empty($input_oic)) {
-                $oic_err = "Please enter an oic.";
-            } else {
-                $oic = $input_oic;
-            }
-        
-            // Check input errors before inserting in database
-            if (empty($event_name_err) && empty($event_description_err) && empty($event_type_err) && empty($date_err) && empty($start_time_err) && empty($end_time_err) && empty($registration_fee_err) && empty($venue_err) && empty($oic_err)) {
-                // Prepare an insert statement
-                $sql = "UPDATE event_info SET event_name=?, event_description=?, event_type=?, date=?, start_time=?, end_time=?, registration_fee=?, venue=?, oic=? WHERE event_id=?";
-        
-                if ($stmt = $mysqli->prepare($sql)) {
-                    // Bind variables to the prepared statement as parameters
-                    $stmt->bind_param("sssssssssi", $param_event_name, $param_event_description, $param_event_type, $param_date, $param_start_time, $param_end_time, $param_registration_fee, $param_venue, $param_oic, $param_event_id);
-        
-                    // Set parameters
-                    $param_event_name = $event_name;
-                    $param_event_description = $event_description;
-                    $param_event_type = $event_type;
-                    $param_date = $date;
-                    $param_start_time = $start_time;
-                    $param_end_time = $end_time;
-                    $param_registration_fee = $registration_fee;
-                    $param_venue = $venue;
-                    $param_oic = $oic;
-                    $param_event_id = $event_id;
-        
-                    // Attempt to execute the prepared statement
-                    if ($stmt->execute()) {
-                        // Records created successfully. Redirect to landing page
-                        header("location: view.php?event_id=".$event_id."&flag=view");
-                        exit();
-                    } else {
-                        echo "Oops! Something went wrong. Please try again later.";
-                        header("location: error.php?asdas");
-                    }
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            if (isset($_POST['id']) && !empty($_POST['id'])) {
+                //Get ID from URL
+                $event_id = trim($_POST["id"]);
+            
+                //Validate event name
+                $input_event_name = trim($_POST["event_name"]);
+                if (empty($input_event_name)) {
+                    $event_name_err = "Please enter a name.";
+                } else {
+                    $event_name = $input_event_name;
                 }
-                // Close statement
-                $stmt->close();
+                //Validate event description
+                $input_event_description = trim($_POST["event_description"]);
+                if (empty($input_event_description)) {
+                    $event_description_err = "Please enter a event_description.";
+                } else {
+                    $event_description = $input_event_description;
+                }
+                //Validate event type
+                $input_event_type = trim($_POST["event_type"]);
+                if (empty($input_event_type)) {
+                    $event_type_err = "Please enter a event_type.";
+                } else {
+                    $event_type = $input_event_type;
+                }
+            
+                //Validate event date
+                $input_date = trim($_POST["date"]);
+                if (empty($input_date)) {
+                    $date_err = "Please enter a valid event date";
+                } else {
+                    $date = $input_date;
+                }
+            
+                //Validate start_time.
+                $input_start_time = trim($_POST["start_time"]);
+                if (empty($input_start_time)) {
+                    $start_time_err = "Please enter a start_time.";
+                } else {
+                    $start_time = $input_start_time;
+                }
+            
+                // Validate end time.
+                $input_end_time = trim($_POST["end_time"]);
+                if (empty($input_end_time)) {
+                    $end_time_err = "Please enter the end_time amount.";
+                } else {
+                    $end_time = $input_end_time;
+                }
+            
+                // Validate registration fee.
+                $input_registration_fee = trim($_POST["registration_fee"]);
+                if (empty($input_registration_fee)) {
+                    $registration_fee_err = "Please enter an registration_fee.";
+                } else {
+                    $registration_fee = $input_registration_fee;
+                }
+            
+                // Validate venue.
+                $input_venue = trim($_POST["venue"]);
+                if (empty($input_venue)) {
+                    $venue_err = "Please enter the venue amount.";
+                } else {
+                    $venue = $input_venue;
+                }
+            
+                // Validate oic.
+                $input_oic = trim($_POST["oic"]);
+                if (empty($input_oic)) {
+                    $oic_err = "Please enter an oic.";
+                } else {
+                    $oic = $input_oic;
+                }
+            
+                // Check input errors before inserting in database
+                if (empty($event_name_err) && empty($event_description_err) && empty($event_type_err) && empty($date_err) && empty($start_time_err) && empty($end_time_err) && empty($registration_fee_err) && empty($venue_err) && empty($oic_err)) {
+                    // Prepare an insert statement
+                    $sql = "UPDATE event_info SET event_name=?, event_description=?, event_type=?, date=?, start_time=?, end_time=?, registration_fee=?, venue=?, oic=? WHERE event_id=?";
+            
+                    if ($stmt = $mysqli->prepare($sql)) {
+                        // Bind variables to the prepared statement as parameters
+                        $stmt->bind_param("sssssssssi", $param_event_name, $param_event_description, $param_event_type, $param_date, $param_start_time, $param_end_time, $param_registration_fee, $param_venue, $param_oic, $param_event_id);
+            
+                        // Set parameters
+                        $param_event_name = $event_name;
+                        $param_event_description = $event_description;
+                        $param_event_type = $event_type;
+                        $param_date = $date;
+                        $param_start_time = $start_time;
+                        $param_end_time = $end_time;
+                        $param_registration_fee = $registration_fee;
+                        $param_venue = $venue;
+                        $param_oic = $oic;
+                        $param_event_id = $event_id;
+            
+                        // Attempt to execute the prepared statement
+                        if ($stmt->execute()) {
+                            // Records created successfully. Redirect to landing page
+                            header("location: view.php?event_id=".$event_id."&flag=view");
+                            exit();
+                        } else {
+                            echo "Oops! Something went wrong. Please try again later.";
+                            header("location: error.php?asdas");
+                        }
+                    }
+                    // Close statement
+                    $stmt->close();
+                }
+                // Close connection
+                $mysqli->close();
+            } else {
+                // put server request error here
             }
-            // Close connection
-            $mysqli->close();
-        } else {
-            // put error here
         }
     }
 ?>
@@ -189,10 +191,11 @@
                         if ($result->num_rows > 0) {
                             $rows = $result->fetch_array();
                             if ($flag == "edit") {
+                                echo '<form action="'.htmlspecialchars($_SERVER["PHP_SELF"]).'?event_id='.$event_id.'&flag=edit" method="post">';
+                                
                                 echo '<a href="view.php?event_id='.$event_id.'&flag=view" class="btn btn-secondary ml-2">Cancel</a>';
                                 echo '<input type="submit" class="btn btn-primary" value="Submit">';
-                                echo '<form action="'.htmlspecialchars($_SERVER["PHP_SELF"]).'?event_id='.$event_id.'&flag=edit" method="post">';
-
+                                
                                 echo '<div class="form-group">';
                                 echo "<label>Event Name</label>";
                                 $placeholder = $rows['event_name'];
@@ -280,6 +283,7 @@
                                 echo "<label>Officer-In-Charge</label>";
                                 echo "<p>".$rows['oic']."</p>";
                             }
+                            echo '<a href="delete_entry.php?event_id='.$event_id.'" class="btn btn-danger ml-2">Delete</a>';
                         }
                     }
                 ?>
