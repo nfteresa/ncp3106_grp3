@@ -164,7 +164,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   body {
     opacity: 1;
     background-color: #013365;
-    background-image: url(bg.png);
+    background-image: url(img/bg.png);
     background-size: cover;
   }
   .signup-form::-webkit-scrollbar{
@@ -192,7 +192,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     color: white;
     font-weight: bold;
     margin: 0 0 15px;
-    position: relative;
+    position: relative; 
     text-align: center;
   }
   .signup-form h2:before {
@@ -268,8 +268,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </style>
 <body>
     <div class="container">
-        <div class="col-md-6 no-gutters" style="width:100%; box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3); border-radius: 10px 0px 0px 10px; background: rgba(246, 246, 242, 1); height:500px;margin-top: 30px;background: #013365; font-family: myFirstFont; background-size:cover ; background-image:url(bg3.png)">
-        <a href="index.php"><img src="back2.png" style="position: absolute; top: 8px; left: 16px; width:50px; height: 50px;"></a>
+        <div class="col-md-6 no-gutters" style="width:100%; box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3); border-radius: 10px 0px 0px 10px; background: rgba(246, 246, 242, 1); height:500px;margin-top: 30px;background: #013365; font-family: myFirstFont; background-size:cover ; background-image:url(img/bg3.png)">
+        <a href="index.php"><img src="img/back2.png" style="position: absolute; top: 8px; left: 16px; width:50px; height: 50px;"></a>
         <div class="signup-form" style="float: left; background-size: cover; margin: auto; text-align: center; margin-top: 200px; ">
             <h2 style="margin-left: 50px;">Register Event</h2>
             <p class="hint-text" style="margin-left: 50px; color: white;">Plan, Create, Celebrate: Events Made Easy.</p>
