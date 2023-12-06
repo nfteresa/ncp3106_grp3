@@ -29,6 +29,7 @@
 <body>
     <div class="wrapper">
         <div class="container-fluid">
+            <a href="../Dashboard/dashboard.html"><button class="btn btn-danger">Back</button></a>
             <?php
             require_once '../config.php';
 
