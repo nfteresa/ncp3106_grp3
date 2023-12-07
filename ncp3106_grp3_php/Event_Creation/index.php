@@ -42,9 +42,15 @@
             background-color: #013365 !important;
         }
 
-        h5 {
+        .card-img-overlay > h5 {
             color: white;
             font-weight: bold;
+        }
+
+        .card-img-overlay > p {
+            color: white;
+            font-weight: light;
+            font-style: italic;
         }
 
         h1 {
@@ -119,10 +125,13 @@
             </div>
             <?php
             if (!empty($search)) {
-                $sql = "SELECT * FROM event_info WHERE event_name LIKE ?";
+                $sql = "SELECT * FROM event_info WHERE event_name LIKE ? OR 
+                                                       event_type LIKE ? OR
+                                                       venue LIKE ? OR
+                                                       oic LIKE ?";
 
                 if ($stmt = $mysqli->prepare($sql)) {
-                    $stmt->bind_param("s", $param_search);
+                    $stmt->bind_param("ssss", $param_search, $param_search, $param_search, $param_search);
                     $param_search = "%" . $search  . "%";
                     if ($stmt->execute()) {
                         $result = $stmt->get_result();
@@ -149,9 +158,11 @@
                     while ($rows = $result->fetch_array()) {
                         echo "<div class='col mt-5 px-4'>";
                         echo "<div class='card h-100 position-relative'>";
-                        echo '<img class="card-img-top" src="./img/'.$rows['event_type'].'.png" alt="'.$rows['event_type'].'">';
+                        echo '<img class="card-img-top" src="./img/'.$rows['event_type'].'.png" alt="'.$rows['event_type'].'">'; 
                         echo '<div class="card-img-overlay">';
-                        echo "<h5 class='card-title'>".$rows['event_name']."</h5>";                        
+                        echo "<h5 class='card-title'>".$rows['event_name']."</h5>";                
+                        echo '<p class="card-text">'.$rows['event_type'].'</p>';
+            
                         echo '</div>';
                         echo "<div class='card-body'>";         
                         echo "<a class='stretched-link' href='view.php?event_id=".urlencode($rows['event_id'])."&flag=view'></a>";
@@ -174,7 +185,6 @@
             <div class="rounded-circle bg-primary d-flex justify-content-center align-items-center">
             <h1 class="beeg-text">+</h1>
                 <a class="stretched-link" href="create.php">
-                    
                 </a>
             </div>
         </footer>
