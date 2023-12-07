@@ -1,6 +1,6 @@
 <?php
 // Include config file
-require_once "../config.php";
+require_once "config.php";
 
 // Define variables and initialize with empty values
 $first_name = "";
@@ -22,81 +22,86 @@ $contact_number_err = "";
 
 // Processing form data when form is submitted
 if (isset($_POST['id']) && !empty($_POST['id'])) {
-    //Get ID from URL
-    $id = trim($_POST['id']);
-
-    //Validate first name
+    
+    //Validate name
     $input_first_name = trim($_POST["first_name"]);
     if (empty($input_first_name)) {
         $first_name_err = "Please enter a name.";
+    } elseif (!filter_var($input_first_name, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => "/^[a-zA-Z\s]+$/")))) {
+        $first_name_err = "Please enter a valid name.";
     } else {
         $first_name = $input_first_name;
     }
-    //Validate last name
+
     $input_last_name = trim($_POST["last_name"]);
     if (empty($input_last_name)) {
-        $last_name_err = "Please enter a last name.";
+        $last_name_err = "Please enter a last_name.";
+    } elseif (!filter_var($input_last_name, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => "/^[a-zA-Z\s]+$/")))) {
+        $last_name_err = "Please enter a valid last_name.";
     } else {
         $last_name = $input_last_name;
     }
-    //Validate middle initial
+
     $input_middle_initial = trim($_POST["middle_initial"]);
-    if (empty($input_middle_initial)) {
-        $middle_initial_err = "Please enter a middle initial.";
+    if (!filter_var($input_middle_initial, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => "/^[a-zA-Z\s]+$/")))){
+        $middle_initial_err = "Please enter a valid middle_initial.";
     } else {
         $middle_initial = $input_middle_initial;
-    }
+    }   
 
     //Validate student number
     $input_student_number = trim($_POST["student_number"]);
     if (empty($input_student_number)) {
-        $student_number_err = "Please enter a valid event student number";
+        $student_number_err = "Please enter the student_number amount.";
+    } elseif (!ctype_digit($input_student_number)) {
+        $student_number_err = "Please enter a positive integer value.";
     } else {
-        $student_number= $input_student_number;
+        $student_number = $input_student_number;
     }
 
-     //Validate program
-     $program = $_POST["program"];
-     if (empty($program)) {
-         $program_err = "Please enter your program.";
-     } else {
-         $program = $program;
-     }
- 
-     // Validate current year
-     $current_year = $_POST["current_year"];
-     if (empty($current_year)){
-         $current_year_err = "Please enter your current year.";
-     } else {
-         $current_year = $current_year;
-     }
- 
+    //Validate program
+    $program = $_POST["program"];
+    if (empty($program)) {
+        $program_err = "Please enter your program.";
+    } else {
+        $program = $program;
+    }
+
+    // Validate current year
+    $current_year = $_POST["current_year"];
+    if (empty($current_year)){
+        $current_year_err = "Please enter your current year.";
+    } else {
+        $current_year = $current_year;
+    }
+
+
     // Validate ue email
     $input_ue_email = trim($_POST["ue_email"]);
     if (empty($input_ue_email)) {
-        $ue_email_err = "Please enter an ue email.";
+        $ue_email_err = "Please enter an UE email.";
     } else {
         $ue_email = $input_ue_email;
     }
 
     // Validate contact number
     $input_contact_number = trim($_POST["contact_number"]);
-    if (empty($input_venue)) {
-        $contact_number_err = "Please enter the contact_number.";
+    if (empty($input_contact_number)) {
+        $contact_number_err = "Please enter your contact number. ";
+    } elseif (!ctype_digit($input_contact_number)) {
+        $contact_number_err = "Please enter a positive integer value.";
     } else {
         $contact_number = $input_contact_number;
     }
 
-    
-
     // Check input errors before inserting in database
     if (empty($first_name_err) && empty($last_name_err) && empty($middle_initial_err) && empty($student_number_err) && empty($program_err) && empty($current_year_err) && empty($ue_email_err) && empty($contact_number_err)) {
         // Prepare an insert statement
-        $sql = "UPDATE stud_info SET first_name=?, last_name=?, middle_initial=?, student_number=?, program =?, current_year=?, ue_email=?, contact_number=? WHERE stud_id=?";
+        $sql = "UPDATE student_info SET first_name=?, last_name=?, middle_initial=?, student_number=?, program=?, current_year=?, ue_email=?, contact_number=? WHERE stud_id=?";
 
         if ($stmt = $mysqli->prepare($sql)) {
             // Bind variables to the prepared statement as parameters
-            $stmt->bind_param("ssssssssi", $param_first_name, $param_last_name, $param_middle_initial, $param_student_number, $param_program, $param_current_year, $param_ue_email, $param_contact_number, $param_stud_id);
+            $stmt->bind_param("sssissssi", $param_first_name, $param_last_name, $param_middle_initial, $param_student_number, $param_program, $param_current_year, $param_ue_email, $param_contact_number, $param_stud_id);
 
             // Set parameters
             $param_first_name = $first_name;
@@ -112,9 +117,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
             // Attempt to execute the prepared statement
             if ($stmt->execute()) {
                 // Records created successfully. Redirect to landing page
-                echo "bobo ako";
                 header("location: index.php");
-
                 exit();
             } else {
                 echo "Oops! Something went wrong. Please try again later.";
@@ -125,12 +128,9 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
         $stmt->close();
     }
 
-    
-} else {
-    // put error here
+    // Close connection
+    $mysqli->close();
 }
-// END OF PHP PART
-// START OF HTML PART
 ?>
 
 <!DOCTYPE html>
@@ -155,7 +155,8 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
       input::-webkit-inner-spin-button {
         display: none;
       }
-    </style>
+      
+      </style>
 
 </head>
 
@@ -173,7 +174,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                             // it gets the value of the element to edit
                             // every text field makes a database query
                                 $id = $_GET['id'];
-                                $sql = "SELECT * FROM student_info WHERE id = $id";
+                                $sql = "SELECT * FROM student_info WHERE stud_id = $id";
                                 $result = $mysqli->query($sql);
                                 $result = $result->fetch_array();
                                 $placeholder = $result['first_name'];
@@ -185,7 +186,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                             <label>Last Name</label>
                             <?php
                                 $id = $_GET['id'];
-                                $sql = "SELECT * FROM student_info WHERE id = $id";
+                                $sql = "SELECT * FROM student_info WHERE stud_id = $id";
                                 $result = $mysqli->query($sql);
                                 $result = $result->fetch_array();
                                 $placeholder = $result['last_name'];
@@ -197,7 +198,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                             <label>Middle Initial (Optional)</label>
                             <?php
                                 $id = $_GET['id'];
-                                $sql = "SELECT * FROM student_info WHERE id = $id";
+                                $sql = "SELECT * FROM student_info WHERE stud_id = $id";
                                 $result = $mysqli->query($sql);
                                 $result = $result->fetch_array();
                                 $placeholder = $result['middle_initial'];
@@ -208,7 +209,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                             <label>Student Number</label>
                             <?php
                                 $id = $_GET['id'];
-                                $sql = "SELECT * FROM student_info WHERE id = $id";
+                                $sql = "SELECT * FROM student_info WHERE stud_id = $id";
                                 $result = $mysqli->query($sql);
                                 $result = $result->fetch_array();
                                 $placeholder = $result['student_number'];
@@ -221,7 +222,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                             <label>Program</label>
                             <?php
                                 $id = $_GET['id'];
-                                $sql = "SELECT * FROM student_info WHERE id = $id";
+                                $sql = "SELECT * FROM student_info WHERE stud_id = $id";
                                 $result = $mysqli->query($sql);
                                 $result = $result->fetch_array();
                                 $placeholder = $result['program'];
@@ -245,7 +246,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                             <label>Current Year</label>
                             <?php
                                 $id = $_GET['id'];
-                                $sql = "SELECT * FROM student_info WHERE id = $id";
+                                $sql = "SELECT * FROM student_info WHERE stud_id = $id";
                                 $result = $mysqli->query($sql);
                                 $result = $result->fetch_array();
                                 $placeholder = $result['current_year'];
@@ -268,7 +269,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                             <label>Email</label>
                             <?php
                                 $id = $_GET['id'];
-                                $sql = "SELECT * FROM student_info WHERE id = $id";
+                                $sql = "SELECT * FROM student_info WHERE stud_id = $id";
                                 $result = $mysqli->query($sql);
                                 $result = $result->fetch_array();
                                 $placeholder = $result['ue_email'];
@@ -281,7 +282,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                             <label>Contact Number</label>
                             <?php
                                 $id = $_GET['id'];
-                                $sql = "SELECT * FROM student_info WHERE id = $id";
+                                $sql = "SELECT * FROM student_info WHERE stud_id = $id";
                                 $result = $mysqli->query($sql);
                                 $result = $result->fetch_array();
                                 $placeholder = $result['contact_number'];
@@ -293,7 +294,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                             <input type="hidden" name="id" value="<?php echo trim($_GET["id"])?>">
                         </div>
                         <input type="submit" class="btn btn-primary" value="Submit">
-                        <a href="index.php" class="btn btn-secondary ml-2">Cancel</a>
+                        
                     </form>
                 </div>
             </div>
@@ -302,4 +303,4 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
     
 </body>
 
-</html>
+</html>     
