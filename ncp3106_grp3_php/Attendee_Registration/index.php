@@ -22,7 +22,7 @@
         if (empty($event_id_err) && empty($payment_err)) {
             $payment_url = urlencode($payment);
             $event_id_url = urlencode($event_id);
-            header("location: registration.php?event_id=".$event_id_url."&payment=".$payment_url);
+            header("location: registration.php?event_id=".$event_id_url);
         } else {
             echo "Fields are empty.";
         }
@@ -36,6 +36,20 @@
     <meta charset="UTF-8">
     <title>Register</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+    
+
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+
     <style>
         .wrapper {
             width: 1000px;
@@ -53,16 +67,22 @@
     <div class="wrapper">
         <a href="../Dashboard/dashboard.html"><button class="btn btn-danger">Back</button></a>
         <form method = "post">
+            <script>
+                $(document).ready(function() {
+                    $('#events').DataTable( {   
+                        dom: 'lp'
+                    } );
+                } );
+            </script>
                 <?php
                 require_once '../config.php';
 
                 $sql = "SELECT * FROM event_info";
                 if ($result = $mysqli->query($sql)) {
                     if($result->num_rows > 0) {
-                        echo '<table class="table table-bordered table-striped table-hover">';
+                        echo '<table id=events class="table table-bordered table-striped table-hover">';
                         echo "<thead>";
                         echo "<tr>";
-                        echo "<th>amongus</th>";
                         echo "<th>#</th>";
                         echo "<th>event_name</th>";
                         echo "<th>event_description</th>";
@@ -78,8 +98,7 @@
                         while ($rows = $result->fetch_array()) {
                             echo "<tr class='position-relative'>";
                             echo '<td><input class="stretched-link" type ="radio" name = "event_id" id = "'. $rows["event_id"].' "value = "'. $rows["event_id"].'"></input></td>';
-                            echo "<td>" . $rows['event_id'] . "</td>";
-                            echo "<td>" . $rows['event_name'] . "</td>";
+                            echo "<td class='text-wrap'>" . $rows['event_name'] . "</td>";
                             echo "<td>" . $rows['event_description'] . "</td>";
                             echo "<td>" . $rows['date'] . "</td>";
                             echo "<td>" . $rows['start_time'] . "</td>";
