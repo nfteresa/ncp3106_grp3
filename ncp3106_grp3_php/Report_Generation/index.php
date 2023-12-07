@@ -55,6 +55,17 @@
             width: 100%;
             margin: 0 auto;
         }     
+        .col-md-6 {
+            border-style: solid;
+        }
+        .bg-primary {
+            background-color: #013365 !important;
+        }
+        .darkbeegee{
+        }
+        body {
+            background-image: url(../Event_Creation/img/bg.png);
+        }
       input::-webkit-outer-spin-button,
       input::-webkit-inner-spin-button {
         display: none;
@@ -67,99 +78,8 @@
     <div class="wrapper">
         <div class="container">
             <div class="row">
-                <div class="col-md-6 bg-secondary">
-
-                <script>
-                    $(document).ready(function() {
-                        $('#report').DataTable( {
-                            dom: 'Blfrtip',
-                            buttons: [
-                                'copy', 'csv', 'excel', 'pdf', 'print'
-                            ]
-                        } );
-                    } );
-                </script>
-
-                <?php
-                    require_once "../config.php";
-                    
-                    $event_sql = "SELECT * FROM event_info WHERE event_id = ? ";
-                    $attendee_sql = "SELECT * FROM attendees WHERE event_id = ? ";
-
-                    if ($stmt = $mysqli->prepare($event_sql)) {
-                        $stmt->bind_param("i", $event_id);  
-                        if ($stmt->execute()) {
-                            $event_result = $stmt->get_result();
-                        }
-                    }
-
-                    if ($stmt = $mysqli->prepare($attendee_sql)) {
-                        $stmt->bind_param("i", $event_id);  
-                        if ($stmt->execute()) {
-                            $attendee_result = $stmt->get_result();
-                        }
-                    }
-
-                    $student_sql = "SELECT * FROM student_info";
-                    $student_result = $mysqli->query($student_sql);
-
-                    $attendee_count = $attendee_result->num_rows;
-                    $student_number_array = "";
-                    $payment_total = 0;
-                    while ($attendee_rows = $attendee_result->fetch_array()) {
-                        $student_number_array = $student_number_array . " " . $attendee_rows["student_number"];
-                        $payment_total += $attendee_rows["payment"];
-                    }
-                    $student_number_array = explode(" ", $student_number_array);
-
-                    if (($event_result) && ($attendee_result)) {
-                        $event_rows = $event_result->fetch_array();
-                        echo "<h5>Event Name</h5>";
-                        echo "<p>".$event_rows['event_name']."</p>";
-                        echo "<h5>Attendant Count</h5>";
-                        echo "<p>".$attendee_count."</p>";
-                        echo "<h5>Payment Total</h5>";
-                        echo "<p>".$payment_total."</p>";
-
-                        if ($student_result) {
-                            if($student_result->num_rows > 0) {
-                                echo '<table id="report" class="table table-bordered table-striped">';
-                                echo "<thead>";
-                                echo "<tr>";
-                                echo "<th>first_name</th>";
-                                echo "<th>last_name</th>";
-                                echo "<th>middle_initial</th>";
-                                echo "</tr>";
-                                echo "</thead>";
-                                echo "<tbody>";
-                                while ($student_rows = $student_result->fetch_array()) {
-                                    if (!in_array($student_rows['student_number'],$student_number_array)) {
-                                        continue;
-                                    }
-                                    echo "<tr>";
-                                    echo "<td>" . $student_rows['first_name'] . "</td>";
-                                    echo "<td>" . $student_rows['last_name'] . "</td>";
-                                    echo "<td>" . $student_rows['middle_initial'] . "</td>";
-                                    echo "</tr>";
-                                }
-                                echo "</tbody>";
-                                echo "</table>";
-                                // Free result set
-                                $student_result->free();
-        
-                            } else {
-        
-                            }
-                        } else {
-        
-                        }
-                    } else {
-
-                    }
-
-                ?>
-                </div>
-                <div class="col-md-6 bg-primary">
+                
+                <div class="col-md-6 bg-light">
                 
                     <form method="post" action="<?php echo $_SERVER["PHP_SELF"]."?event_id=".$event_id."&search=".$search;?>">
                         <div class="input-group input-group">
@@ -241,6 +161,99 @@
                             }
                             ?>
                     </form>
+                </div>
+                <div class="col-md-6 bg-primary darkbeegee text-light">
+
+                <script>
+                    $(document).ready(function() {
+                        $('#report').DataTable( {
+                            dom: 'Blfrtip',
+                            buttons: [
+                                'copy', 'csv', 'excel', 'pdf', 'print'
+                            ]
+                        } );
+                    } );
+                </script>
+
+                <?php
+                    require_once "../config.php";
+                    
+                    $event_sql = "SELECT * FROM event_info WHERE event_id = ? ";
+                    $attendee_sql = "SELECT * FROM attendees WHERE event_id = ? ";
+
+                    if ($stmt = $mysqli->prepare($event_sql)) {
+                        $stmt->bind_param("i", $event_id);  
+                        if ($stmt->execute()) {
+                            $event_result = $stmt->get_result();
+                        }
+                    }
+
+                    if ($stmt = $mysqli->prepare($attendee_sql)) {
+                        $stmt->bind_param("i", $event_id);  
+                        if ($stmt->execute()) {
+                            $attendee_result = $stmt->get_result();
+                        }
+                    }
+
+                    $student_sql = "SELECT * FROM student_info";
+                    $student_result = $mysqli->query($student_sql);
+
+                    $attendee_count = $attendee_result->num_rows;
+                    $student_number_array = "";
+                    $payment_total = 0;
+                    while ($attendee_rows = $attendee_result->fetch_array()) {
+                        $student_number_array = $student_number_array . " " . $attendee_rows["student_number"];
+                        $payment_total += $attendee_rows["payment"];
+                    }
+                    $student_number_array = explode(" ", $student_number_array);
+
+                    if (($event_result) && ($attendee_result)) {
+                        $event_rows = $event_result->fetch_array();
+                        if (empty($event_rows['event_name'])) {$event_name = "null";} else {$event_name = $event_rows['event_name'];}
+                        echo "<h5>Event Name</h5>";
+                        echo "<p>".$event_name."</p>";
+                        echo "<h5>Attendant Count</h5>";
+                        echo "<p>".$attendee_count."</p>";
+                        echo "<h5>Payment Total</h5>";
+                        echo "<p>".$payment_total."</p>";
+
+                        if ($student_result) {
+                            if($student_result->num_rows > 0) {
+                                echo '<table id="report" class="table table-bordered table-striped text-white">';
+                                echo "<thead>";
+                                echo "<tr>";
+                                echo "<th>first_name</th>";
+                                echo "<th>last_name</th>";
+                                echo "<th>middle_initial</th>";
+                                echo "</tr>";
+                                echo "</thead>";
+                                echo "<tbody>";
+                                while ($student_rows = $student_result->fetch_array()) {
+                                    if (!in_array($student_rows['student_number'],$student_number_array)) {
+                                        continue;
+                                    }
+                                    echo "<tr>";
+                                    echo "<td>" . $student_rows['first_name'] . "</td>";
+                                    echo "<td>" . $student_rows['last_name'] . "</td>";
+                                    echo "<td>" . $student_rows['middle_initial'] . "</td>";
+                                    echo "</tr>";
+                                }
+                                echo "</tbody>";
+                                echo "</table>";
+                                // Free result set
+                                $student_result->free();
+        
+                            } else {
+        
+                            }
+                        } else {
+        
+                        }
+                    } else {
+
+                    }
+
+                ?>
                 </div>
             </div>
         </div>
