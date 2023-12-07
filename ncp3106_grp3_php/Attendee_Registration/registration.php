@@ -6,7 +6,17 @@
     $student_number_err = "";
 
     $event_id = urldecode($_GET["event_id"]);
-    $payment = urldecode($_GET["payment"]);
+
+    $sql = "SELECT * FROM event_info WHERE event_id = ?";
+    if ($stmt = $mysqli->prepare($sql)) {
+        $stmt->bind_param('i',$param_event_id);
+        $param_event_id = $event_id;
+        if ($result = $stmt->execute()) {
+            $result = $stmt->get_result();
+            $result = $result->fetch_array();
+            $payment = $result["registration_fee"];
+        }
+    }
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $input_student_number = trim($_POST["student_number"]);
@@ -71,6 +81,8 @@
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
             </form>
+            <h5>payment</h5>
+            <p><?php echo $payment;?></p>
         </div>
     </div>
 </body>
