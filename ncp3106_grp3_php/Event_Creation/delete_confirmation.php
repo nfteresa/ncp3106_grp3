@@ -4,6 +4,7 @@
         require_once "../config.php";
 
         //sql statement
+        //nigga
         $sql = "DELETE FROM event_info WHERE event_id = ?";
 
         //turn url variable to array
