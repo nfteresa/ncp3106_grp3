@@ -78,7 +78,7 @@
         }
 
         .beeg-text{
-            font-size: 150px;
+            font-size: 12vw;
             right: 50px;
             top: 0px;
         }
@@ -91,6 +91,10 @@
         table tr td:last-child {
             width: 120px;
         }
+
+        .input-group-button {
+            margin-right: 10vw;
+        }
     </style>
     <script>
         $(document).ready(function() {
@@ -101,15 +105,13 @@
 
 <body>
     <div class="wrapper my-5">
-        <div class="container-fluid">
+        <div class="container">
             <div class = "row">
-                <div class="col-md-2">
-                    <a href="../Dashboard/dashboard.html"><button class="btn btn-danger btn-lg">Back</button></a>
-                </div>
-                <div class="col-md-10">
+                <div class="col-md-12">
                     <form method="post">
                         <div class="input-group input-group-lg">
-                            <input type="text" name="search" class="form-control <?php echo (!empty($search_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $search?>"/>
+                            <button class="btn btn-danger btn-lg position-relative input-group-button"><a href="../Dashboard/dashboard.html" class="stretched-link"></a>Back</button>
+                            <input type="text" style= "border-radius:3px" name="search" class="form-control <?php echo (!empty($search_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $search?>"/>
                             <button type="submit" class="btn btn-primary">Search</button>
                         </div>
                     </form>
@@ -145,13 +147,13 @@
                 if ($result->num_rows > 0) {
                     echo "<div class='row row-cols-1 row-cols-md-3 g-4 mt-5'>";
                     while ($rows = $result->fetch_array()) {
-                        echo "<div class='col mt-3'>";
-                        echo "<div class='card h-100'>";
-                        echo '<img class="card-img-top" src="./img/bg.png" alt="Error">';
+                        echo "<div class='col mt-5 px-4'>";
+                        echo "<div class='card h-100 position-relative'>";
+                        echo '<img class="card-img-top" src="./img/'.$rows['event_type'].'.png" alt="'.$rows['event_type'].'">';
                         echo '<div class="card-img-overlay">';
                         echo "<h5 class='card-title'>".$rows['event_name']."</h5>";                        
                         echo '</div>';
-                        echo "<div class='card-body position-relative'>";         
+                        echo "<div class='card-body'>";         
                         echo "<a class='stretched-link' href='view.php?event_id=".urlencode($rows['event_id'])."&flag=view'></a>";
                         echo "<p class='card-text'>".$rows['event_description']."</p>";
                         echo "</div>";
@@ -170,8 +172,9 @@
         </div>
         <footer class="footer mt-auto py-3 fixed-bottom">
             <div class="rounded-circle bg-primary d-flex justify-content-center align-items-center">
+            <h1 class="beeg-text">+</h1>
                 <a class="stretched-link" href="create.php">
-                    <h1 class="beeg-text">+</h1>
+                    
                 </a>
             </div>
         </footer>
