@@ -157,191 +157,185 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 </head>
 <style>
-    @font-face {
+  @font-face {
         font-family: myFirstFont;
-        src: url(../font/Montserrat-VariableFont_wght.ttf);
-    }
+        src: url("../font/Montserrat-VariableFont_wght.ttf");
+  }
   body {
-    opacity: 1;
-    background-color: #013365;
-    background-image: url(img/bg.png);
+    background-image: url("./img/bg.png");
     background-size: cover;
   }
-  .signup-form::-webkit-scrollbar{
-    display: none;
+  .container{
+    display: flex;
+    margin: auto;
+    padding: 40px 0;
   }
-  .form-control {
-    height: 40px;
-    box-shadow: none;
-    color: #969fa4;
+  .left-box{
+    width: 100%;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3); 
+    border-radius: 10px 0px 0px 10px; 
+    height: 100%;
+    background-size:cover ;
+    background-image:url('./img/bg3.png');
+    justify-content: center; 
+    align-items: center; 
+    max-height: 85vh;
+    max-width: 85vw;
   }
-  .form-control:focus {
-    border-color: #013365;
+  .left{
+    text-align: center;
+    padding: 200px 0;
   }
-  .form-control, .btn {        
-    border-radius: 3px;
-  }
-  .signup-form {
-    width: 450px;
-    margin: 0 auto;
-    font-size: 15px;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-  .signup-form h2 {
+  .left h1,p{
+    font-family: myFirstFont;
     color: white;
+  }
+  .left-box a{
+    position: absolute; 
+    top: 8px; 
+    left: 16px; 
+    width:50px; 
+    height: 50px;
+  }
+  .left h1{
+    font-weight:bold;
+  }
+  .right-box{
+    width: 100%;
+    height: 100%;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3); 
+    border-radius: 0px 10px 10px 0px; 
+    background: rgba(246, 246, 242, 1);
+    justify-content: center; 
+    align-items: center; 
+    margin: 0;
+    max-height: 85vh;
+    max-width: 85vw;
+    overflow: scroll;
+  }
+  .right{
+    padding: 50px;
+    line-height: 1.8;
+    margin: 0 auto;
+    text-align: center;
+    
+  }
+  .right label{
     font-weight: bold;
-    margin: 0 0 15px;
-    position: relative; 
-    text-align: center;
   }
-  .signup-form h2:before {
-    left: 0;
+  .right input, .right select, .right textarea{
+    width: 100%; 
+    padding:5px; 
+    padding-left:5px; 
+    border-radius: 5px; 
+    border: 1px solid black
   }
-  .signup-form h2:after {
-    right: 0;
-  }
-  .signup-form .hint-text {
-    color: #999;
-    margin-bottom: 30px;
-    text-align: center;
-  }
-  .signup-form form {
-    margin-top: 30px;
+  .right form{
     color: black;
     border-radius: 3px;
     margin-bottom: 15px;
     background: rgba(246, 246, 242, 1);
-    padding: 30px;
-    width: 100%; 
-    height: 100%;
+    width: 100%;
     line-height: 1.8; 
-    display: block;
-    
   }
-  .signup-form .form-group {
-    margin-bottom: 20px;
-  }
-  .signup-form input [type="checkbox"] {
-    margin-top: 3px;
-  }
-  .signup-form .btn {        
-    font-size: 16px;
-    font-weight: bold;		
-    min-width: 140px;
+  .right .btn{
+    background-color: #013365; 
+    border: #013365 solid;
+    font-family: myFirstFont;
+    font-weight: bold;
     outline: none !important;
   }
-  .signup-form .row div:first-child {
-    padding-right: 10px;
-  }
-  .signup-form .row div:last-child {
-    padding-left: 10px;
-  }    	
-  .signup-form a {
-    color: #fff;
-    text-decoration: underline;
-  }
-  .signup-form a:hover {
-    text-decoration: none;
-  }
-  .signup-form form a {
-    color: #013365;
-    text-decoration: none;
-  }	
-  .signup-form form a:hover {
-    text-decoration: underline;
-  }  
-  .container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: auto;
-    text-align: center;
+  .left img{
+    
   }
   ::-webkit-scrollbar{
     display: none;
   }
-  
-  select {
-    font-weight: bold;
-  }
 </style>
+</head>
 <body>
-    <div class="container">
-        <div class="col-md-6 no-gutters" style="width:100%; box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3); border-radius: 10px 0px 0px 10px; background: rgba(246, 246, 242, 1); height:500px;margin-top: 30px;background: #013365; font-family: myFirstFont; background-size:cover ; background-image:url(img/bg3.png)">
-        <a href="index.php"><img src="img/back2.png" style="position: absolute; top: 8px; left: 16px; width:50px; height: 50px;"></a>
-        <div class="signup-form" style="float: left; background-size: cover; margin: auto; text-align: center; margin-top: 200px; ">
-            <h2 style="margin-left: 50px;">Register Event</h2>
-            <p class="hint-text" style="margin-left: 50px; color: white;">Plan, Create, Celebrate: Events Made Easy.</p>
+  <div class="container no-gutters">
+    <div class="col-md-6 no-gutters">
+      <div class="left-box">
+        <a href="index.php"><img src="./img/back2.png" style="position: absolute; top: 8px; left: 16px; width:50px;height: 50px;"></a>
+        <div class="left">
+          <h1>Register Event</h1>
+          <p>Plan, Create, Celebrate: Events Made Easy</p>
         </div>
-        </div>
-        <div class="col-md-6 no-gutters" style="width:100%;overflow: scroll; height:500px; margin-top: 30px; border-radius: 0px 10px 10px 0px; background: rgba(246, 246, 242, 1);">
-            <div class="signup-form" style="float: left; justify-content: center; align-items: center; margin: auto; ">
-                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                <div class="form-group" style="margin-left: 60px;">
-                    <div class="form-group">
-                        <label style="font-weight: bold;">Event Name</label><br>
-                        <input style="width: 100%; padding:5px; padding-left:5px; border-radius: 5px; border: 1px solid black" type="text" class="form-control <?php echo (!empty($event_name_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $event_name; ?>" name="event_name" required="required">
-                        <span class="invalid-feedback"><?php echo $event_name_err; ?></span>
-                    </div>
-                    <div class="form-group">
-                        <label style="font-weight: bold;">Event Description</label><br>
-                        <input style="width: 100%; padding:5px; padding-left:5px; border-radius: 5px; border: 1px solid black" type="text" class="form-control <?php echo (!empty($event_description_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $event_description; ?>" name="event_description" required="required">
-                        <span class="invalid-feedback"><?php echo $event_description_err; ?></span>
-                    </div>
-                    <div class="form-group">
-                            <label style="font-weight: bold;">Event Type</label>
-                            <select style="width: 100%; padding:5px; padding-left:5px; border-radius: 5px; border: 1px solid black" name="event_type" class="form-control <?php echo (!empty($event_type_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $event_type; ?>" required="required">
-                            <span class="invalid-feedback"><?php echo $event_type_err; ?></span>
-                                <option value="Other">Other</option>
-                                <option value="Meetup">Meetup</option>
-                                <option value="Seminar">Seminar</option>
-                                <option value="Sports">Sports</option>
-                                <option value="Convention">Convention</option>
-                            </select>
-                        </div>
-                    <div class="form-group">
-                        <label style="font-weight: bold;">Event Date</label><br>
-                        <input style="width: 100%; padding:5px; padding-left:5px; border-radius: 5px; border: 1px solid black" type="date" class="form-control <?php echo (!empty($date_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $date; ?>" name="date" required="required">
+      </div>
+    </div>
+    <div class="col-md-6 no-gutters">
+      <div class="right-box">
+        <div class="right">
+          <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+            <div class="form-group">
+                <div class="form-group">
+                    <label>Event Name</label><br>
+                    <input type="text" class="form-control <?php echo (!empty($event_name_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $event_name; ?>" name="event_name" required="required">
+                    <span class="invalid-feedback"><?php echo $event_name_err; ?></span>
+                </div>
+                <div class="form-group">
+                    <label>Event Description</label><br>
+                    <textarea type="text" class="form-control <?php echo (!empty($event_description_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $event_description; ?>" name="event_description" required="required"></textarea>
+                    <span class="invalid-feedback"><?php echo $event_description_err; ?></span>
+                </div>
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col">
+                      <label>Event Type</label>
+                      <select name="event_type" class="form-control <?php echo (!empty($event_type_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $event_type; ?>" required="required">
+                      <span class="invalid-feedback"><?php echo $event_type_err; ?></span>
+                          <option value="Other">Other</option>
+                          <option value="Meetup">Meetup</option>
+                          <option value="Seminar">Seminar</option>
+                          <option value="Sports">Sports</option>
+                          <option value="Convention">Convention</option>
+                      </select>
+                  </div>
+                      <div class="col">
+                        <label>Event Date</label><br>
+                        <input type="date" class="form-control <?php echo (!empty($date_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $date; ?>" name="date" required="required">
                         <span class="invalid-feedback"><?php echo $date_err; ?></span>
                     </div>
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col">
-                                <label style="font-weight: bold;">Start Time</label><br>
-                                <input style="width: 100%; padding:5px; padding-left:5px; border-radius: 5px; border: 1px solid black" type="time" class="form-control <?php echo (!empty($start_time_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $start_time; ?>" name="start_time" required="required">
-                                <span class="invalid-feedback"><?php echo $start_time_err; ?></span>
-                            </div>
-                            <div class="col">
-                                <label style="font-weight: bold;">End Time</label><br>
-                                <input style="width: 100%; padding:5px; padding-left:5px; border-radius: 5px; border: 1px solid black" type="time" class="form-control <?php echo (!empty($end_time_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $end_time; ?>" name="end_time" required="required">
-                                <span class="invalid-feedback"><?php echo $end_time_err; ?></span>
-                            </div>
-                        </div>        	
-                    </div>  
-                    </div>
-                    <div class="form-group" style="margin-left: 60px;">
-                    <label style="font-weight: bold;">Registration Fee</label><br>
-                    <input style="width: 100%; padding:5px; padding-left:5px; border-radius: 5px; border: 1px solid black" type="number" class="form-control <?php echo (!empty($registration_fee_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $registration_fee; ?>" name="registration_fee" required="required">
-                    <span class="invalid-feedback"><?php echo $registration_fee_err; ?></span>
-                    </div>
-                    <div class="form-group" style="margin-left: 60px;">
-                    <label style="font-weight: bold;">Venue</label><br>
-                    <input style="width: 100%; padding:5px; padding-left:5px; border-radius: 5px; border: 1px solid black" type="text" class="form-control <?php echo (!empty($venue_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $venue; ?>" name="venue" required="required">
-                    <span class="invalid-feedback"><?php echo $venue_err; ?></span>
-                    </div>
-                    <div class="form-group" style="margin-left: 60px;">
-                    <label style="font-weight: bold;">Officer in Charge</label><br>
-                    <input style="width: 100%; padding:5px; padding-left:5px; border-radius: 5px; border: 1px solid black" type="text" class="form-control <?php echo (!empty($oic_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $oic; ?>"name="oic" required="required">
-                    <span class="invalid-feedback"><?php echo $oic_err; ?></span>
-                    </div>
-                    <div class="form-group" style="margin-left: 60px;">
-                            <button type="submit" style="background-color: #013365; border: #013365 solid;" class="btn btn-success btn-lg btn-block">Register</button>
-                    </div>
-                </form>
-            </div>
+                  </div>        	
+                </div>  
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col">
+                            <label>Start Time</label><br>
+                            <input type="time" class="form-control <?php echo (!empty($start_time_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $start_time; ?>" name="start_time" required="required">
+                            <span class="invalid-feedback"><?php echo $start_time_err; ?></span>
+                        </div>
+                        <div class="col">
+                            <label>End Time</label><br>
+                            <input type="time" class="form-control <?php echo (!empty($end_time_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $end_time; ?>" name="end_time" required="required">
+                            <span class="invalid-feedback"><?php echo $end_time_err; ?></span>
+                        </div>
+                    </div>        	
+                </div>  
+                </div>
+                <div class="form-group">
+                  <label>Registration Fee</label><br>
+                  <input type="number" class="form-control <?php echo (!empty($registration_fee_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $registration_fee; ?>" name="registration_fee" required="required">
+                  <span class="invalid-feedback"><?php echo $registration_fee_err; ?></span>
+                </div>
+                <div class="form-group">
+                  <label>Venue</label><br>
+                  <input type="text" class="form-control <?php echo (!empty($venue_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $venue; ?>" name="venue" required="required">
+                  <span class="invalid-feedback"><?php echo $venue_err; ?></span>
+                </div>
+                <div class="form-group">
+                  <label>Officer in Charge</label><br>
+                  <input type="text" class="form-control <?php echo (!empty($oic_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $oic; ?>"name="oic" required="required">
+                  <span class="invalid-feedback"><?php echo $oic_err; ?></span>
+                </div>
+                <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-lg btn-block">Register</button>
+                </div>
+            </form>
         </div>
+      </div>
     </div>
+  </div>
 </body>
-
 </html>
