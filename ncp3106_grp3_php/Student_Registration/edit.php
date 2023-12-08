@@ -22,7 +22,8 @@ $contact_number_err = "";
 
 // Processing form data when form is submitted
 if (isset($_POST['id']) && !empty($_POST['id'])) {
-    
+    //Get ID from URL
+    $stud_id = trim($_POST["id"]);
     //Validate name
     $input_first_name = trim($_POST["first_name"]);
     if (empty($input_first_name)) {
@@ -97,13 +98,14 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
     // Check input errors before inserting in database
     if (empty($first_name_err) && empty($last_name_err) && empty($middle_initial_err) && empty($student_number_err) && empty($program_err) && empty($current_year_err) && empty($ue_email_err) && empty($contact_number_err)) {
         // Prepare an insert statement
-        $sql = "UPDATE student_info SET first_name=?, last_name=?, middle_initial=?, student_number=?, program=?, current_year=?, ue_email=?, contact_number=? WHERE stud_id=?";
+        $sql = "UPDATE student_info SET first_name=?, last_name=?, middle_initial=?, student_number=?, program=?, current_year=?, ue_email=?, contact_number=? WHERE stud_id =?";
 
         if ($stmt = $mysqli->prepare($sql)) {
             // Bind variables to the prepared statement as parameters
-            $stmt->bind_param("sssissssi", $param_first_name, $param_last_name, $param_middle_initial, $param_student_number, $param_program, $param_current_year, $param_ue_email, $param_contact_number, $param_stud_id);
+            $stmt->bind_param("ssssssssi", $param_first_name, $param_last_name, $param_middle_initial, $param_student_number, $param_program, $param_current_year, $param_ue_email, $param_contact_number, $param_stud_id );
 
             // Set parameters
+            $param_stud_id=$stud_id;
             $param_first_name = $first_name;
             $param_last_name = $last_name;
             $param_middle_initial = $middle_initial;
@@ -112,9 +114,9 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
             $param_current_year = $current_year;
             $param_ue_email = $ue_email;
             $param_contact_number = $contact_number;
-            $param_stud_id = $stud_id;
-
+        
             // Attempt to execute the prepared statement
+
             if ($stmt->execute()) {
                 // Records created successfully. Redirect to landing page
                 header("location: index.php");
