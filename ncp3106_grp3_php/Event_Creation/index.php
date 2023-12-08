@@ -166,7 +166,7 @@
                     <div class="col-md-12">
                         <form method="post">
                             <div class="input-group input-group-lg">
-                                <a class=" btn-lg position-relative input-group-button" href="../Dashboard/dashboard.php"><img src="./img/back.png" style="position: absolute; top: 0px; left: 0px; width:50px;height: 50px;"></a>
+                                <a class=" btn-lg position-relative input-group-button" href="../Dashboard/dashboard.html"><img src="./img/back.png" style="position: absolute; top: 0px; left: 0px; width:50px;height: 50px;"></a>
                                 
                                 <input type="text" style= "border-radius:3px" name="search" class="form-control <?php echo (!empty($search_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $search?>"/>
                                 <div class="input-group-append">
