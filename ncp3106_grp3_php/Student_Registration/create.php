@@ -56,8 +56,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $uu = mysqli_query($con,$u);
     if (empty($input_student_number)) {
         $student_number_err = "Please enter the student number.";
-    } elseif (!ctype_digit($input_student_number)) {
-        $student_number_err = "Please enter a valid student number.";
+    } elseif (preg_match('/^[0-9]{11}+$/', $input_student_number)) {
+        $contact_number = $input_contact_number;
     } elseif (mysqli_num_rows($uu) > 0 ) {
         $student_number_err = "Student number exist.";
     }else{
@@ -84,19 +84,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Validate ue email
     $input_ue_email = trim($_POST["ue_email"]);
     if (empty($input_ue_email)) {
-        $ue_email_err = "Please enter an UE email.";
-    } else {
+        $ue_email_err = "Please enter an UE email.";     
+    } elseif (preg_match("/\b(ue.edu.ph)\b/i", $input_ue_email)){
         $ue_email = $input_ue_email;
+    } else {
+        $ue_email_err = "Please enter an UE email.";
     }
 
     // Validate contact number
     $input_contact_number = trim($_POST["contact_number"]);
     if (empty($input_contact_number)) {
         $contact_number_err = "Please enter your contact number. ";
-    } elseif (!ctype_digit($input_contact_number)) {
-        $contact_number_err = "Please enter a positive integer value.";
-    } else {
+    } elseif (preg_match('/^[0-9]{11}+$/', $input_contact_number)) {
         $contact_number = $input_contact_number;
+    } else {
+        $contact_number_err = "Please enter a valid contact number.";
     }
 
     // Check input errors before inserting in database
