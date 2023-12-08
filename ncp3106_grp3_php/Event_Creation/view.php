@@ -21,6 +21,8 @@
     $venue_err = "";
     $oic_err = "";
 
+
+
     if (empty($_GET["event_id"])) {
         echo "something went wrong";
     } else if (!is_numeric($_GET["event_id"])) {
@@ -30,6 +32,31 @@
     }
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if (isset($_POST['delete']) && !empty($_POST['delete'])) {
+            $id = $_POST["id"];
+            $id_err = "";
+            if (!is_numeric($id)) {
+                $id_err = "Invalid ID.";
+            }
+
+            if(empty($id_err)) {
+                $sql = "DELETE FROM event_info WHERE event_id = ?";
+                if ($stmt = $mysqli->prepare($sql)) {
+                    $stmt->bind_param("i", $param_id);
+                    (int) $param_id = $id;
+                    if ($stmt->execute()) {
+                        header("location: index.php?".$param_id);
+                    } else {
+                        header("location: error.php");
+                    }
+                } else {
+                    echo "query preparation failed";
+                }
+            } else {
+                echo $id_err;
+            }
+        }
+
         if ($flag == "edit") {
             if (isset($_POST['id']) && !empty($_POST['id'])) {
                 //Get ID from URL
@@ -161,6 +188,8 @@
     <title>Event list</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -180,6 +209,30 @@
 <body>
     <div class="wrapper">
         <div class="container-fluid">
+            
+        <div class="modal fade" id="Delete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="DeleteLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="Delete">Are you sure?</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete this entry?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+                        <?php
+                        echo '<form action="'.htmlspecialchars($_SERVER["PHP_SELF"]).'?event_id='.$event_id.'&flag=edit" method="post">';
+                        echo '<button type="submit" class="btn btn-danger">Yes</button>';
+                        echo '<input type="hidden" name="id" value="'.$event_id.'">';
+                        echo '<input type="hidden" name="delete" value="YES">';
+                        echo '</form>';
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
 
                 <?php 
                     require_once "../config.php";
@@ -304,6 +357,7 @@
                             } else {
                                 echo '<a href="index.php"><button class="btn btn-danger">Back</button></a>';
                                 echo '<a href="view.php?event_id='.$event_id.'&flag=edit" class="btn btn-secondary ml-2">Edit</a>';
+                                echo '<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#Delete">Delete</button>';
                                 echo "<label>Event Name</label>";
                                 echo "<p>".$rows['event_name']."</p>";
                                 echo "<label>Event Description</label>";
@@ -323,7 +377,7 @@
                                 echo "<label>Officer-In-Charge</label>";
                                 echo "<p>".$rows['oic']."</p>";
                             }
-                            echo '<a href="delete_entry.php?event_id='.$event_id.'" class="btn btn-danger ml-2">Delete</a>';
+                            echo '';
                         }
                     }
                 ?>
