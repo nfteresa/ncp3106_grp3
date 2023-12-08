@@ -29,9 +29,8 @@
 <body>
     <div class="wrapper">
         <div class="container-fluid">
-            <a href="../Dashboard/dashboard.html"><button class="btn btn-danger">Back</button></a>
             <?php
-            require_once '../config.php';
+            require_once 'config.php';
 
             $sql = "SELECT * FROM student_info";
             if ($result = $mysqli->query($sql)) {
@@ -40,7 +39,7 @@
                     echo "<thead>";
                     echo "<tr>";
                     echo "<th>#</th>";
-                        echo "<th>Last Name</th>";
+                        echo "<th>Last Name </th>";
                         echo "<th>First Name</th>";
                         echo "<th>Middle Initial</th>";
                         echo "<th>Student Number</th>";
@@ -52,9 +51,10 @@
                         echo "</tr>";
                         echo "</thead>";
                         echo "<tbody>";
+                        
                         while ($rows = $result->fetch_array()) {
                             echo "<tr>";
-                            echo "<td>" . $rows['id'] . "</td>";
+                            echo "<td>" . $rows['stud_id'] . "</td>";
                             echo "<td>" . $rows['last_name'] . "</td>";
                             echo "<td>" . $rows['first_name'] . "</td>";
                             echo "<td>" . $rows['middle_initial'] . "</td>";
@@ -65,15 +65,16 @@
                             echo "<td>" . $rows['contact_number'] . "</td>";
                             echo "<td>
                             <div class='btn-group'>
-                                <a class='btn btn-secondary' href='../Student_Registration/edit.php?id=" .$rows['id']."' > EDIT <a>
-                                <a class='btn btn-danger' href='../Student_Registration/delete.php??id=" .$rows['id']."'> DELETE <a>
+                                <a class='btn btn-secondary' href='./././edit.php?id=" .$rows['stud_id']."' > EDIT <a>
                                 </div>
                             </td>";    
                             echo "</tr>";
-                       
+                    
+                             
                     }
                     echo "</tbody>";
                     echo "</table>";
+                    echo "<a class='btn btn-danger' href='./././delete.php?id= 'stud_id'.'> DELETE <a>";
                     // Free result set
                     $result->free();
 
