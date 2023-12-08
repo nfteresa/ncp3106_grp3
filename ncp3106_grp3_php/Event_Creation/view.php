@@ -30,6 +30,17 @@
     }
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if (isset($_POST['delete']) && !empty($_POST['delete'])) {
+            $sql = "DELETE FROM event_info WHERE event_id = ?";
+            if ($stmt = $mysqli->prepare($sql)) {
+                $stmt->bind_param('i',$param_id);
+
+                $param_id = $_POST['id'];
+                if ($stmt->execute()) {
+                    header("location: index.php");
+                }
+            }
+        }
         if ($flag == "edit") {
             if (isset($_POST['id']) && !empty($_POST['id'])) {
                 //Get ID from URL
@@ -497,20 +508,20 @@
 <body>
     <div class="wrapper">
         <div class="container-fluid d-flex justify-content-center align-items-center">
-            <div class="modal fade" id="Delete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="DeleteLabel" aria-hidden="true">
+            <div class="modal fade" id="Delete" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="DeleteLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="Delete">Are you sure?</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             Are you sure you want to delete this entry?
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
                             <?php
-                            echo '<form action="'.htmlspecialchars($_SERVER["PHP_SELF"]).'?event_id='.$event_id.'&flag=edit" method="post">';
+                            echo '<form method="post">';
                             echo '<button type="submit" class="btn btn-danger">Yes</button>';
                             echo '<input type="hidden" name="id" value="'.$event_id.'">';
                             echo '<input type="hidden" name="delete" value="YES">';
@@ -662,6 +673,7 @@
                             echo '</form>';
                         } else {
                             echo '<div class="wrapper my-5">';
+                            
                             echo '<div class="box">';
                             echo '<div class="search-box" style="background-image: url(./img/'.$rows["event_type"].'.png); background-size: cover;">';
                             echo '<div class = "row" >';
@@ -698,6 +710,7 @@
                             echo "<label>Venue</label>";
                             echo "<p>".$rows['venue']."</p>";
                             echo '</div>';
+                            
 
                             echo '<div class="col">';
                             echo "<label>Start Time</label>";
@@ -720,7 +733,7 @@
                             echo '<a class="stretched-link" href="view.php?event_id='.$event_id.'&flag=edit"> <img src="./img/edit.png" class="center"></a>';
                             echo '</div>';
                             echo '<div class="rounded-circle del bg-primary d-flex justify-content-center align-items-center">';
-                            echo '<a class="btn" data-bs-toggle="modal" data-bs-target="#Delete"><img src="./img/delete.png" class="center"></a>';
+                            echo '<a class="btn" data-toggle="modal" data-target="#Delete"><img src="./img/delete.png" class="center"></a>';
                             echo '</footer>';
                         }
                     }
