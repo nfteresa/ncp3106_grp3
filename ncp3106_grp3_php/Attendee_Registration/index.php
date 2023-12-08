@@ -7,25 +7,14 @@
     $payment = "";
     $input_payment = "";
     $payment_err = "";
+    $search = "";
+    $input_search = "";
+    $search_err = "";
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-        $input_event_id = trim($_POST["event_id"]);
-        $event_id = $input_event_id;
-
-        $sql = "SELECT registration_fee FROM event_info WHERE event_id=".$event_id;
-        $payment = $mysqli->query($sql);
-        $payment = $payment->fetch_array();
-        $payment = $payment["registration_fee"];
-        $mysqli->close();
-
-        if (empty($event_id_err) && empty($payment_err)) {
-            $payment_url = urlencode($payment);
-            $event_id_url = urlencode($event_id);
-            header("location: registration.php?event_id=".$event_id_url);
-        } else {
-            echo "Fields are empty.";
-        }
+        $input_search = trim($_POST["search"]);
+        $search = $input_search;
     } 
 ?>
 
@@ -34,93 +23,169 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Register</title>
+    <title>Event list</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
-    
-
-    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
-        .wrapper {
-            width: 1000px;
-            margin: 0 auto;
-        }     
-      input::-webkit-outer-spin-button,
-      input::-webkit-inner-spin-button {
-        display: none;
-      }
-    </style>
+        @font-face {
+        font-family: myFirstFont;
+        src: url("../font/Montserrat-VariableFont_wght.ttf");
+        }
+        
+        .card-img-top {
+            width: 100%;
+            height: 25vh;
+            object-fit: cover;
+        }
 
+        .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited, .bg-primary {
+            border-color: #013365 !important;
+            background-color: #013365 !important;
+        }
+
+        .card-img-overlay > h5 {
+            color: white;
+            font-weight: bold;
+        }
+
+        .card-img-overlay > p {
+            color: white;
+            font-weight: light;
+            font-style: italic;
+        }
+
+        h1 {
+            color: white;
+        }
+
+        .btn-primary {
+
+        }
+
+        body {
+            font-family: myFirstFont;
+        }
+
+        .wrapper {
+            width: 90vw;
+            margin: 0 auto;
+        }
+
+        footer {
+            width: 100%;
+            height: 20vh;
+        }
+        .rounded-circle{
+            height: 10vw;
+            width: 10vw;
+            position: absolute;
+            right:33px;
+            bottom:33px;
+            box-shadow: 8px 8px 15px rgba(0,0,0,0.3)
+        }
+
+        .beeg-text{
+            font-size: 12vw;
+            right: 50px;
+            top: 0px;
+        }
+
+        .bi-plus {
+            height:50px;
+            width:50px;
+        }
+
+        table tr td:last-child {
+            width: 120px;
+        }
+
+        .input-group-button {
+            margin-right: 10vw;
+        }
+    </style>
+    <script>
+        $(document).ready(function() {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
 </head>
 
 <body>
-    <div class="wrapper">
-        <a href="../Dashboard/dashboard.html"><button class="btn btn-danger">Back</button></a>
-        <form method = "post">
-            <script>
-                $(document).ready(function() {
-                    $('#events').DataTable( {   
-                        dom: 'lp'
-                    } );
-                } );
-            </script>
-                <?php
-                require_once '../config.php';
+    <div class="wrapper my-5">
+        <div class="container">
+            <div class = "row">
+                <div class="col-md-12">
+                    <form method="post">
+                        <div class="input-group input-group-lg">
+                            <button class="btn btn-danger btn-lg position-relative input-group-button"><a href="../Dashboard/dashboard.html" class="stretched-link"></a>Back</button>
+                            <input type="text" style= "border-radius:3px" name="search" class="form-control <?php echo (!empty($search_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $search?>"/>
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <h1 class="text-dark mt-5 font-weight-bold">Choose an event for registration</h1>
+            <?php
+            if (!empty($search)) {
+                $sql = "SELECT * FROM event_info WHERE event_name LIKE ? OR 
+                                                       event_type LIKE ? OR
+                                                       venue LIKE ? OR
+                                                       oic LIKE ?";
 
-                $sql = "SELECT * FROM event_info";
-                if ($result = $mysqli->query($sql)) {
-                    if($result->num_rows > 0) {
-                        echo '<table id=events class="table table-bordered table-striped table-hover">';
-                        echo "<thead>";
-                        echo "<tr>";
-                        echo "<th>#</th>";
-                        echo "<th>event_name</th>";
-                        echo "<th>event_description</th>";
-                        echo "<th>date</th>";
-                        echo "<th>start_time</th>";
-                        echo "<th>end_time</th>";
-                        echo "<th>registration_fee</th>";
-                        echo "<th>venue</th>";
-                        echo "<th>oic</th>";
-                        echo "</tr>";
-                        echo "</thead>";
-                        echo "<tbody>";
-                        while ($rows = $result->fetch_array()) {
-                            echo "<tr class='position-relative'>";
-                            echo '<td><input class="stretched-link" type ="radio" name = "event_id" id = "'. $rows["event_id"].' "value = "'. $rows["event_id"].'"></input></td>';
-                            echo "<td class='text-wrap'>" . $rows['event_name'] . "</td>";
-                            echo "<td>" . $rows['event_description'] . "</td>";
-                            echo "<td>" . $rows['date'] . "</td>";
-                            echo "<td>" . $rows['start_time'] . "</td>";
-                            echo "<td>" . $rows['end_time'] . "</td>";
-                            echo "<td>" . $rows['registration_fee'] . "</td>";
-                            echo "<td>" . $rows['venue'] . "</td>";
-                            echo "<td>" . $rows['oic'] . "</td>";
-                            echo "</tr>";
-                        }
-                        echo "</tbody>";
-                        echo "</table>";
-                        // Free result set
-                        $result->free();
-
+                if ($stmt = $mysqli->prepare($sql)) {
+                    $stmt->bind_param("ssss", $param_search, $param_search, $param_search, $param_search);
+                    $param_search = "%" . $search  . "%";
+                    if ($stmt->execute()) {
+                        $result = $stmt->get_result();
                     } else {
+                        echo "search failed";
+                    }
+                }
+                $stmt->close();
+            } else {
+                $sql = "SELECT * FROM event_info";
+                if ($stmt = $mysqli->prepare($sql)) {
+                    if ($stmt->execute()) {
+                        $result = $stmt->get_result();
+                    } else {
+                        echo "search failed";
+                    }
+                }
+                $stmt->close();
+            }
 
+            if (!empty($result)) {
+                if ($result->num_rows > 0) {
+                    echo "<div class='row row-cols-1 row-cols-md-3 g-4 mt-3 '>";
+                    while ($rows = $result->fetch_array()) {
+                        echo "<div class='col mt-5 px-4'>";
+                        echo "<div class='card h-100 position-relative'>";
+                        echo '<img class="card-img-top" src="./img/'.$rows['event_type'].'.png" alt="'.$rows['event_type'].'">'; 
+                        echo '<div class="card-img-overlay">';
+                        echo "<h5 class='card-title'>".$rows['event_name']."</h5>";                
+                        echo '<p class="card-text">'.$rows['event_type'].'</p>';
+            
+                        echo '</div>';
+                        echo "<div class='card-body'>";         
+                        echo "<a class='stretched-link' href='registration.php?event_id=".urlencode($rows['event_id'])."'></a>";
+                        echo "<p class='card-text'>".$rows['event_description']."</p>";
+                        echo "</div>";
+                        echo "</div>";
+                        echo "</div>";
                     }
                 } else {
-
+                    //error message here if $result doesnt have rows
+                    echo "no rows found";
                 }
-                ?>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form> 
+            } else {
+                // error message here if we didnt get a $result
+                echo "no results found";
+            }
+            ?>
+        </div>
     </div>
 </body>
