@@ -40,8 +40,8 @@
                     echo "<thead>";
                     echo "<tr>";
                     echo "<th>#</th>";
-                        echo "<th>First Name</th>";
                         echo "<th>Last Name</th>";
+                        echo "<th>First Name</th>";
                         echo "<th>Middle Initial</th>";
                         echo "<th>Student Number</th>";
                         echo "<th>Program</th>";
@@ -55,8 +55,8 @@
                         while ($rows = $result->fetch_array()) {
                             echo "<tr>";
                             echo "<td>" . $rows['id'] . "</td>";
-                            echo "<td>" . $rows['first_name'] . "</td>";
                             echo "<td>" . $rows['last_name'] . "</td>";
+                            echo "<td>" . $rows['first_name'] . "</td>";
                             echo "<td>" . $rows['middle_initial'] . "</td>";
                             echo "<td>" . $rows['student_number'] . "</td>";
                             echo "<td>" . $rows['program'] . "</td>";
