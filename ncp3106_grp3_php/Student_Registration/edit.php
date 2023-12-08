@@ -149,29 +149,137 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
     <title>Create Record</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        .wrapper {
-            width: 600px;
-            margin: 0 auto;
-        }     
-      input::-webkit-outer-spin-button,
-      input::-webkit-inner-spin-button {
-        display: none;
-      }
-      
-      </style>
-
-</head>
+  @font-face {
+        font-family: myFirstFont;
+        src: url("../font/Montserrat-VariableFont_wght.ttf");
+  }
+  body {
+    background-image: url("./img/bg2.png");
+    background-size: cover;
+  }
+  .container{
+    display: flex;
+    margin: auto;
+    padding: 40px 0;
+  }
+  .left-box{
+    width: 100%;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3); 
+    border-radius: 10px 0px 0px 10px; 
+    height: 100%;
+    background-size:cover ;
+    background-image:url('./img/bg.png');
+    justify-content: center; 
+    align-items: center; 
+    max-height: 85vh;
+    max-width: 85vw;
+  }
+  .left{
+    text-align: center;
+    padding: 200px 0;
+  }
+  .left h1,p{
+    font-family: myFirstFont;
+    color: white;
+  }
+  .left-box a{
+    position: absolute; 
+    top: 8px; 
+    left: 16px; 
+    width:50px; 
+    height: 50px;
+  }
+  .left h1{
+    font-weight:bold;
+  }
+  .right-box{
+    width: 100%;
+    height: 100%;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3); 
+    border-radius: 0px 10px 10px 0px; 
+    background: rgba(246, 246, 242, 1);
+    justify-content: center; 
+    align-items: center; 
+    margin: 0;
+    max-height: 85vh;
+    max-width: 85vw;
+    overflow: scroll;
+  }
+  .right{
+    padding: 50px;
+    line-height: 1.8;
+    margin: 0 auto;
+    text-align: center;
+    
+  }
+  .right label{
+    font-weight: bold;
+  }
+  .right input, .right select, .right textarea{
+    width: 100%; 
+    padding:5px; 
+    padding-left:5px; 
+    border-radius: 5px; 
+    border: 1px solid black
+  }
+  .right form{
+    color: black;
+    border-radius: 3px;
+    margin-bottom: 15px;
+    background: rgba(246, 246, 242, 1);
+    width: 100%;
+    line-height: 1.8; 
+  }
+  .right .btn{
+    background-color: #013365; 
+    border: #013365 solid;
+    font-family: myFirstFont;
+    font-weight: bold;
+    outline: none !important;
+  }
+  .left img{
+    
+  }
+  ::-webkit-scrollbar{
+    display: none;
+  }
+</style>
 
 <body>
-    <div class="wrapper">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <h2 class="mt-5"> Student Registration </h2>
-                    <p> Fill up the form </p>
-                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]).'?id='.$_GET["id"]; ?>" method="post">
-                        <div class="form-group">
-                        <?php
+  <div class="container no-gutters">
+    <div class="col-md-6 no-gutters">
+      <div class="left-box">
+        <a href="index.php"><img src="./img/back.png" style="position: absolute; top: 8px; left: 16px; width:50px;height: 50px;"></a>
+        <div class="left">
+          <h1>Student Registration</h1>
+          <p>Plan, Create, Celebrate: Events Made Easy</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 no-gutters">
+      <div class="right-box">
+        <div class="right">
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                <div class="form-group">
+                    <div class="form-group">
+                                <label>Last Name</label><br>
+                                <?php
+                                $id = $_GET['id'];
+                                $sql = "SELECT * FROM student_info WHERE stud_id = $id";
+                                $result = $mysqli->query($sql);
+                                $result = $result->fetch_array();
+                                $placeholder = $result['last_name'];
+                                $is_invalid = (!empty($last_name_err)) ? "is-invalid" : "";
+                                echo '<input type="text" name="last_name" class="form-control'.$is_invalid.'" value="'.$placeholder.'">';
+                                
+                            ?>
+                            <span class="invalid-feedback"><?php echo $last_name_err; ?></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <label>First Name</label><br>
+                                <?php
                             // i put this in every text field
                             // it gets the value of the element to edit
                             // every text field makes a database query
@@ -184,24 +292,10 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                                 echo '<input type="text" name="first_name" class="form-control'.$is_invalid.'" value="'.$placeholder.'">';
                             ?>
                             <span class="invalid-feedback"><?php echo $first_name_err; ?></span>
-                        </div>
-                        <div class="form-group">
-                            <label>Last Name</label>
-                            <?php
-                                $id = $_GET['id'];
-                                $sql = "SELECT * FROM student_info WHERE stud_id = $id";
-                                $result = $mysqli->query($sql);
-                                $result = $result->fetch_array();
-                                $placeholder = $result['last_name'];
-                                $is_invalid = (!empty($last_name_err)) ? "is-invalid" : "";
-                                echo '<input type="text" name="last_name" class="form-control'.$is_invalid.'" value="'.$placeholder.'">';
-                                
-                            ?>
-                            <span class="invalid-feedback"><?php echo $last_name_err; ?></span>
-                        </div>
-                        <div class="form-group">
-                            <label>Middle Initial (Optional)</label>
-                            <?php
+                            </div>
+                            <div class="col-md-4">
+                                <label>M.I.</label><br>
+                                <?php
                                 $id = $_GET['id'];
                                 $sql = "SELECT * FROM student_info WHERE stud_id = $id";
                                 $result = $mysqli->query($sql);
@@ -210,10 +304,12 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                                 echo '<input type="text" name="middle_initial" class="form-control" value="'.$placeholder.'">';
                             ?>
                             <span class="invalid-feedback"><?php echo $middle_initial_err; ?></span>
-                        </div>
-                        <div class="form-group">
-                            <label>Student Number</label>
-                            <?php
+                            </div>
+                        </div>        	
+                    </div>  
+                    <div class="form-group">
+                        <label>Student Number</label><br>
+                        <?php
                                 $id = $_GET['id'];
                                 $sql = "SELECT * FROM student_info WHERE stud_id = $id";
                                 $result = $mysqli->query($sql);
@@ -223,10 +319,12 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                                 echo '<input type="number" name="student_number" class="form-control'.$is_invalid.'" value="'.$placeholder.'">';
                             ?>
                             <span class="invalid-feedback"><?php echo $student_number_err; ?> </span>
-                        </div>
-                        <div class="form-group">
-                            <label>Program</label>
-                            <?php
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col">
+                              <label>Program</label>
+                              <?php
                                 $id = $_GET['id'];
                                 $sql = "SELECT * FROM student_info WHERE stud_id = $id";
                                 $result = $mysqli->query($sql);
@@ -243,13 +341,9 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                                     </select>';
                             ?>
                             <span class="invalid-feedback"><?php echo $program_err; ?></span>
-                            
-
-                                    
-
                             </div>
-                            <div class="form-group">
-                            <label>Current Year</label>
+                            <div class="col">
+                            <label>Year Level</label>
                             <?php
                                 $id = $_GET['id'];
                                 $sql = "SELECT * FROM student_info WHERE stud_id = $id";
@@ -266,14 +360,12 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                                 
                                     </select>';
                             ?>
-                        
-                                    
-
                             </div>
-                        
-                        <div class="form-group">
-                            <label>Email</label>
-                            <?php
+                        </div>        	
+                    </div>  
+                    <div class="form-group">
+                        <label>Email</label><br>
+                        <?php
                                 $id = $_GET['id'];
                                 $sql = "SELECT * FROM student_info WHERE stud_id = $id";
                                 $result = $mysqli->query($sql);
@@ -283,8 +375,8 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                                 echo '<input type="email" name="ue_email" class="form-control'.$is_invalid.'" value="'.$placeholder.'">';
                             ?>
                             <span class="invalid-feedback"><?php echo $ue_email_err; ?></span>
-                        </div>
-                        <div class="form-group">
+                    </div>
+                    <div class="form-group">
                             <label>Contact Number</label>
                             <?php
                                 $id = $_GET['id'];
@@ -296,10 +388,11 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                                 echo '<input type="number" name="contact_number" class="form-control'.$is_invalid.'" value="'.$placeholder.'">';
                             ?>
                             <span class="invalid-feedback"><?php echo $contact_number_err; ?></span>
-                            
-                            <input type="hidden" name="id" value="<?php echo trim($_GET["id"])?>">
                         </div>
-                        <input type="submit" class="btn btn-primary" value="Submit">
+                        
+                        <input type="hidden" name="id" value="<?php echo trim($_GET["id"])?>">
+                        </div>
+                        <input type="submit"  style="background-color: #CC1429; border: #CC1429 solid;" class="btn btn-primary" value="Submit">
                         
                     </form>
                 </div>
