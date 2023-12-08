@@ -52,11 +52,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     //Validate student number
     $input_student_number = trim($_POST["student_number"]);
+    $u = "SELECT student_number FROM student_info WHERE student_number ='$input_student_number'";
+    $uu = mysqli_query($con,$u);
     if (empty($input_student_number)) {
-        $student_number_err = "Please enter the student_number amount.";
+        $student_number_err = "Please enter the student number.";
     } elseif (!ctype_digit($input_student_number)) {
-        $student_number_err = "Please enter a positive integer value.";
-    } else {
+        $student_number_err = "Please enter a valid student number.";
+    } elseif (mysqli_num_rows($uu) > 0 ) {
+        $student_number_err = "Student number exist.";
+    }else{
         $student_number = $input_student_number;
     }
 
