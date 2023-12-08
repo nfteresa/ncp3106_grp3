@@ -20,9 +20,11 @@ $current_year_err = "";
 $ue_email_err = "";
 $contact_number_err = "";
 
+$con = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 // Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //Validate name
+
     $input_first_name = trim($_POST["first_name"]);
     if (empty($input_first_name)) {
         $first_name_err = "Please enter a name.";
@@ -46,22 +48,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $middle_initial = $input_middle_initial;
     } elseif (filter_var($input_middle_initial, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => "/^[a-zA-Z\s]+$/")))){
         $middle_initial = $input_middle_initial;
+        
     }   else {
         $middle_initial_err = "Please enter a valid middle_initial.";
     }   
 
     //Validate student number
+    
+    
     $input_student_number = trim($_POST["student_number"]);
     $u = "SELECT student_number FROM student_info WHERE student_number ='$input_student_number'";
     $uu = mysqli_query($con,$u);
     if (empty($input_student_number)) {
-        $student_number_err = "Please enter the student number.";
-    } elseif (preg_match('/^[0-9]{11}+$/', $input_student_number)) {
-        $contact_number = $input_contact_number;
+        $student_number_err = "Please enter y0ur student number.";
     } elseif (mysqli_num_rows($uu) > 0 ) {
         $student_number_err = "Student number exist.";
+    } elseif (preg_match('/^[0-9]{11}+$/', $input_student_number)) {
+        $student_number = $input_student_number;       
     }else{
-        $student_number = $input_student_number;
+        $student_number_err = "Please enter a valid student number.";
     }
 
     //Validate program
@@ -73,11 +78,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Validate current year
-    $current_year = $_POST["current_year"];
-    if (empty($current_year)){
+    $input_current_year = $_POST["current_year"];
+    if (empty($input_current_year)){
         $current_year_err = "Please enter your current year.";
     } else {
-        $current_year = $current_year;
+        $current_year = $input_current_year;
     }
 
 
@@ -102,13 +107,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Check input errors before inserting in database
-    if (empty($first_name_err) && empty($last_name_err) && empty($student_number_err) && empty($program_err) && empty($current_year_err) && empty($ue_email_err) && empty($contact_number_err)) {
+    if (empty($first_name_err) && empty($last_name_err) && empty($middle_initial_err) && empty($student_number_err) && empty($program_err) && empty($current_year_err) && empty($ue_email_err) && empty($contact_number_err)) {
         // Prepare an insert statement
-        $sql = "INSERT INTO stud_info (first_name, last_name, middle_initial, student_number, program, current_year, ue_email, contact_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO student_info (first_name, last_name, middle_initial, student_number, program, current_year, ue_email, contact_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         if ($stmt = $mysqli->prepare($sql)) {
             // Bind variables to the prepared statement as parameters
-            $stmt->bind_param("ssssssss", $param_first_name, $param_last_name, $param_middle_initial, $param_student_number, $param_program, $param_current_year, $param_ue_email, $param_contact_number);
+            $stmt->bind_param("sssissss", $param_first_name, $param_last_name, $param_middle_initial, $param_student_number, $param_program, $param_current_year, $param_ue_email, $param_contact_number);
 
             // Set parameters
             $param_first_name = $first_name;
@@ -138,7 +143,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $mysqli->close();
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -330,7 +334,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                     <div class="form-group">
                             <label>Contact Number</label>
-                            <input type="number" name="contact_number"  name="contact_number" class="form-control" <?php echo (!empty($contact_number_err)) ? 'is-invalid' : ''; ?> value="<?php echo $contact_number; ?>">
+                            <input type="number" name="contact_number"  name="contact_number" class="form-control <?php echo (!empty($contact_number_err)) ? 'is-invalid' : ''; ?> value="<?php echo $contact_number; ?>">
                             <span class="invalid-feedback"><?php echo $contact_number_err; ?></span>  
                         </div>
                         
