@@ -238,7 +238,7 @@
                                 }
                             } else {
                                 //error message here if $result doesnt have rows
-                                echo "no rows found";
+                                echo 'No results for "'.$search.'"';
                             }
                         } else {
                             // error message here if we didnt get a $result
