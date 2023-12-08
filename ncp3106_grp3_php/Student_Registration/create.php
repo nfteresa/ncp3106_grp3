@@ -42,10 +42,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $input_middle_initial = trim($_POST["middle_initial"]);
-    if (!filter_var($input_middle_initial, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => "/^[a-zA-Z\s]+$/")))){
-        $middle_initial_err = "Please enter a valid middle_initial.";
-    } else {
+    if (empty($input_middle_initial)){
         $middle_initial = $input_middle_initial;
+    } elseif (filter_var($input_middle_initial, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => "/^[a-zA-Z\s]+$/")))){
+        $middle_initial = $input_middle_initial;
+    }   else {
+        $middle_initial_err = "Please enter a valid middle_initial.";
     }   
 
     //Validate student number
@@ -94,7 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Check input errors before inserting in database
-    if (empty($first_name_err) && empty($last_name_err) && empty($middle_initial_err) && empty($student_number_err) && empty($program_err) && empty($current_year_err) && empty($ue_email_err) && empty($contact_number_err)) {
+    if (empty($first_name_err) && empty($last_name_err) && empty($student_number_err) && empty($program_err) && empty($current_year_err) && empty($ue_email_err) && empty($contact_number_err)) {
         // Prepare an insert statement
         $sql = "INSERT INTO stud_info (first_name, last_name, middle_initial, student_number, program, current_year, ue_email, contact_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -267,19 +269,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="form-group">
                                 <label>Last Name</label><br>
                                 <input name="last_name" type="text" class="form-control <?php echo (!empty($last_name_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $last_name; ?>">
-                                <span class="invalid-feedback"><?php echo $end_time_err; ?></span>
+                                <span class="invalid-feedback"><?php echo $last_name_err; ?></span>
                     </div>
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md-8">
                                 <label>First Name</label><br>
                                 <input name="first_name" type="text" class="form-control <?php echo (!empty($first_name_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $first_name; ?>">
-                                <span class="invalid-feedback"><?php echo $start_time_err; ?></span>
+                                <span class="invalid-feedback"><?php echo $first_name_err; ?></span>
                             </div>
                             <div class="col-md-4">
                                 <label>M.I.</label><br>
-                                <input name="middle_initial" type="text" class="form-control <?php echo (!empty($last_name_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $last_name; ?>">
-                                <span class="invalid-feedback"><?php echo $end_time_err; ?></span>
+                                <input name="middle_initial" type="text" class="form-control <?php echo (!empty($middle_initial_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $middle_initial; ?>">
+                                <span class="invalid-feedback"><?php echo $middle_initial_err; ?></span>
                             </div>
                         </div>        	
                     </div>  
