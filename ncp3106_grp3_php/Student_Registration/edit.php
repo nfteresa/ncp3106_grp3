@@ -127,7 +127,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
         }
 
         // Close statement
-        $stmt->close();
+        //$stmt->close();
     }
 
     // Close connection
@@ -143,7 +143,16 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
             empty($_GET["id"]) ? header("location: error.php") : "";
         ?>
 
-
+<style>
+        .wrapper {
+            width: 600px;
+            margin: 0 auto;
+        }     
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        display: none;
+      }
+    </style>
 <head>
     <meta charset="UTF-8">
     <title>Create Record</title>
