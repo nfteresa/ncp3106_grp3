@@ -12,25 +12,19 @@
 
     <style>
         .carousel {
-            width: 95vw;
+            width: 70vw;
         }
         .carousel-item {
-            height: 95vh;
+            height: 70vh;
         }    
 
             .carousel-item > img {
-                height: 95vh;
                 object-fit: cover;    
             }
                 
-        .wrapper {
-            height:100%;
-            margin: 0 auto;
-        }
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
+            height: 100vh;
         }
 
         header {
@@ -38,13 +32,6 @@
             color: white;
             text-align: center;
             padding: 1em;
-        }
-
-        .container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            padding: 2em;
         }
 
         .card {
@@ -66,8 +53,13 @@
         }
     </style>
 </head>
-<body>
-    <div class="wrapper d-flex justify-content-center my-3">
+<body style="background-image: url(../Event_Creation/img/bg2.png)">
+  <div class="container-fluid p-5" >
+    <div class="row row-cols-1 row-cols-md-1 border py-3 bg-primary" style="border-radius:1vw">
+      <div class="col d-flex justify-content-center border-bottom align-items-center mb-3">
+        <h1> Welcome Admin! </h1>
+      </div>
+      <div class="col d-flex justify-content-center align-items-center">
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
               <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -122,7 +114,9 @@
               <span class="sr-only">Next</span>
             </a>
           </div>
+        </div>
+      </div>
     </div>
-
+  </div>
 </body>
 </html>
