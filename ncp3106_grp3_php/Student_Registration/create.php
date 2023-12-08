@@ -1,6 +1,6 @@
 <?php
 // Include config file
-require_once "../config.php";
+require_once "config.php";
 
 // Define variables and initialize with empty values
 $first_name = "";
@@ -27,18 +27,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $input_first_name = trim($_POST["first_name"]);
     if (empty($input_first_name)) {
-        $first_name_err = "Please enter a name.";
+        $first_name_err = "Please enter your first name.";
     } elseif (!filter_var($input_first_name, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => "/^[a-zA-Z\s]+$/")))) {
-        $first_name_err = "Please enter a valid name.";
+        $first_name_err = "Please enter a valid first name.";
     } else {
         $first_name = $input_first_name;
     }
 
     $input_last_name = trim($_POST["last_name"]);
     if (empty($input_last_name)) {
-        $last_name_err = "Please enter a last_name.";
+        $last_name_err = "Please enter your last name.";
     } elseif (!filter_var($input_last_name, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => "/^[a-zA-Z\s]+$/")))) {
-        $last_name_err = "Please enter a valid last_name.";
+        $last_name_err = "Please enter a valid last name.";
     } else {
         $last_name = $input_last_name;
     }
@@ -50,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $middle_initial = $input_middle_initial;
         
     }   else {
-        $middle_initial_err = "Please enter a valid middle_initial.";
+        $middle_initial_err = "Please enter a valid middle initial.";
     }   
 
     //Validate student number
@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $u = "SELECT student_number FROM student_info WHERE student_number ='$input_student_number'";
     $uu = mysqli_query($con,$u);
     if (empty($input_student_number)) {
-        $student_number_err = "Please enter y0ur student number.";
+        $student_number_err = "Please enter your student number.";
     } elseif (mysqli_num_rows($uu) > 0 ) {
         $student_number_err = "Student number exist.";
     } elseif (preg_match('/^[0-9]{11}+$/', $input_student_number)) {
@@ -329,12 +329,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>  
                     <div class="form-group">
                         <label>Email</label><br>
-                        <input name="ue_email" type="email" class="form-control <?php echo (!empty($ue_email_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $ue_email; ?>">
+                        <input name="ue_email" type="email" placeholder ="example@ue.edu.ph" class="form-control <?php echo (!empty($ue_email_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $ue_email; ?>">
                         <span class="invalid-feedback"><?php echo $ue_email_err; ?></span>
                     </div>
                     <div class="form-group">
                             <label>Contact Number</label>
-                            <input type="number" name="contact_number"  name="contact_number" class="form-control <?php echo (!empty($contact_number_err)) ? 'is-invalid' : ''; ?> value="<?php echo $contact_number; ?>">
+                            <input type="number" name="contact_number" placeholder="09*********" class="form-control <?php echo (!empty($contact_number_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $contact_number; ?>">
                             <span class="invalid-feedback"><?php echo $contact_number_err; ?></span>  
                         </div>
                         
