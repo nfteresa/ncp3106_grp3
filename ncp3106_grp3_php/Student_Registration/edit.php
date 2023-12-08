@@ -96,7 +96,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
     }
 
     // Check input errors before inserting in database
-    if (empty($first_name_err) && empty($last_name_err) && empty($middle_initial_err) && empty($student_number_err) && empty($program_err) && empty($current_year_err) && empty($ue_email_err) && empty($contact_number_err)) {
+    if (empty($first_name_err) && empty($last_name_err) && empty($student_number_err) && empty($program_err) && empty($current_year_err) && empty($ue_email_err) && empty($contact_number_err)) {
         // Prepare an insert statement
         $sql = "UPDATE student_info SET first_name=?, last_name=?, middle_initial=?, student_number=?, program=?, current_year=?, ue_email=?, contact_number=? WHERE stud_id =?";
 
@@ -183,6 +183,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                                 $is_invalid = (!empty($first_name_err)) ? "is-invalid" : "";
                                 echo '<input type="text" name="first_name" class="form-control'.$is_invalid.'" value="'.$placeholder.'">';
                             ?>
+                            <span class="invalid-feedback"><?php echo $first_name_err; ?></span>
                         </div>
                         <div class="form-group">
                             <label>Last Name</label>
@@ -194,7 +195,9 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                                 $placeholder = $result['last_name'];
                                 $is_invalid = (!empty($last_name_err)) ? "is-invalid" : "";
                                 echo '<input type="text" name="last_name" class="form-control'.$is_invalid.'" value="'.$placeholder.'">';
+                                
                             ?>
+                            <span class="invalid-feedback"><?php echo $last_name_err; ?></span>
                         </div>
                         <div class="form-group">
                             <label>Middle Initial (Optional)</label>
@@ -206,6 +209,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                                 $placeholder = $result['middle_initial'];
                                 echo '<input type="text" name="middle_initial" class="form-control" value="'.$placeholder.'">';
                             ?>
+                            <span class="invalid-feedback"><?php echo $middle_initial_err; ?></span>
                         </div>
                         <div class="form-group">
                             <label>Student Number</label>
