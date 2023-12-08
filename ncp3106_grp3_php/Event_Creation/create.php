@@ -164,6 +164,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   body {
     background-image: url("./img/bg.png");
     background-size: cover;
+    height: 100vh;
   }
   .container{
     display: flex;
@@ -254,85 +255,87 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </style>
 </head>
 <body>
-  <div class="container no-gutters">
-    <div class="col-md-6 no-gutters">
-      <div class="left-box">
-        <a href="index.php"><img src="./img/back2.png" style="position: absolute; top: 8px; left: 16px; width:50px;height: 50px;"></a>
-        <div class="left">
-          <h1>Register Event</h1>
-          <p>Plan, Create, Celebrate: Events Made Easy</p>
+  <div class="container-fluid h-100 d-flex justify-content-center align-items-center">
+    <div class="container">
+      <div class="col-md-6 px-0">
+        <div class="left-box">
+          <a href="index.php"><img src="./img/back.png" style="position: absolute; top: 8px; left: 16px; width:50px;height: 50px;"></a>
+          <div class="left">
+            <h1>Register Event</h1>
+            <p>Plan, Create, Celebrate: Events Made Easy</p>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="col-md-6 no-gutters">
-      <div class="right-box">
-        <div class="right">
-          <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-            <div class="form-group">
-                <div class="form-group">
-                    <label>Event Name</label><br>
-                    <input type="text" class="form-control <?php echo (!empty($event_name_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $event_name; ?>" name="event_name" required="required">
-                    <span class="invalid-feedback"><?php echo $event_name_err; ?></span>
-                </div>
-                <div class="form-group">
-                    <label>Event Description</label><br>
-                    <textarea type="text" class="form-control <?php echo (!empty($event_description_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $event_description; ?>" name="event_description" required="required"></textarea>
-                    <span class="invalid-feedback"><?php echo $event_description_err; ?></span>
-                </div>
-                <div class="form-group">
-                  <div class="row">
-                    <div class="col">
-                      <label>Event Type</label>
-                      <select name="event_type" class="form-control <?php echo (!empty($event_type_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $event_type; ?>" required="required">
-                      <span class="invalid-feedback"><?php echo $event_type_err; ?></span>
-                          <option value="Other">Other</option>
-                          <option value="Meetup">Meetup</option>
-                          <option value="Seminar">Seminar</option>
-                          <option value="Sports">Sports</option>
-                          <option value="Convention">Convention</option>
-                      </select>
+      <div class="col-md-6 px-0">
+        <div class="right-box">
+          <div class="right">
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+              <div class="form-group">
+                  <div class="form-group">
+                      <label>Event Name</label><br>
+                      <input type="text" class="form-control <?php echo (!empty($event_name_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $event_name; ?>" name="event_name" required="required">
+                      <span class="invalid-feedback"><?php echo $event_name_err; ?></span>
                   </div>
-                      <div class="col">
-                        <label>Event Date</label><br>
-                        <input type="date" class="form-control <?php echo (!empty($date_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $date; ?>" name="date" required="required">
-                        <span class="invalid-feedback"><?php echo $date_err; ?></span>
-                    </div>
-                  </div>        	
-                </div>  
-                <div class="form-group">
+                  <div class="form-group">
+                      <label>Event Description</label><br>
+                      <textarea type="text" class="form-control <?php echo (!empty($event_description_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $event_description; ?>" name="event_description" required="required"></textarea>
+                      <span class="invalid-feedback"><?php echo $event_description_err; ?></span>
+                  </div>
+                  <div class="form-group">
                     <div class="row">
+                      <div class="col">
+                        <label>Event Type</label>
+                        <select name="event_type" class="form-control <?php echo (!empty($event_type_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $event_type; ?>" required="required">
+                        <span class="invalid-feedback"><?php echo $event_type_err; ?></span>
+                            <option value="Other">Other</option>
+                            <option value="Meetup">Meetup</option>
+                            <option value="Seminar">Seminar</option>
+                            <option value="Sports">Sports</option>
+                            <option value="Convention">Convention</option>
+                        </select>
+                    </div>
                         <div class="col">
-                            <label>Start Time</label><br>
-                            <input type="time" class="form-control <?php echo (!empty($start_time_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $start_time; ?>" name="start_time" required="required">
-                            <span class="invalid-feedback"><?php echo $start_time_err; ?></span>
-                        </div>
-                        <div class="col">
-                            <label>End Time</label><br>
-                            <input type="time" class="form-control <?php echo (!empty($end_time_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $end_time; ?>" name="end_time" required="required">
-                            <span class="invalid-feedback"><?php echo $end_time_err; ?></span>
-                        </div>
+                          <label>Event Date</label><br>
+                          <input type="date" class="form-control <?php echo (!empty($date_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $date; ?>" name="date" required="required">
+                          <span class="invalid-feedback"><?php echo $date_err; ?></span>
+                      </div>
                     </div>        	
-                </div>  
-                </div>
-                <div class="form-group">
-                  <label>Registration Fee</label><br>
-                  <input type="number" class="form-control <?php echo (!empty($registration_fee_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $registration_fee; ?>" name="registration_fee" required="required">
-                  <span class="invalid-feedback"><?php echo $registration_fee_err; ?></span>
-                </div>
-                <div class="form-group">
-                  <label>Venue</label><br>
-                  <input type="text" class="form-control <?php echo (!empty($venue_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $venue; ?>" name="venue" required="required">
-                  <span class="invalid-feedback"><?php echo $venue_err; ?></span>
-                </div>
-                <div class="form-group">
-                  <label>Officer in Charge</label><br>
-                  <input type="text" class="form-control <?php echo (!empty($oic_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $oic; ?>"name="oic" required="required">
-                  <span class="invalid-feedback"><?php echo $oic_err; ?></span>
-                </div>
-                <div class="form-group">
-                        <button type="submit" class="btn btn-success btn-lg btn-block">Register</button>
-                </div>
-            </form>
+                  </div>  
+                  <div class="form-group">
+                      <div class="row">
+                          <div class="col">
+                              <label>Start Time</label><br>
+                              <input type="time" class="form-control <?php echo (!empty($start_time_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $start_time; ?>" name="start_time" required="required">
+                              <span class="invalid-feedback"><?php echo $start_time_err; ?></span>
+                          </div>
+                          <div class="col">
+                              <label>End Time</label><br>
+                              <input type="time" class="form-control <?php echo (!empty($end_time_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $end_time; ?>" name="end_time" required="required">
+                              <span class="invalid-feedback"><?php echo $end_time_err; ?></span>
+                          </div>
+                      </div>        	
+                  </div>  
+                  </div>
+                  <div class="form-group">
+                    <label>Registration Fee</label><br>
+                    <input type="number" class="form-control <?php echo (!empty($registration_fee_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $registration_fee; ?>" name="registration_fee" required="required">
+                    <span class="invalid-feedback"><?php echo $registration_fee_err; ?></span>
+                  </div>
+                  <div class="form-group">
+                    <label>Venue</label><br>
+                    <input type="text" class="form-control <?php echo (!empty($venue_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $venue; ?>" name="venue" required="required">
+                    <span class="invalid-feedback"><?php echo $venue_err; ?></span>
+                  </div>
+                  <div class="form-group">
+                    <label>Officer in Charge</label><br>
+                    <input type="text" class="form-control <?php echo (!empty($oic_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $oic; ?>"name="oic" required="required">
+                    <span class="invalid-feedback"><?php echo $oic_err; ?></span>
+                  </div>
+                  <div class="form-group">
+                          <button type="submit" class="btn btn-success btn-lg btn-block">Register</button>
+                  </div>
+              </form>
+          </div>
         </div>
       </div>
     </div>

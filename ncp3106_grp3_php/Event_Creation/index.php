@@ -63,6 +63,9 @@
 
         body {
             font-family: myFirstFont;
+            height: 100%;
+            overflow-y: hidden;
+            background-image: url("./img/bg.png");
         }
 
         .wrapper {
@@ -101,6 +104,52 @@
         .input-group-button {
             margin-right: 10vw;
         }
+        .box{
+            background: rgba(246, 246, 242, 1);
+            border-radius: 3px;
+            box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+            margin-top:20px;
+        }
+        .box1{
+            background: rgba(246, 246, 242, 1);
+            border-radius: 3px;
+            box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+        }
+        .card-box{
+            overflow:auto;
+            height: 68vh;
+            padding:20px;
+        }
+        .container{
+            width: 100%;
+            height: 100%;
+        }
+        .search-box{
+            padding: 20px;
+            border-bottom-style:double;
+            border-bottom-color: white;
+            background-image: url("./img/bg3.png");
+            background-size:cover;
+        }
+        ::-webkit-scrollbar{
+            display: none;
+        }
+        .title{
+            font-family:myFirstFont;
+            text-align: center;
+        }
+        .title h1{
+            color: #013365;
+            font-weight:bold;
+        }
+        .title p{
+            color: #013365;
+        }
+        .center{
+            border-radius:100px;
+            width:100%;
+            height:100%;
+        }
     </style>
     <script>
         $(document).ready(function() {
@@ -111,82 +160,99 @@
 
 <body>
     <div class="wrapper my-5">
-        <div class="container">
-            <div class = "row">
-                <div class="col-md-12">
-                    <form method="post">
-                        <div class="input-group input-group-lg">
-                            <button class="btn btn-danger btn-lg position-relative input-group-button"><a href="../Dashboard/dashboard.html" class="stretched-link"></a>Back</button>
-                            <input type="text" style= "border-radius:3px" name="search" class="form-control <?php echo (!empty($search_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $search?>"/>
-                            <button type="submit" class="btn btn-primary">Search</button>
-                        </div>
-                    </form>
+        <div class="box">
+            <div class="search-box">
+                <div class = "row" >
+                    <div class="col-md-12">
+                        <form method="post">
+                            <div class="input-group input-group-lg">
+                                <a class=" btn-lg position-relative input-group-button" href="../Dashboard/dashboard.php"><img src="./img/back.png" style="position: absolute; top: 0px; left: 0px; width:50px;height: 50px;"></a>
+                                
+                                <input type="text" style= "border-radius:3px" name="search" class="form-control <?php echo (!empty($search_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $search?>"/>
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-primary">Search</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-            <?php
-            if (!empty($search)) {
-                $sql = "SELECT * FROM event_info WHERE event_name LIKE ? OR 
-                                                       event_type LIKE ? OR
-                                                       venue LIKE ? OR
-                                                       oic LIKE ?";
+            <div class="box1 pt-3">
+                <div class="container">
+                    <div class="container-fluid card-box">
+                    <div class="title">
+                        <h1>
+                            Welcome!<br>
+                        </h1>
+                        <p>
+                            Edit an Event or Create One!
+                        </p>
+                    </div>
+                    <?php
+                        if (!empty($search)) {
+                            $sql = "SELECT * FROM event_info WHERE event_name LIKE ? OR 
+                                                                event_type LIKE ? OR
+                                                                venue LIKE ? OR
+                                                                oic LIKE ?";
 
-                if ($stmt = $mysqli->prepare($sql)) {
-                    $stmt->bind_param("ssss", $param_search, $param_search, $param_search, $param_search);
-                    $param_search = "%" . $search  . "%";
-                    if ($stmt->execute()) {
-                        $result = $stmt->get_result();
-                    } else {
-                        echo "search failed";
-                    }
-                }
-                $stmt->close();
-            } else {
-                $sql = "SELECT * FROM event_info";
-                if ($stmt = $mysqli->prepare($sql)) {
-                    if ($stmt->execute()) {
-                        $result = $stmt->get_result();
-                    } else {
-                        echo "search failed";
-                    }
-                }
-                $stmt->close();
-            }
+                            if ($stmt = $mysqli->prepare($sql)) {
+                                $stmt->bind_param("ssss", $param_search, $param_search, $param_search, $param_search);
+                                $param_search = "%" . $search  . "%";
+                                if ($stmt->execute()) {
+                                    $result = $stmt->get_result();
+                                } else {
+                                    echo "search failed";
+                                }
+                            }
+                            $stmt->close();
+                        } else {
+                            $sql = "SELECT * FROM event_info";
+                            if ($stmt = $mysqli->prepare($sql)) {
+                                if ($stmt->execute()) {
+                                    $result = $stmt->get_result();
+                                } else {
+                                    echo "search failed";
+                                }
+                            }
+                            $stmt->close();
+                        }
 
-            if (!empty($result)) {
-                if ($result->num_rows > 0) {
-                    echo "<div class='row row-cols-1 row-cols-md-3 g-4 mt-5'>";
-                    while ($rows = $result->fetch_array()) {
-                        echo "<div class='col mt-5 px-4'>";
-                        echo "<div class='card h-100 position-relative'>";
-                        echo '<img class="card-img-top" src="./img/'.$rows['event_type'].'.png" alt="'.$rows['event_type'].'">'; 
-                        echo '<div class="card-img-overlay">';
-                        echo "<h5 class='card-title'>".$rows['event_name']."</h5>";                
-                        echo '<p class="card-text">'.$rows['event_type'].'</p>';
-            
-                        echo '</div>';
-                        echo "<div class='card-body'>";         
-                        echo "<a class='stretched-link' href='view.php?event_id=".urlencode($rows['event_id'])."&flag=view'></a>";
-                        echo "<p class='card-text'>".$rows['event_description']."</p>";
-                        echo "</div>";
-                        echo "</div>";
-                        echo "</div>";
-                    }
-                } else {
-                    //error message here if $result doesnt have rows
-                    echo "no rows found";
-                }
-            } else {
-                // error message here if we didnt get a $result
-                echo "no results found";
-            }
-            ?>
-        </div>
-        <footer class="footer mt-auto py-3 fixed-bottom">
-            <div class="rounded-circle bg-primary d-flex justify-content-center align-items-center">
-            <h1 class="beeg-text">+</h1>
-                <a class="stretched-link" href="create.php">
-                </a>
+                        if (!empty($result)) {
+                            if ($result->num_rows > 0) {
+                                echo "<div class='row row-cols-1 row-cols-md-3 g-4 mt-5'>";
+                                while ($rows = $result->fetch_array()) {
+                                    echo "<div class='col mt-5 px-4'>";
+                                    echo "<div class='card h-100 position-relative'>";
+                                    echo '<img class="card-img-top" src="./img/'.$rows['event_type'].'.png" alt="'.$rows['event_type'].'">'; 
+                                    echo '<div class="card-img-overlay">';
+                                    echo "<h5 class='card-title'>".$rows['event_name']."</h5>";                
+                                    echo '<p class="card-text">'.$rows['event_type'].'</p>';
+                        
+                                    echo '</div>';
+                                    echo "<div class='card-body'>";         
+                                    echo "<a class='stretched-link' href='view.php?event_id=".urlencode($rows['event_id'])."&flag=view'></a>";
+                                    echo "<p class='card-text'>".$rows['event_description']."</p>";
+                                    echo "</div>";
+                                    echo "</div>";
+                                    echo "</div>";
+                                }
+                            } else {
+                                //error message here if $result doesnt have rows
+                                echo "no rows found";
+                            }
+                        } else {
+                            // error message here if we didnt get a $result
+                            echo "no results found";
+                        }
+                        ?>
+                    </div>
+                    <footer class="footer mt-auto py-3 fixed-bottom">
+                        <div class="rounded-circle bg-primary d-flex justify-content-center align-items-center">
+                            <a class="stretched-link" href="create.php"> <img src="./img/create.png" class="center"></a>
+                            </a>
+                        </div>
+                    </footer>
+                </div>
             </div>
-        </footer>
-    </div>
+        </div>
 </body>
