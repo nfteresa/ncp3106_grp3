@@ -9,7 +9,7 @@
         $password = $_POST["password"];
 
         if (($username == "admin") && ($password == "admin")) {
-            header("location: ../Event_Creation/index.php");
+            header("location: ../Dashboard/dashboard.php?from=event");
         } else {
             $username = "";
             $password = "";
