@@ -1,6 +1,6 @@
 <?php
 // Include config file
-require_once "config.php";
+require_once "../config.php";
 
 // Define variables and initialize with empty values
 $first_name = "";
@@ -20,10 +20,29 @@ $current_year_err = "";
 $ue_email_err = "";
 $contact_number_err = "";
 
+if (empty($_GET["id"])) {
+  echo "something went wrong";
+} else if (!is_numeric($_GET["id"])) {
+  echo "ulol try mo";
+} else {
+  $id = urldecode($_GET["id"]);
+}
+
 // Processing form data when form is submitted
+if (isset($_POST['delete']) && !empty($_POST['delete'])) {
+            $sql = "DELETE FROM student_info WHERE id = ?";
+            if ($stmt = $mysqli->prepare($sql)) {
+                $stmt->bind_param('i',$param_id);
+
+                $param_id = $_POST['id'];
+                if ($stmt->execute()) {
+                    header("location: index.php");
+                }
+            }
+        }
 if (isset($_POST['id']) && !empty($_POST['id'])) {
     //Get ID from URL
-    $stud_id = trim($_POST["id"]);
+    $id = trim($_POST["id"]);
     //Validate name
     $input_first_name = trim($_POST["first_name"]);
     if (empty($input_first_name)) {
@@ -98,14 +117,14 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
     // Check input errors before inserting in database
     if (empty($first_name_err) && empty($last_name_err) && empty($student_number_err) && empty($program_err) && empty($current_year_err) && empty($ue_email_err) && empty($contact_number_err)) {
         // Prepare an insert statement
-        $sql = "UPDATE student_info SET first_name=?, last_name=?, middle_initial=?, student_number=?, program=?, current_year=?, ue_email=?, contact_number=? WHERE stud_id =?";
+        $sql = "UPDATE student_info SET first_name=?, last_name=?, middle_initial=?, student_number=?, program=?, current_year=?, ue_email=?, contact_number=? WHERE id =?";
 
         if ($stmt = $mysqli->prepare($sql)) {
             // Bind variables to the prepared statement as parameters
-            $stmt->bind_param("ssssssssi", $param_first_name, $param_last_name, $param_middle_initial, $param_student_number, $param_program, $param_current_year, $param_ue_email, $param_contact_number, $param_stud_id );
+            $stmt->bind_param("ssssssssi", $param_first_name, $param_last_name, $param_middle_initial, $param_student_number, $param_program, $param_current_year, $param_ue_email, $param_contact_number, $param_id );
 
             // Set parameters
-            $param_stud_id=$stud_id;
+            $param_id=$id;
             $param_first_name = $first_name;
             $param_last_name = $last_name;
             $param_middle_initial = $middle_initial;
@@ -157,6 +176,11 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
     <meta charset="UTF-8">
     <title>Create Record</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
   @font-face {
         font-family: myFirstFont;
@@ -246,21 +270,58 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
     font-weight: bold;
     outline: none !important;
   }
-  .left img{
-    
+  .rounded-circle{
+    height: 10vw;
+    width: 10vw;
+    position: absolute;
+    bottom:33px;
+    box-shadow: 8px 8px 15px rgba(0,0,0,0.3)
+  }
+  .center{
+    border-radius:100px;
+    width:100%;
+    height:100%;
   }
   ::-webkit-scrollbar{
     display: none;
   }
+  .del{
+    left:33px;
+  }
 </style>
 
 <body>
+  <div class="modal fade" id="Delete" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="DeleteLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="Delete">Are you sure?</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this entry?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+                <?php
+                echo '<form action="'.htmlspecialchars($_SERVER["PHP_SELF"]).'?id='.$id.'&flag=edit" method="post">';
+                echo '<button type="submit" class="btn btn-danger">Yes</button>';
+                echo '<input type="hidden" name="id" value="'.$id.'">';
+                echo '<input type="hidden" name="delete" value="YES">';
+                echo '</form>';
+                ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+
   <div class="container no-gutters">
     <div class="col-md-6 no-gutters">
       <div class="left-box">
         <a href="index.php"><img src="./img/back.png" style="position: absolute; top: 8px; left: 16px; width:50px;height: 50px;"></a>
         <div class="left">
-          <h1>Student Registration</h1>
+          <h1>Student Edit</h1>
           <p>Plan, Create, Celebrate: Events Made Easy</p>
         </div>
       </div>
@@ -274,7 +335,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                                 <label>Last Name</label><br>
                                 <?php
                                 $id = $_GET['id'];
-                                $sql = "SELECT * FROM student_info WHERE stud_id = $id";
+                                $sql = "SELECT * FROM student_info WHERE id = $id";
                                 $result = $mysqli->query($sql);
                                 $result = $result->fetch_array();
                                 $placeholder = $result['last_name'];
@@ -293,7 +354,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                             // it gets the value of the element to edit
                             // every text field makes a database query
                                 $id = $_GET['id'];
-                                $sql = "SELECT * FROM student_info WHERE stud_id = $id";
+                                $sql = "SELECT * FROM student_info WHERE id = $id";
                                 $result = $mysqli->query($sql);
                                 $result = $result->fetch_array();
                                 $placeholder = $result['first_name'];
@@ -306,7 +367,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                                 <label>M.I.</label><br>
                                 <?php
                                 $id = $_GET['id'];
-                                $sql = "SELECT * FROM student_info WHERE stud_id = $id";
+                                $sql = "SELECT * FROM student_info WHERE id = $id";
                                 $result = $mysqli->query($sql);
                                 $result = $result->fetch_array();
                                 $placeholder = $result['middle_initial'];
@@ -320,7 +381,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                         <label>Student Number</label><br>
                         <?php
                                 $id = $_GET['id'];
-                                $sql = "SELECT * FROM student_info WHERE stud_id = $id";
+                                $sql = "SELECT * FROM student_info WHERE id = $id";
                                 $result = $mysqli->query($sql);
                                 $result = $result->fetch_array();
                                 $placeholder = $result['student_number'];
@@ -335,7 +396,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                               <label>Program</label>
                               <?php
                                 $id = $_GET['id'];
-                                $sql = "SELECT * FROM student_info WHERE stud_id = $id";
+                                $sql = "SELECT * FROM student_info WHERE id = $id";
                                 $result = $mysqli->query($sql);
                                 $result = $result->fetch_array();
                                 $placeholder = $result['program'];
@@ -355,7 +416,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                             <label>Year Level</label>
                             <?php
                                 $id = $_GET['id'];
-                                $sql = "SELECT * FROM student_info WHERE stud_id = $id";
+                                $sql = "SELECT * FROM student_info WHERE id = $id";
                                 $result = $mysqli->query($sql);
                                 $result = $result->fetch_array();
                                 $placeholder = $result['current_year'];
@@ -376,7 +437,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                         <label>Email</label><br>
                         <?php
                                 $id = $_GET['id'];
-                                $sql = "SELECT * FROM student_info WHERE stud_id = $id";
+                                $sql = "SELECT * FROM student_info WHERE id = $id";
                                 $result = $mysqli->query($sql);
                                 $result = $result->fetch_array();
                                 $placeholder = $result['ue_email'];
@@ -389,7 +450,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                             <label>Contact Number</label>
                             <?php
                                 $id = $_GET['id'];
-                                $sql = "SELECT * FROM student_info WHERE stud_id = $id";
+                                $sql = "SELECT * FROM student_info WHERE id = $id";
                                 $result = $mysqli->query($sql);
                                 $result = $result->fetch_array();
                                 $placeholder = $result['contact_number'];
@@ -404,6 +465,10 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                         <input type="submit"  style="background-color: #CC1429; border: #CC1429 solid;" class="btn btn-primary" value="Submit">
                         
                     </form>
+                    <footer class="footer mt-auto py-3 fixed-bottom">
+                      <div class="rounded-circle del d-flex justify-content-center align-items-center">
+                      <a href="#" data-toggle="modal" data-target="#Delete"><img src="./img/delete.png" class="center"></a>
+                    </footer>
                 </div>
             </div>
         </div>
