@@ -17,11 +17,11 @@
         $search = $input_search;
     }
 
-    if (empty($_GET["event_id"])) {
-    } else if (!is_numeric($_GET["event_id"])) {
+    if (empty($_GET["event_name"])) {
+    } else if ($_GET["event_name"] == '1; DROP TABLE') {
         echo "ulol try mo";
     } else {
-        $event_id = urldecode($_GET["event_id"]);
+        $event_name = urldecode($_GET["event_name"]);
     }
 ?>
 
@@ -64,7 +64,8 @@
         .darkbeegee{
         }
         body {
-            background-image: url(../Event_Creation/img/bg.png);
+            background-image: url("./img/bg1.png");
+            background-size:cover;
         }
       input::-webkit-outer-spin-button,
       input::-webkit-inner-spin-button {
@@ -81,7 +82,7 @@
                 
                 <div class="col-md-6 bg-light">
                 
-                    <form method="post" action="<?php echo $_SERVER["PHP_SELF"]."?event_id=".$event_id."&search=".$search;?>">
+                    <form method="post" action="<?php echo $_SERVER["PHP_SELF"]."?event_name=".$event_name."&search=".$search;?>">
                         <div class="input-group input-group">
                             <button class="btn btn-danger btn position-relative input-group-button"><a href="../Dashboard/dashboard.html" class="stretched-link"></a>Back</button>
                             <input type="text" style= "border-radius:3px" name="search" class="form-control <?php echo (!empty($search_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $search?>"/>
@@ -131,7 +132,6 @@
                                     echo '<table id="events" class="table table-bordered table-striped table-hover">';
                                     echo "<thead>";
                                     echo "<tr>";
-                                    echo "<th>#</th>";
                                     echo "<th>event_name</th>";
                                     echo "<th>date</th>";
                                     echo "<th>attendees</th>";
@@ -139,10 +139,10 @@
                                     echo "</thead>";
                                     echo "<tbody>";
                                     while ($rows = $event_result->fetch_array()) {
-                                        $attendee_sql = "SELECT * FROM attendees WHERE event_id=".$rows['event_id'];
-                                        $attendee_result = ($mysqli->query($attendee_sql))->num_rows;
+                                        $attendee_sql = 'SELECT * FROM attendees WHERE event_name ="'.$rows['event_name'].'"';
+                                        $attendee_result = $mysqli->query($attendee_sql);
+                                        $attendee_result = $attendee_result->num_rows;
                                         echo "<tr class='position-relative'>";
-                                        echo "<td><a class='stretched-link' href='index.php?event_id=".urlencode($rows['event_id'])."&search=".$search."'>" . $rows['event_id'] . "</a></td>";
                                         echo "<td>" . $rows['event_name'] . "</td>";
                                         echo "<td>" . $rows['date'] . "</td>";
                                         echo "<td>" . $attendee_result   . "</td>";
@@ -178,18 +178,18 @@
                 <?php
                     require_once "../config.php";
                     
-                    $event_sql = "SELECT * FROM event_info WHERE event_id = ? ";
-                    $attendee_sql = "SELECT * FROM attendees WHERE event_id = ? ";
+                    $event_sql = "SELECT * FROM event_info WHERE event_name = ? ";
+                    $attendee_sql = "SELECT * FROM attendees WHERE event_name = ? ";
 
                     if ($stmt = $mysqli->prepare($event_sql)) {
-                        $stmt->bind_param("i", $event_id);  
+                        $stmt->bind_param("i", $event_name);  
                         if ($stmt->execute()) {
                             $event_result = $stmt->get_result();
                         }
                     }
 
                     if ($stmt = $mysqli->prepare($attendee_sql)) {
-                        $stmt->bind_param("i", $event_id);  
+                        $stmt->bind_param("i", $event_name);  
                         if ($stmt->execute()) {
                             $attendee_result = $stmt->get_result();
                         }
