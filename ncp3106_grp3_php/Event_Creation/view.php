@@ -681,8 +681,8 @@
                             echo '<a class=" btn-lg position-relative input-group-button" href="../Event_Creation/index.php"><img src="./img/back.png" style="position: absolute; top: 0px; left: 0px; width:50px;height: 50px;"></a>';
                             
                             echo "<h1>".$rows['event_name']."</h1>";
-                            echo "<p>".$rows['event_description']."</p>";
-                            echo "<p>".$rows['event_type']."</p>";
+                            echo "<p class='fst-italic'>".$rows['event_type']."</p>";
+                            echo "<p class='mt-5'>".$rows['event_description']."</p>";
                             
                             echo '<form method="post">';
                             echo '<div class="input-group input-group-lg">';
