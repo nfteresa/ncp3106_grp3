@@ -106,6 +106,131 @@
         .input-group-button {
             margin-right: 10vw;
         }
+        @font-face {
+        font-family: myFirstFont;
+        src: url("../font/Montserrat-VariableFont_wght.ttf");
+        }
+        
+        .card-img-top {
+            width: 100%;
+            height: 25vh;
+            object-fit: cover;
+        }
+
+        .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited, .bg-primary {
+            border-color: #013365 !important;
+            background-color: #013365 !important;
+        }
+
+        .card-img-overlay > h5 {
+            color: white;
+            font-weight: bold;
+        }
+
+        .card-img-overlay > p {
+            color: white;
+            font-weight: light;
+            font-style: italic;
+        }
+
+        h1 {
+            color: white;
+        }
+
+        .btn-primary {
+
+        }
+
+        body {
+            font-family: myFirstFont;
+            height: 100%;
+            overflow-y: hidden;
+            background-image: url("./img/bg4.png");
+        }
+
+        .wrapper {
+            width: 90vw;
+            margin: 0 auto;
+        }
+
+        footer {
+            width: 100%;
+            height: 20vh;
+        }
+        .rounded-circle{
+            height: 10vw;
+            width: 10vw;
+            position: absolute;
+            right:33px;
+            bottom:33px;
+            box-shadow: 8px 8px 15px rgba(0,0,0,0.3)
+        }
+
+        .beeg-text{
+            font-size: 12vw;
+            right: 50px;
+            top: 0px;
+        }
+
+        .bi-plus {
+            height:50px;
+            width:50px;
+        }
+
+        table tr td:last-child {
+            width: 120px;
+        }
+
+        .input-group-button {
+            margin-right: 10vw;
+        }
+        .box{
+            background: rgba(246, 246, 242, 1);
+            border-radius: 5px;
+            box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+            margin-top:20px;
+        }
+        .box1{
+            background: rgba(246, 246, 242, 1);
+            border-radius: 3px;
+            box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+        }
+        .card-box{
+            overflow:auto;
+            height: 68vh;
+            padding:20px;
+        }
+        .container{
+            width: 100%;
+            height: 100%;
+        }
+        .search-box{
+            padding: 20px;
+            border-bottom-style:double;
+            border-bottom-color: white;
+            background-image: url("./img/left.png");
+            background-size:cover;
+            border-radius:5px;
+        }
+        ::-webkit-scrollbar{
+            display: none;
+        }
+        .title{
+            font-family:myFirstFont;
+            text-align: center;
+        }
+        .title h1{
+            color: #013365;
+            font-weight:bold;
+        }
+        .title p{
+            color: #013365;
+        }
+        .center{
+            border-radius:100px;
+            width:100%;
+            height:100%;
+        }
     </style>
     <script>
         $(document).ready(function() {
@@ -115,77 +240,95 @@
 </head>
 
 <body>
-    <div class="wrapper my-5">
-        <div class="container">
-            <div class = "row">
-                <div class="col-md-12">
-                    <form method="post">
-                        <div class="input-group input-group-lg">
-                            <button class="btn btn-danger btn-lg position-relative input-group-button"><a href="../Dashboard/dashboard.html" class="stretched-link"></a>Back</button>
-                            <input type="text" style= "border-radius:3px" name="search" class="form-control <?php echo (!empty($search_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $search?>"/>
-                            <button type="submit" class="btn btn-primary">Search</button>
-                        </div>
-                    </form>
+<div class="wrapper my-5">
+        <div class="box">
+            <div class="search-box">
+                <div class = "row" >
+                    <div class="col-md-12">
+                        <form method="post">
+                            <div class="input-group input-group-lg">
+                                <a class=" btn-lg position-relative input-group-button" href="../Dashboard/dashboard.html"><img src="./img/back.png" style="position: absolute; top: 0px; left: 0px; width:50px;height: 50px;"></a>
+                                
+                                <input type="text" style= "border-radius:3px" name="search" class="form-control <?php echo (!empty($search_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $search?>"/>
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-primary">Search</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-            <h1 class="text-dark mt-5 font-weight-bold">Choose an event for registration</h1>
-            <?php
-            if (!empty($search)) {
-                $sql = "SELECT * FROM event_info WHERE event_name LIKE ? OR 
-                                                       event_type LIKE ? OR
-                                                       venue LIKE ? OR
-                                                       oic LIKE ?";
+            <div class="box1 pt-3">
+                <div class="container">
+                    <div class="container-fluid card-box">
+                    <div class="title">
+                        <h1 class="mt-2 font-weight-bold">Choose an event for registration</h1>
+                    </div>
+                    <?php
+                        if (!empty($search)) {
+                            $sql = "SELECT * FROM event_info WHERE event_name LIKE ? OR 
+                                                                event_type LIKE ? OR
+                                                                venue LIKE ? OR
+                                                                oic LIKE ?";
 
-                if ($stmt = $mysqli->prepare($sql)) {
-                    $stmt->bind_param("ssss", $param_search, $param_search, $param_search, $param_search);
-                    $param_search = "%" . $search  . "%";
-                    if ($stmt->execute()) {
-                        $result = $stmt->get_result();
-                    } else {
-                        echo "search failed";
-                    }
-                }
-                $stmt->close();
-            } else {
-                $sql = "SELECT * FROM event_info";
-                if ($stmt = $mysqli->prepare($sql)) {
-                    if ($stmt->execute()) {
-                        $result = $stmt->get_result();
-                    } else {
-                        echo "search failed";
-                    }
-                }
-                $stmt->close();
-            }
+                            if ($stmt = $mysqli->prepare($sql)) {
+                                $stmt->bind_param("ssss", $param_search, $param_search, $param_search, $param_search);
+                                $param_search = "%" . $search  . "%";
+                                if ($stmt->execute()) {
+                                    $result = $stmt->get_result();
+                                } else {
+                                    echo "search failed";
+                                }
+                            }
+                            $stmt->close();
+                        } else {
+                            $sql = "SELECT * FROM event_info";
+                            if ($stmt = $mysqli->prepare($sql)) {
+                                if ($stmt->execute()) {
+                                    $result = $stmt->get_result();
+                                } else {
+                                    echo "search failed";
+                                }
+                            }
+                            $stmt->close();
+                        }
 
-            if (!empty($result)) {
-                if ($result->num_rows > 0) {
-                    echo "<div class='row row-cols-1 row-cols-md-3 g-4 mt-3 '>";
-                    while ($rows = $result->fetch_array()) {
-                        echo "<div class='col mt-5 px-4'>";
-                        echo "<div class='card h-100 position-relative'>";
-                        echo '<img class="card-img-top" src="./img/'.$rows['event_type'].'.png" alt="'.$rows['event_type'].'">'; 
-                        echo '<div class="card-img-overlay">';
-                        echo "<h5 class='card-title'>".$rows['event_name']."</h5>";                
-                        echo '<p class="card-text">'.$rows['event_type'].'</p>';
+                        if (!empty($result)) {
+                            if ($result->num_rows > 0) {
+                                echo "<div class='row row-cols-1 row-cols-md-3 g-4 mt-3 '>";
+                                while ($rows = $result->fetch_array()) {
+                                    echo "<div class='col mt-5 px-4'>";
+                                    echo "<div class='card h-100 position-relative'>";
+                                    echo '<img class="card-img-top" src="./img/'.$rows['event_type'].'.png" alt="'.$rows['event_type'].'">'; 
+                                    echo '<div class="card-img-overlay">';
+                                    echo "<h5 class='card-title'>".$rows['event_name']."</h5>";                
+                                    echo '<p class="card-text">'.$rows['event_type'].'</p>';
+                        
+                                    echo '</div>';
+                                    echo "<div class='card-body'>";         
+                                    echo "<a class='stretched-link' href='registration.php?event_id=".urlencode($rows['event_id'])."'></a>";
+                                    echo "<p class='card-text'>".$rows['event_description']."</p>";
+                                    echo "</div>";
+                                    echo "</div>";
+                                    echo "</div>";
+                                }
+                            } else {
+                                //error message here if $result doesnt have rows
+                                echo "no rows found";
+                            }
+                        } else {
+                            // error message here if we didnt get a $result
+                            echo "no results found";
+                        }
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    
             
-                        echo '</div>';
-                        echo "<div class='card-body'>";         
-                        echo "<a class='stretched-link' href='registration.php?event_id=".urlencode($rows['event_id'])."'></a>";
-                        echo "<p class='card-text'>".$rows['event_description']."</p>";
-                        echo "</div>";
-                        echo "</div>";
-                        echo "</div>";
-                    }
-                } else {
-                    //error message here if $result doesnt have rows
-                    echo "no rows found";
-                }
-            } else {
-                // error message here if we didnt get a $result
-                echo "no results found";
-            }
-            ?>
         </div>
     </div>
 </body>

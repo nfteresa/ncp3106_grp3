@@ -78,9 +78,10 @@
         src: url("../font/Montserrat-VariableFont_wght.ttf");
   }
   body {
-    background-image: url("./img/bg.png");
+    background-image: url("./img/bg4.png");
     background-size: cover;
     height: 100vh;
+    overflow:hidden;
   }
   .container{
     display: flex;
@@ -93,7 +94,7 @@
     border-radius: 10px 0px 0px 10px; 
     height: 100%;
     background-size:cover ;
-    background-image:url('./img/bg3.png');
+    background-image:url('./img/left.png');
     justify-content: center; 
     align-items: center; 
     max-height: 85vh;
@@ -101,11 +102,11 @@
   }
   .left{
     text-align: center;
-    padding: 200px 0;
+    padding: 170px 0;
   }
   .left h1,p{
     font-family: myFirstFont;
-    color: white;
+    color: #013365;
   }
   .left-box a{
     position: absolute; 
@@ -171,37 +172,33 @@
 </style>
 </head>
 <body>
-    <div class="container h-100">
-        <div class="container d-flex justify-content-center">
-            <div class="col-md-6 px-0">
-                <div class="left-box">
-                    <a href="index.php"><img src="./img/back2.png" style="position: absolute; 
-                        top: 8px; left: 16px; 
-                        width:50px; 
-                        height: 50px;"></a>
-                    <div class="left">
-                        <h1><?php echo $event_name ?></h1>
-                        <p><?php echo $event_description ?></p>
-                        <h1>payment</h1>
-                        <p><?php echo $payment;?></p>
-                    </div>
-                </div>
-                </div>
-                <div class="col-md-6 px-0">
-                <div class="right-box">
-                    <div class="right d-flex justify-content-center align-items-center h-100">
-                        <form method="post">
-                            <div class="form-group">
-                                <label>Student Number</label>
-                                <input type="number" name="student_number" class="form-control <?php echo (!empty($student_number_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $student_number?>"/>
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
-                        </form>
-                        
-                    </div>
-                </div>
-            </div>
+  <div class="container-fluid h-100 d-flex justify-content-center align-items-center">
+    <div class="container">
+      <div class="col-md-6 px-0">
+        <div class="left-box">
+          <a href="index.php"><img src="./img/back.png" style="position: absolute; top: 8px; left: 16px; width:50px;height: 50px;"></a>
+          <div class="left">
+            <p style="font-weight:bold; font-size:30px"><?php echo $event_name ?></p>
+            <p><?php echo $event_description ?></p>
+            <p style="font-weight:bold; font-size:30px">payment</p>
+            <p><?php echo $payment;?></p>
+          </div>
         </div>
+      </div>
+      <div class="col-md-6 px-0">
+        <div class="right-box">
+          <div class="right">
+            <form method="post">
+              <div class="form-group">
+                <label>Student Number</label>
+                <input type="number" name="student_number" class="form-control <?php echo (!empty($student_number_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $student_number?>"/>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+              </form>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </body>
 </html>
