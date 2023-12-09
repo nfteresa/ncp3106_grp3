@@ -195,7 +195,7 @@
                   <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
                 </ol>
                 <div class="carousel-inner">
-                  <div class="carousel-item <?php echo((($_POST['from']) == 'event') ? 'active' : '';) ?>">
+                  <div class="carousel-item <?php echo((($_GET['from']) == 'event') ? 'active' : ''); ?>">
                     <img class="d-block w-100 position-relative" src="../Event_Creation/img/bg.png" alt="First slide"  style="border-radius:5px ;">
                     <a class="stretched-link" href="../Event_Creation/index.php"></a>
                     </img>
@@ -204,7 +204,7 @@
                         <p>Create events!</p>
                       </div>
                     </div>
-                  <div class="carousel-item <?php echo((($_POST['from']) == 'student') ? 'active' : '';) ?>">
+                  <div class="carousel-item <?php echo((($_GET['from']) == 'student') ? 'active' : ''); ?>">
                     <img class="d-block w-100 position-relative" src="./img/bg2.png" alt="Second slide"  style="border-radius:5px ;">
                     <a class="stretched-link" href="../Student_Registration/index.php"></a>
                     </img>
@@ -213,7 +213,7 @@
                         <p>Register Students!</p>
                     </div>
                   </div>
-                  <div class="carousel-item <?php echo((($_POST['from']) == 'attendee') ? 'active' : '';) ?>">
+                  <div class="carousel-item <?php echo((($_GET['from']) == 'attendee') ? 'active' : ''); ?>">
                     <img class="d-block w-100 position-relative" src="./img/bg.png" alt="Third slide"  style="border-radius:5px ;">
                     <a class="stretched-link" href="../Attendee_Registration/index.php"></a>
                     </img>
@@ -222,7 +222,7 @@
                         <p>Registrate Attendees!</p>
                     </div>
                   </div>
-                  <div class="carousel-item <?php echo((($_POST['from']) == 'report') ? 'active' : '';) ?>">
+                  <div class="carousel-item <?php echo((($_GET['from']) == 'report') ? 'active' : ''); ?>">
                     <img class="d-block w-100 position-relative" src="./img/bg3.png" alt="Fourth slide"  style="border-radius:5px ;">
                     <a class="stretched-link" href="../Report_Generation/index.php"></a>
                     </img>
