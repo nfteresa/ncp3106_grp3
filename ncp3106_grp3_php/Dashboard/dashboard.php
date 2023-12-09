@@ -19,11 +19,11 @@
             width: 70vw;
         }
         .carousel-item {
-            height: 70vh;
+            height: 75vh;
         }    
 
             .carousel-item > img {
-                object-fit: cover;    
+                object-fit: contain;    
             }
                 
         body {
@@ -139,7 +139,6 @@
             overflow:hidden;
             height: 75vh;
             width: 80vw;
-            padding:20px;
             border-radius: 5px;
             box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
         }
@@ -180,14 +179,13 @@
 <body>
   <div class="container-fluid ">
     <div class="container d-flex justify-content-center align-items-center">
-      <div class="box">
+      <div class="box no-gutters">
         <div class="col no-gutters search-box ">
           <a class=" btn-lg position-relative input-group-button" href="../Login/index.php"><img src="./img/back.png" style="position: absolute; top: 0px; left: 0px; width:50px;height: 50px;"></a>
           <h1 style="text-align: center; font-family: myFirstFont; font-weight: bold;">Welcome Admin!</h1>
         </div>
         <div class="col no-gutters card-box">
-          <div class="col d-flex justify-content-center align-items-center">
-            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <div id="carouselExampleIndicators" class="carousel slide w-100 h-100" data-ride="carousel">
                 <ol class="carousel-indicators">
                   <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
                   <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -241,7 +239,7 @@
                   <span class="sr-only">Next</span>
                 </a>
             </div>
-          </div>
+
         </div>
         </div>
         </div>
