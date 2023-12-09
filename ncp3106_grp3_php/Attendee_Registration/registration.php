@@ -23,10 +23,16 @@
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $input_student_number = trim($_POST["student_number"]);
+        $u = "SELECT student_number FROM student_info WHERE student_number ='$input_student_number'";
+        $uu = $mysqli->query($u);
         if (empty($input_student_number)) {
-            $student_number_err = "Please put in a student number";
-        } else {
-            $student_number = $input_student_number;
+            $student_number_err = "Please enter your student number.";
+        } elseif (mysqli_num_rows($uu) > 0 ) {
+            $student_number_err = "Student number exist.";
+        } elseif (preg_match('/^[0-9]{11}+$/', $input_student_number)) {
+            $student_number = $input_student_number;       
+        }else{
+            $student_number_err = "Please enter a valid student number.";
         }
 
         if (empty($student_number_err)) {   
@@ -47,7 +53,6 @@
             }
             $stmt->close();
         } else {
-            echo $student_number_err;
         }
         $mysqli->close();
     } 
@@ -186,12 +191,15 @@
         </div>
       </div>
       <div class="col-md-6 px-0">
-        <div class="right-box">
-          <div class="right">
+        <div class="right-box d-flex justify-content-center">
+          <div class="right container-fluid">
             <form method="post">
               <div class="form-group">
                 <label>Student Number</label>
                 <input type="number" name="student_number" class="form-control <?php echo (!empty($student_number_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $student_number?>"/>
+                <span class="invalid-feedback"> <?php echo $student_number_err; ?> </span>
+              </div>
+              <div class="form-group">
                 <button type="submit" class="btn btn-primary">Submit</button>
               </div>
               </form>
