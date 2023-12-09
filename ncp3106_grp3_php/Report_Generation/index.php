@@ -84,7 +84,7 @@
                 
                     <form method="post" action="<?php echo $_SERVER["PHP_SELF"]."?event_name=".$event_name."&search=".$search;?>">
                         <div class="input-group input-group">
-                            <button class="btn btn-danger btn position-relative input-group-button"><a href="../Dashboard/dashboard.php?from=attendee" class="stretched-link"></a>Back</button>
+                            <button class="btn btn-danger btn position-relative input-group-button"><a href="../Dashboard/dashboard.php?from=report" class="stretched-link"></a>Back</button>
                             <input type="text" style= "border-radius:3px" name="search" class="form-control <?php echo (!empty($search_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $search?>"/>
                             <button type="submit" class="btn btn-primary">Search</button>
                         </div>
