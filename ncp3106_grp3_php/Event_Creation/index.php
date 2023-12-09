@@ -180,13 +180,10 @@
             <div class="box1 pt-3">
                 <div class="container">
                     <div class="container-fluid card-box">
-                    <div class="title">
+                    <div class="title mt-3">
                         <h1>
-                            Welcome!<br>
+                            Edit an event or create one!<br>
                         </h1>
-                        <p>
-                            Edit an Event or Create One!
-                        </p>
                     </div>
                     <?php
                         if (!empty($search)) {
