@@ -186,13 +186,10 @@
                 <div class="box1 pt-3">
                     <div class="container">
                         <div class="container-fluid card-box">
-                        <div class="title">
+                        <div class="title mb-4">
                             <h1>
-                                Welcome!<br>
+                                Edit student info or register one<br>
                             </h1>
-                            <p>
-                                Edit Student Info or Register One!
-                            </p>
                         </div>
                         <?php
                             require_once '../config.php';
