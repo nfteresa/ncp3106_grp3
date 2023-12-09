@@ -38,8 +38,8 @@
         }
 
         .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited, .bg-primary {
-            border-color: #013365 !important;
-            background-color: #013365 !important;
+            border-color: #cc1529 !important;
+            background-color: #cc1529 !important;
         }
 
         .card-img-overlay > h5 {
