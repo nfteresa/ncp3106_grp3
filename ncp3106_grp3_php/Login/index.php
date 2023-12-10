@@ -96,17 +96,14 @@
         <div class="col-md-7 no-gutters">
             <div class="left d-flex justify-content-center align-items-center">
                 <section style="text-align: center;">
-                    <h1 style="color: #f6f6f2; font-family: myFirstFont; font-weight: bold;">Event Mastery Made Easy: Effortless Creation,<br> Seamless Success.</h1>
-                    <p style="color: #f6f6f2;">Memorable Gatherings in just a few clicks</p>
+                    <h1 style="color: #f6f6f2; font-family: myFirstFont; font-weight: bold;">Plan, Create, Celebrate:<br> Events Made Easy</h1>
+                    <p style="color: #f6f6f2;">Create events, register students and generate reports.</p>
                 </section>
             </div>
         </div>
         <div class="col-md-5 no-gutters">
             <div class="right d-flex justify-content-center align-items-center">
                 <div style="margin-left: 40px;">
-                    <div class="center">
-                        <img src="logo.png" style="border-radius:50px;height:50px; width:50px; position: absolute; top: 5px; center: 5px; text-align: center; margin-left:100px; margin-top:30px;">
-                    </div>
                     <form action = "<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" style="line-height: 25px;">
                         <section>
                             <h1 style="margin-top: 30px; text-align: center; color: #013365; font-weight: bold;">Welcome</h1>
