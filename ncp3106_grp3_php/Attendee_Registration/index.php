@@ -146,6 +146,7 @@
             height: 100%;
             overflow-y: hidden;
             background-image: url("./img/bg4.png");
+            background-size:cover;
         }
 
         .wrapper {
