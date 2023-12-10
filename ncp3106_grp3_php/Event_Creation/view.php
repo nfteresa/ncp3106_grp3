@@ -446,8 +446,7 @@
             margin-right: 10vw;
         }
         .box{
-            background: rgba(246, 246, 242, 1);
-            border-radius: 3px;
+            border-radius: 10px 10px 0px 0px;
             box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
         }
         .box1{
@@ -675,7 +674,7 @@
                             echo '<div class="wrapper my-5">';
                             
                             echo '<div class="box">';
-                            echo '<div class="search-box" style="background-image: url(./img/'.$rows["event_type"].'.png); background-size: cover;">';
+                            echo '<div class="search-box" style="background-image: url(./img/'.$rows["event_type"].'.png); background-size: cover; border-radius: 10px 10px 0px 0px;">';
                             echo '<div class = "row" >';
                             echo '<div class="col-md-12">';
                             echo '<a class=" btn-lg position-relative input-group-button" href="../Event_Creation/index.php"><img src="./img/back.png" style="position: absolute; top: 0px; left: 0px; width:50px;height: 50px;"></a>';
