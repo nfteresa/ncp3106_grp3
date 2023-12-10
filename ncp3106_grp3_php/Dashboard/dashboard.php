@@ -67,7 +67,7 @@
             background-color: #013365 !important;
         }
 
-        .card-img-overlay > h5 {
+        .card-img-overlay > h2 {
             color: white;
             font-weight: bold;
         }
@@ -139,7 +139,7 @@
             overflow:hidden;
             height: 75vh;
             width: 80vw;
-            border-radius: 5px;
+            border-radius: 0px 0px 5px 5px;
             box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
         }
         .container{
@@ -152,7 +152,7 @@
             border-bottom-color: black;
             background-image: url("../Event_Creation/img/bg3.png");
             background-size:cover;
-            border-radius: 5px;
+            border-radius: 5px 5px 0px 0px;
             box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
         }
         ::-webkit-scrollbar{
@@ -173,6 +173,10 @@
             border-radius:100px;
             width:100%;
             height:100%;
+        }
+
+        h2 {
+            font-weight: bold;
         }
     </style>
 </head>
@@ -198,7 +202,7 @@
                     <a class="stretched-link" href="../Event_Creation/index.php"></a>
                     </img>
                     <div class="carousel-caption d-none d-md-block">
-                        <h5>Event Creation</h5>
+                        <h2>Event Creation</h2>
                         <p>Create events!</p>
                       </div>
                     </div>
@@ -207,7 +211,7 @@
                     <a class="stretched-link" href="../Student_Registration/index.php"></a>
                     </img>
                     <div class="carousel-caption d-none d-md-block">
-                        <h5>Student Registration</h5>
+                        <h2>Student Registration</h2>
                         <p>Register Students!</p>
                     </div>
                   </div>
@@ -216,7 +220,7 @@
                     <a class="stretched-link" href="../Attendee_Registration/index.php"></a>
                     </img>
                     <div class="carousel-caption d-none d-md-block">
-                        <h5>Attendee Registration</h5>
+                        <h2>Attendee Registration</h2>
                         <p>Registrate Attendees!</p>
                     </div>
                   </div>
@@ -225,7 +229,7 @@
                     <a class="stretched-link" href="../Report_Generation/index.php"></a>
                     </img>
                     <div class="carousel-caption d-none d-md-block">
-                        <h5>Report Generation</h5>
+                        <h2>Report Generation</h2>
                         <p>Generate Reports!</p>
                     </div>
                   </div>
