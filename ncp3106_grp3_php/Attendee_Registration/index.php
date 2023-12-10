@@ -146,7 +146,6 @@
             height: 100%;
             overflow-y: hidden;
             background-image: url("./img/bg4.png");
-            background-size:cover;
         }
 
         .wrapper {
@@ -223,6 +222,7 @@
         .title h1{
             color: #013365;
             font-weight:bold;
+
         }
         .title p{
             color: #013365;
@@ -262,9 +262,11 @@
             <div class="box1 pt-3">
                 <div class="container">
                     <div class="container-fluid card-box">
-                    <div class="title">
-                        <h1 class="mt-2 font-weight-bold">Choose an event for registration</h1>
-                    </div>
+                        <div style="border-bottom-style: double;" class="pb-4">
+                            <div class="title">
+                                <h1 class="mt-2 font-weight-bold">Choose an event for registration</h1>
+                            </div>
+                        </div>
                     <?php
                         if (!empty($search)) {
                             $sql = "SELECT * FROM event_info WHERE event_name LIKE ? OR 
