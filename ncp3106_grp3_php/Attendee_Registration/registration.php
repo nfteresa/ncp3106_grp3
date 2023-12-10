@@ -83,6 +83,7 @@
         src: url("../font/Montserrat-VariableFont_wght.ttf");
   }
   body {
+    font-family: myFirstFont;
     background-image: url("./img/bg4.png");
     background-size: cover;
     height: 100vh;
@@ -128,7 +129,7 @@
     height: 100%;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3); 
     border-radius: 0px 10px 10px 0px; 
-    background: rgba(246, 246, 242, 1);
+    background: white;
     justify-content: center; 
     align-items: center; 
     margin: 0;
@@ -157,7 +158,6 @@
     color: black;
     border-radius: 3px;
     margin-bottom: 15px;
-    background: rgba(246, 246, 242, 1);
     width: 100%;
     line-height: 1.8; 
   }
@@ -195,7 +195,10 @@
           <div class="right container-fluid">
             <form method="post">
               <div class="form-group">
-                <label>Student Number</label>
+                <img src="./img/qr.png"/>
+              </div>
+              <div class="form-group">
+                <h5 style="font-weight: bold; color: #013365;">Student Number</h5>
                 <input type="number" name="student_number" class="form-control <?php echo (!empty($student_number_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $student_number?>"/>
                 <span class="invalid-feedback"> <?php echo $student_number_err; ?> </span>
               </div>
