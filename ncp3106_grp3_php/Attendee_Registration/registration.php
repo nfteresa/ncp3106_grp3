@@ -185,7 +185,7 @@
           <div class="left">
             <p style="font-weight:bold; font-size:30px"><?php echo $event_name ?></p>
             <p><?php echo $event_description ?></p>
-            <p style="font-weight:bold; font-size:30px">payment</p>
+            <p style="font-weight:bold; font-size:25px">Registration Fee</p>
             <p><?php echo $payment;?></p>
           </div>
         </div>
