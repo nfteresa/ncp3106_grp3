@@ -181,9 +181,11 @@
                 <div class="container">
                     <div class="container-fluid card-box">
                     <div class="title mt-3">
-                        <h1>
-                            Edit an event or create one!<br>
-                        </h1>
+                         <div style="border-bottom-style: double;" class="pb-4">
+                            <div class="title">
+                                <h1 class="mt-2 font-weight-bold">Edit an Event or Create one!</h1>
+                            </div>
+                        </div>
                     </div>
                     <?php
                         if (!empty($search)) {
