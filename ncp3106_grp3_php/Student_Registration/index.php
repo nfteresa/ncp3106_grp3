@@ -187,9 +187,12 @@
                     <div class="container">
                         <div class="container-fluid card-box">
                         <div class="title mb-4">
-                            <h1>
-                                Edit student info or register one<br>
-                            </h1>
+                            <div style="border-bottom-style: double;" class="pb-4">
+                                <div class="title">
+                                    <h1 class="mt-2 font-weight-bold">Edit Student Info or Register them.</h1>
+                                </div>
+                            </div>
+                        </div>
                         </div>
                         <?php
                             require_once '../config.php';
