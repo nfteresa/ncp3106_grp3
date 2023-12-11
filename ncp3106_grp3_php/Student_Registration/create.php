@@ -1,6 +1,6 @@
 <?php
 // Include config file
-require_once "../config.php";
+require_once "config.php";
 
 // Define variables and initialize with empty values
 $first_name = "";
@@ -297,33 +297,95 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>  
                     <div class="form-group">
                         <label>Student Number</label><br>
-                        <input name="student_number" type="number" class="form-control <?php echo (!empty($student_number_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $student_number; ?>">
+                        <input name="student_number" type="number " class="form-control <?php echo (!empty($student_number_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $student_number; ?>">
                         <span class="invalid-feedback"><?php echo $student_number_err; ?></span>
                     </div>
                     <div class="form-group">
                         <div class="row">
                             <div class="col">
                               <label>Program</label>
-                              <select name="program" name="program" class="form-control <?php echo (!empty($program_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $program; ?>">
-                              <span class="invalid-feedback"><?php echo $program_err; ?></span> 
-                              <option value="">Select program</option>
-                              <option value="CpE">Computer Engineering</option>
-                              <option value="ECE">Electrical Engineering</option>
-                              <option value="CE">Civil Engineering</option>
-                              <option value="ME">Mechanical Engineering</option>
-                              <option value="EE">Electronic Engineering</option>
-                              </select>
+                              <?php        
+                              echo '<select name="program" class="form-control '.(!empty($program_err) ? 'is-invalid' : '' ).'" value="'. $program.'">';
+                        
+                              $option1= '<option value="CpE">Computer Engineering</option>';
+                              $option2= '<option value="ECE">Electrical Engineering</option>';
+                              $option3= '<option value="CE">Civil Engineering</option>';
+                              $option4= '<option value="ME">Mechanical Engineering</option>';
+                              $option5= '<option value="EE">Electronic Engineering</option>';
+                              $option_list = array($option1,$option2,$option3,$option4,$option5);
+
+                              switch($program){
+                                case "CpE":
+                                  $i=0;
+                                  break;
+                                case "ECE":  
+                                  $i=1;
+                                  break;
+                                case "CE":  
+                                  $i=2;
+                                  break;
+                                case "ME":  
+                                  $i=3;
+                                  break;    
+                                case "EE":  
+                                  $i=4;
+                                  break; 
+                                
+                               
+                              }
+                              $j=count($option_list);
+                              while ($j>0){
+                                echo $option_list[$i];
+                                if ($i==4){
+                                  $i=0;
+                                }else {
+                                  $i +=1;
+                                }
+                                $j -=1;
+
+                              }
+                              echo"</select>"; ?>
                             </div>
                             <div class="col">
                             <label>Year Level</label>
-                        <select name="current_year" name="current_year" class="form-control <?php echo (!empty($current_year_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $current_year; ?>">
-                        <span class="invalid-feedback"><?php echo $current_year_err; ?></span>
-                            <option value="">Current Year</option>
-                            <option value="1st">1st</option>
-                            <option value="2nd">2nd</option>
-                            <option value="3rd">3rd</option>
-                            <option value="4th">4th</option>                       
-                        </select>
+                            <?php        
+                              echo '<select name="current_year" class="form-control '.(!empty($current_year_err) ? 'is-invalid' : '' ).'" value="'. $current_year.'">';
+                              $option1= '<option value="1st">    1st   </option>';
+                              $option2= '<option value="2nd">    2nd   </option>';
+                              $option3= '<option value="3rd">    3rd   </option>';
+                              $option4= '<option value="4th">    4th   </option>';
+                              
+                             
+                              $option_list = array($option1,$option2,$option3,$option4);
+
+                              switch($current_year){
+                                case "1st":
+                                  $i=0;
+                                  break;
+                                case "2nd":  
+                                  $i=1;
+                                  break;
+                                case "3rd":  
+                                  $i=2;
+                                  break;
+                                case "4th":  
+                                  $i=3;
+                                  break;    
+                                
+                               
+                              }
+                              $j=count($option_list);
+                              while ($j>0){
+                                echo $option_list[$i];
+                                if ($i==3){
+                                  $i=0;
+                                }else {
+                                  $i +=1;
+                                }
+                                $j -=1;
+
+                              }
+                              echo"</select>"; ?>
                             </div>
                         </div>        	
                     </div>  
