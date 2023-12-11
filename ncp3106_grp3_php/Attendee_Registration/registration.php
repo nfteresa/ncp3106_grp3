@@ -4,6 +4,9 @@
     $student_number = "";
     $input_student_number = "";
     $student_number_err = "";
+    $first_name = "";
+    $last_name = "";
+    $middle_initial = "";
     
 
     $event_id = urldecode($_GET["event_id"]);
@@ -21,14 +24,20 @@
         }
     }
 
+    
+
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $input_student_number = trim($_POST["student_number"]);
-        $u = "SELECT student_number FROM student_info WHERE student_number ='$input_student_number'";
+        $u = "SELECT student_number FROM attendees WHERE student_number ='$input_student_number' AND event_id='$event_id'";
         $uu = $mysqli->query($u);
+        $u = "SELECT student_number FROM student_info WHERE student_number ='$input_student_number'";
+        $uu2 = $mysqli->query($u);
         if (empty($input_student_number)) {
             $student_number_err = "Please enter your student number.";
+        } elseif (mysqli_num_rows($uu2) < 1 ) {
+            $student_number_err = "Student number does not exist in database";
         } elseif (mysqli_num_rows($uu) > 0 ) {
-            $student_number_err = "Student number exist.";
+            $student_number_err = "Student number already exists.";
         } elseif (preg_match('/^[0-9]{11}+$/', $input_student_number)) {
             $student_number = $input_student_number;       
         }else{
@@ -46,7 +55,7 @@
                 $param_student_number = $student_number;
 
                 if ($stmt->execute()) {
-                    header("location: registration.php?event_id=".urlencode($event_id)."&payment=".urlencode($payment));
+                    header("location: registration.php?event_id=".urlencode($event_id)."&payment=".urlencode($payment)."&sn=".urlencode($student_number));
                 } else {
                     echo "something went wrong ):";
                 }
@@ -54,8 +63,22 @@
             $stmt->close();
         } else {
         }
-        $mysqli->close();
     } 
+    $sql = "SELECT * FROM student_info WHERE student_number = ?";
+    if (!empty($_GET["sn"]) && empty($student_number_err)) {
+      if ($stmt = $mysqli->prepare($sql)) {
+        $stmt->bind_param('s',$param_student_number);
+        $param_student_number = urldecode($_GET['sn']);
+        if ($result = $stmt->execute()) {
+            $result = $stmt->get_result();
+            $result = $result->fetch_array();
+            $first_name = $result["first_name"];
+            $last_name = $result["last_name"];
+            $middle_initial = $result["middle_initial"];
+        }
+      } 
+    }
+    $mysqli->close();
 ?>
 
 <!DOCTYPE html>
@@ -195,12 +218,19 @@
           <div class="right container-fluid">
             <form method="post">
               <div class="form-group">
+                <p style="font-weight:bold; font-size:25px">Scan for payment on <?php echo $event_name ?></p>
                 <img src="./img/qr.png"/>
               </div>
               <div class="form-group">
                 <h5 style="font-weight: bold; color: #013365;">Student Number</h5>
                 <input type="number" name="student_number" class="form-control <?php echo (!empty($student_number_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $student_number?>"/>
                 <span class="invalid-feedback"> <?php echo $student_number_err; ?> </span>
+                <span class=""> <?php 
+                  if (!empty($last_name) && !empty($first_name)) {
+                    echo "".$last_name.", ".$first_name." ".$middle_initial.""; 
+                  } else {
+                  }
+                  ?> </span>
               </div>
               <div class="form-group">
                 <button type="submit" class="btn btn-primary">Submit</button>
