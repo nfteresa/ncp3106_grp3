@@ -28,7 +28,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Create Record</title>
+    <title>Report Generation</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
@@ -156,7 +156,7 @@
     <div class="container">
       <div class="col-md-6 px-0">
         <div class="left-box">
-            <form method="post" action="<?php echo $_SERVER["PHP_SELF"]."?event_id=".$event_id."&search=".$search;?>">
+            <form method="post">
                 <div class="input-group p-3" style="background-image:url(./img/bg2.png); border-radius: 10px 0px 0px 0px; ">
                     <div class="col-md-2">
                     <a class=" btn-lg position-relative input-group-button" href="../Dashboard/dashboard.php?from=report"><img src="./img/back.png" style="position: absolute; top: 10px; left: 0px; width:50px;height: 50px;"></a>
