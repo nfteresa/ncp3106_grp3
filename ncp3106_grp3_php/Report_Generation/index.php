@@ -225,11 +225,12 @@
                                 while ($rows = $event_result->fetch_array()) {
                                     $attendee_sql = 'SELECT * FROM attendees WHERE event_id ="'.$rows['event_id'].'"';
                                     $attendee_result = $mysqli->query($attendee_sql);
-                                    $attendee_result = $attendee_result->num_rows;
+                                    $attendee_count_sql = "SELECT COUNT(DISTINCT (student_number)) FROM attendees WHERE event_id = '".$rows["event_id"]."'";
+                                    $attendee_count = $mysqli->query($attendee_count_sql)->fetch_array()[0];
                                     echo "<tr class='position-relative'>";
                                     echo "<td>" . $rows['event_name'] . "<a class='stretched-link' href='index.php?event_id=".$rows['event_id']."&search=".$search."'></a></td>";
                                     echo "<td>" . $rows['date'] . "</td>";
-                                    echo "<td>" . $attendee_result   . "</td>";
+                                    echo "<td>" . $attendee_count  . "</td>";
                                     echo "</tr>";
                                 }
                                 echo "</tbody>";
@@ -267,6 +268,7 @@
                     
                     $event_sql = "SELECT * FROM event_info WHERE event_id = ? ";
                     $attendee_sql = "SELECT * FROM attendees WHERE event_id = ? ";
+                    $attendee_count_sql = "SELECT COUNT(DISTINCT (student_number)) FROM attendees WHERE event_id = ?";
 
                     if ($stmt = $mysqli->prepare($event_sql)) {
                         $stmt->bind_param("i", $event_id);  
@@ -282,17 +284,30 @@
                         }
                     }
 
+                    if ($stmt = $mysqli->prepare($attendee_count_sql)) {
+                        $stmt->bind_param("i", $event_id);  
+                        if ($stmt->execute()) {
+                            $attendee_count = $stmt->get_result()->fetch_array()[0];
+                        }
+                    }
+
                     $student_sql = "SELECT * FROM student_info";
                     $student_result = $mysqli->query($student_sql);
 
-                    $attendee_count = $attendee_result->num_rows;
                     $student_number_array = "";
-                    $payment_total = 0;
+                    
                     while ($attendee_rows = $attendee_result->fetch_array()) {
                         $student_number_array = $student_number_array . " " . $attendee_rows["student_number"];
-                        $payment_total += $attendee_rows["payment"];
                     }
+                    $payment_total = $attendee_rows*$attendee_count;
                     $student_number_array = explode(" ", $student_number_array);
+
+                    if ($stmt = $mysqli->prepare($attendee_sql)) {
+                        $stmt->bind_param("i", $event_id);  
+                        if ($stmt->execute()) {
+                            $attendee_result = $stmt->get_result();
+                        }
+                    }
 
                     if (($event_result) && ($attendee_result)) {
                         $event_rows = $event_result->fetch_array();
@@ -311,13 +326,14 @@
                         echo "<p>".$payment_total."</p>";
                         echo "</div>";
                         echo "</div>";
+                        echo "<div class='col'>";
+                        echo "<a href='expanded.php?event_id=".$event_id."'><button type='submit' class='btn btn-primary'>Expand</button></a>";
                         echo "</div>";
                         echo "</div>";
-                        
-                        
+                        echo "</div>";
 
-                        if ($student_result) {
-                            if($student_result->num_rows > 0) {
+                        if ($attendee_result) {
+                            if($attendee_result->num_rows > 0) {
                                 echo '<div class="row">';
                                 echo '<div class="container-fluid p-5">';
                                 echo '<table id="report" class="table table-bordered table-striped">';
@@ -326,17 +342,19 @@
                                 echo "<th>First Name</th>";
                                 echo "<th>Last Name</th>";
                                 echo "<th>Student Number</th>";
+                                echo "<th>Time In</th>";
+                                echo "<th>Time Out</th>";
                                 echo "</tr>";
                                 echo "</thead>";
-                                echo "<tbody>";
-                                while ($student_rows = $student_result->fetch_array()) {
-                                    if (!in_array($student_rows['student_number'],$student_number_array)) {
-                                        continue;
-                                    }
+                                echo "<tbody align='left'>";
+                                while ($attendee_rows = $attendee_result->fetch_array()) {
                                     echo "<tr>";
-                                    echo "<td>" . $student_rows['first_name'] . "</td>";
-                                    echo "<td>" . $student_rows['last_name'] . "</td>";
-                                    echo "<td>" . $student_rows['student_number'] . "</td>";
+                                    //Very hacky way, please improve
+                                    echo "<td>" . $mysqli->query("SELECT first_name FROM student_info WHERE student_number =".$attendee_rows['student_number'])->fetch_array()["first_name"] . "</td>";
+                                    echo "<td>" . $mysqli->query("SELECT last_name FROM student_info WHERE student_number =".$attendee_rows['student_number'])->fetch_array()["last_name"] . "</td>";
+                                    echo "<td>" . $attendee_rows['student_number'] . "</td>";
+                                    echo "<td>" . $attendee_rows['time_in'] . "</td>";
+                                    echo "<td>" . $attendee_rows['time_out'] . "</td>";
                                     echo "</tr>";
                                 }
                                 echo "</tbody>";
@@ -344,7 +362,7 @@
                                 echo "</div>";
                                 echo "</div>";
                                 // Free result set
-                                $student_result->free();
+                                $attendee_result->free();
         
                             } else {
         
@@ -362,4 +380,3 @@
     </div>
 </body>
 </html>
-
